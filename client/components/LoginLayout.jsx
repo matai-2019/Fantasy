@@ -16,7 +16,7 @@ const LoginForm = () => (
         </Segment>
       </Form>
       <Message>
-        Welcome to Dungeon &#38; Dragos
+        Welcome to Dungeon &#38; Dragons
       </Message>
     </Grid.Column>
   </Grid>
