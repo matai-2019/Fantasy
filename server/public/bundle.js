@@ -86,6 +86,34 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./client/components/AdminLayout.jsx":
+/*!*******************************************!*\
+  !*** ./client/components/AdminLayout.jsx ***!
+  \*******************************************/
+/*! exports provided: AdminLayout, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminLayout", function() { return AdminLayout; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/index.js");
+
+
+var AdminLayout = function AdminLayout() {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Segment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Form"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Form"].Field, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Room"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    placeholder: "create room"
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+    type: "submit"
+  }, "Submit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Button"].Group, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Button"], null, "delete"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Button"].Or, null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+    positive: true
+  }, "kickout"))));
+};
+/* harmony default export */ __webpack_exports__["default"] = (AdminLayout);
+
+/***/ }),
+
 /***/ "./client/components/App.jsx":
 /*!***********************************!*\
   !*** ./client/components/App.jsx ***!
@@ -97,14 +125,16 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _LoginLayout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LoginLayout */ "./client/components/LoginLayout.jsx");
-/* harmony import */ var _ChatLayout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ChatLayout */ "./client/components/ChatLayout.jsx");
+/* harmony import */ var _AdminLayout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminLayout */ "./client/components/AdminLayout.jsx");
+/* harmony import */ var _LoginLayout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./LoginLayout */ "./client/components/LoginLayout.jsx");
+/* harmony import */ var _ChatLayout__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ChatLayout */ "./client/components/ChatLayout.jsx");
+
 
 
 
 
 var App = function App() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Welcome to Fantasy!!!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChatLayout__WEBPACK_IMPORTED_MODULE_2__["ChatTemplate"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChatLayout__WEBPACK_IMPORTED_MODULE_2__["ButtonExamplePositive"], null));
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Welcome to Fantasy!!!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AdminLayout__WEBPACK_IMPORTED_MODULE_1__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChatLayout__WEBPACK_IMPORTED_MODULE_3__["ChatTemplate"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChatLayout__WEBPACK_IMPORTED_MODULE_3__["ButtonExamplePositive"], null));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
@@ -60455,7 +60485,7 @@ var partitionHTMLProps = function partitionHTMLProps(props) {
 /*!*************************************************************!*\
   !*** ./node_modules/semantic-ui-react/dist/es/lib/index.js ***!
   \*************************************************************/
-/*! exports provided: AutoControlledComponent, getChildMapping, mergeChildMappings, childrenUtils, useKeyOnly, useKeyOrValueAndKey, useValueAndKey, useMultipleProp, useTextAlignProp, useVerticalAlignProp, useWidthProp, customPropTypes, eventStack, createShorthand, createShorthandFactory, createHTMLDivision, createHTMLIframe, createHTMLImage, createHTMLInput, createHTMLLabel, createHTMLParagraph, getUnhandledProps, getElementType, htmlInputAttrs, htmlInputEvents, htmlInputProps, htmlImageProps, partitionHTMLProps, isBrowser, doesNodeContainClick, leven, createPaginationItems, SUI, numberToWordMap, numberToWord, normalizeOffset, normalizeTransitionDuration, objectDiff, handleRef, isRefObject */
+/*! exports provided: AutoControlledComponent, getChildMapping, mergeChildMappings, childrenUtils, useKeyOnly, useKeyOrValueAndKey, useValueAndKey, useMultipleProp, useTextAlignProp, useVerticalAlignProp, useWidthProp, customPropTypes, eventStack, getUnhandledProps, getElementType, htmlInputAttrs, htmlInputEvents, htmlInputProps, htmlImageProps, partitionHTMLProps, isBrowser, doesNodeContainClick, leven, createPaginationItems, SUI, numberToWordMap, numberToWord, normalizeOffset, normalizeTransitionDuration, objectDiff, handleRef, isRefObject, createShorthand, createShorthandFactory, createHTMLDivision, createHTMLIframe, createHTMLImage, createHTMLInput, createHTMLLabel, createHTMLParagraph */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
