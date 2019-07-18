@@ -1,5 +1,5 @@
 import React from 'react'
-import { List, Button, Divider, Grid, Image, Segment } from 'semantic-ui-react'
+import { List, Button, Divider, Grid, Image, Segment, Input } from 'semantic-ui-react'
 
 export const ChatTemplate = () => (
   <Segment>
@@ -68,5 +68,6 @@ export const ChatTemplate = () => (
 export const ButtonExamplePositive = () => (
   <div>
     <Button positive>Whisper</Button>
+    <Input icon='users' iconPosition='left' placeholder='Your message goes here...' />
   </div>
 )

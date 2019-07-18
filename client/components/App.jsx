@@ -1,6 +1,6 @@
 import React from 'react'
 import LoginLayout from './LoginLayout'
-import { ChatTemplate, ButtonExamplePositive } from './ChatLayout'
+import { ChatTemplate, ButtonExamplePositive, Input } from './ChatLayout'
 
 const App = () => {
   return (
@@ -9,7 +9,7 @@ const App = () => {
       {/* <LoginLayout /> */}
       <ChatTemplate />
       <ButtonExamplePositive />
-    </>
+   </>
   )
 }
 
