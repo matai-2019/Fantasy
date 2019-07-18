@@ -1,4 +1,5 @@
 import React from 'react'
+import AdminLayout from './AdminLayout'
 import LoginLayout from './LoginLayout'
 import { ChatTemplate, ButtonExamplePositive, Input } from './ChatLayout'
 
@@ -7,6 +8,7 @@ const App = () => {
     <>
       <h1>Welcome to Fantasy!!!</h1>
       {/* <LoginLayout /> */}
+      <AdminLayout />
       <ChatTemplate />
       <ButtonExamplePositive />
    </>
