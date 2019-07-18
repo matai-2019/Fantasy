@@ -104,7 +104,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var App = function App() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "React development has begun!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_LoginLayout__WEBPACK_IMPORTED_MODULE_1__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChatLayout__WEBPACK_IMPORTED_MODULE_2__["default"], null));
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Welcome to Fantasy!!!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChatLayout__WEBPACK_IMPORTED_MODULE_2__["ChatTemplate"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChatLayout__WEBPACK_IMPORTED_MODULE_2__["ButtonExamplePositive"], null));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
@@ -115,23 +115,27 @@ var App = function App() {
 /*!******************************************!*\
   !*** ./client/components/ChatLayout.jsx ***!
   \******************************************/
-/*! exports provided: default */
+/*! exports provided: ChatTemplate, ButtonExamplePositive */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ChatTemplate", function() { return ChatTemplate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ButtonExamplePositive", function() { return ButtonExamplePositive; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/index.js");
 
 
-
 var ChatTemplate = function ChatTemplate() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"], {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Segment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Grid"], {
+    columns: 2,
+    relaxed: "very"
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Grid"].Column, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"], {
     divided: true,
     relaxed: true
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Item, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Icon, {
-    name: "github",
+    name: "grunt",
     size: "large",
     verticalAlign: "middle"
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Content, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Header, {
@@ -139,7 +143,7 @@ var ChatTemplate = function ChatTemplate() {
   }, "Semantic-Org/Semantic-UI"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Description, {
     as: "a"
   }, "Updated 10 mins ago"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Item, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Icon, {
-    name: "github",
+    name: "grunt",
     size: "large",
     verticalAlign: "middle"
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Content, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Header, {
@@ -147,7 +151,7 @@ var ChatTemplate = function ChatTemplate() {
   }, "Semantic-Org/Semantic-UI-Docs"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Description, {
     as: "a"
   }, "Updated 22 mins ago"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Item, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Icon, {
-    name: "github",
+    name: "grunt",
     size: "large",
     verticalAlign: "middle"
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Content, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Header, {
@@ -155,7 +159,7 @@ var ChatTemplate = function ChatTemplate() {
   }, "Semantic-Org/Semantic-UI-Meteor"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Description, {
     as: "a"
   }, "Updated 34 mins ago"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Item, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Icon, {
-    name: "github",
+    name: "grunt",
     size: "large",
     verticalAlign: "middle"
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Content, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Header, {
@@ -163,7 +167,7 @@ var ChatTemplate = function ChatTemplate() {
   }, "Semantic-Org/Semantic-UI-Meteor"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Description, {
     as: "a"
   }, "Updated 34 mins ago"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Item, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Icon, {
-    name: "github",
+    name: "grunt",
     size: "large",
     verticalAlign: "middle"
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Content, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Header, {
@@ -171,17 +175,30 @@ var ChatTemplate = function ChatTemplate() {
   }, "Semantic-Org/Semantic-UI-Meteor"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Description, {
     as: "a"
   }, "Updated 34 mins ago"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Item, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Icon, {
-    name: "github",
+    name: "grunt",
     size: "large",
     verticalAlign: "middle"
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Content, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Header, {
     as: "a"
   }, "Semantic-Org/Semantic-UI-Meteor"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Description, {
     as: "a"
-  }, "Updated 34 mins ago"))));
+  }, "Updated 34 mins ago"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Grid"].Column, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Item, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Icon, {
+    name: "grunt",
+    size: "large",
+    verticalAlign: "middle"
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Content, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Header, {
+    as: "a"
+  }, "Semantic-Org/Semantic-UI-Meteor"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Description, {
+    as: "a"
+  }, "Updated 34 mins ago")))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Divider"], {
+    vertical: true
+  }, "+"));
 };
-
-/* harmony default export */ __webpack_exports__["default"] = (ChatTemplate);
+var ButtonExamplePositive = function ButtonExamplePositive() {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+    positive: true
+  }, "Whisper"));
+};
 
 /***/ }),
 
@@ -60434,7 +60451,7 @@ var partitionHTMLProps = function partitionHTMLProps(props) {
 /*!*************************************************************!*\
   !*** ./node_modules/semantic-ui-react/dist/es/lib/index.js ***!
   \*************************************************************/
-/*! exports provided: AutoControlledComponent, getChildMapping, mergeChildMappings, childrenUtils, useKeyOnly, useKeyOrValueAndKey, useValueAndKey, useMultipleProp, useTextAlignProp, useVerticalAlignProp, useWidthProp, customPropTypes, eventStack, getUnhandledProps, getElementType, htmlInputAttrs, htmlInputEvents, htmlInputProps, htmlImageProps, partitionHTMLProps, isBrowser, doesNodeContainClick, leven, createPaginationItems, SUI, numberToWordMap, numberToWord, normalizeOffset, normalizeTransitionDuration, objectDiff, handleRef, isRefObject, createShorthand, createShorthandFactory, createHTMLDivision, createHTMLIframe, createHTMLImage, createHTMLInput, createHTMLLabel, createHTMLParagraph */
+/*! exports provided: AutoControlledComponent, getChildMapping, mergeChildMappings, childrenUtils, useKeyOnly, useKeyOrValueAndKey, useValueAndKey, useMultipleProp, useTextAlignProp, useVerticalAlignProp, useWidthProp, customPropTypes, eventStack, createShorthand, createShorthandFactory, createHTMLDivision, createHTMLIframe, createHTMLImage, createHTMLInput, createHTMLLabel, createHTMLParagraph, getUnhandledProps, getElementType, htmlInputAttrs, htmlInputEvents, htmlInputProps, htmlImageProps, partitionHTMLProps, isBrowser, doesNodeContainClick, leven, createPaginationItems, SUI, numberToWordMap, numberToWord, normalizeOffset, normalizeTransitionDuration, objectDiff, handleRef, isRefObject */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
