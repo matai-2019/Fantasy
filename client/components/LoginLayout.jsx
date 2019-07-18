@@ -10,7 +10,6 @@ const LoginForm = () => (
       <Form size='large'>
         <Segment stacked>
           <Form.Input fluid icon='user' iconPosition='left' placeholder='Username' />
-
           <Button color='teal' fluid size='large'>
             Start New Adventure
           </Button>
