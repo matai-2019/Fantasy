@@ -1,22 +1,19 @@
 # Fantasy
 
-<h2>User stories</h2>
+This app provides a chat platform to allow communication between the Dungeon Master (DM) and players 
+during a session of Dungeons & Dragons(D&D) play.
 
-<h3> 1#user stories</h3>
-<p>i.As a dungeon master i want to be able to create group and inivte a maximum of 6 players in the group.</p>
-<p>ii. i want to be able to remove people from the group</p>
+At present, there is no chat functionality offered in the game itself, and communication tends to be 
+through other communication apps such as Skype or face to face between players.
 
+This app allows the DM to message individual or groups of players directly, and for the players to 
+message each other. It is not intended for these "chats" to be kept or stored once the game session ends.
 
+This app is intended for a maximum of 6 players only.
 
+The DM will have the capability of inviting players to the chatroom, as well as removing players from the
+chatroom.
 
-<h3>2#user stories</h3>
-<p>i.i want to be able to message the players personal aswell as players messaging each other</p>
-<p>ii. i dont want the player to be able to message the dungeon master</p>
+When a player "dies" in game, they leave the game and so leave the chatroom.
 
-
-<h3>3#user stories</h3>
-<p>i. at the end of the d&d session i want the messages to delete</p>
-
-
-
-
+At the end of game play, the database will be reset and all chats will be wiped ready for the next session.
