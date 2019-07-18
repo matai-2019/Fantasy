@@ -5,26 +5,19 @@ const LoginForm = () => (
   <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
     <Grid.Column style={{ maxWidth: 450 }}>
       <Header as='h2' color='teal' textAlign='center'>
-        <Image src='/logo.png' /> Log-in to your account
+        <Image src='/logo.png' /> Brace Yourself
       </Header>
       <Form size='large'>
         <Segment stacked>
-          <Form.Input fluid icon='user' iconPosition='left' placeholder='E-mail address' />
-          <Form.Input
-            fluid
-            icon='lock'
-            iconPosition='left'
-            placeholder='Password'
-            type='password'
-          />
+          <Form.Input fluid icon='user' iconPosition='left' placeholder='Username' />
 
           <Button color='teal' fluid size='large'>
-            Login
+            Start New Adventure
           </Button>
         </Segment>
       </Form>
       <Message>
-        New to us? <a href='#'>Sign Up</a>
+        Welcome to Dungeon &#38; Dragos
       </Message>
     </Grid.Column>
   </Grid>
