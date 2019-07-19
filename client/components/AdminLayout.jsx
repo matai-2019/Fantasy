@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Image, Message, Segment, List } from 'semantic-ui-react'
 
 export const AdminLayout = () => (
   <Segment>
@@ -16,10 +16,13 @@ export const AdminLayout = () => (
     </Grid>
     <Grid.Column floated="right" width={4}>
       <Grid.Column>
+      <List.Icon name='grunt' size='large' verticalAlign='middle' />
+                <List.Content>
+                  <List.Header as='a'>User-1</List.Header>
+                  <List.Description as='a'>Updated 10 mins ago</List.Description>
+                </List.Content>
       <Button.Group>
-        <Button>delete</Button>
-        <Button.Or />
-        <Button positive>kickout</Button>
+        <Button negative>Kill</Button>
       </Button.Group>
       </Grid.Column>
     </Grid.Column>
