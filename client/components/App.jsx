@@ -17,18 +17,15 @@ const App = () => {
       console.log({ messages })
     })
 
-  addUser({ id: 5, isAdmin: false, name: 'tamari' })
+  addUser({ id: 6, isAdmin: false, name: 'Joe Bloggs' })
     .then(data => {
-      user = data
-      console.log({ user })
+      console.log({ data })
     })
 
-  addMessage({ id: 11, authorId: 4, messsage: 'Test Message', recipients: [1, 2], timestamp: 123456789 })
-    .then(message => {
-      messages = message
-      console.log({ message })
+  addMessage({ id: 11, authorId: 4, messsage: 'newTest message', recipients: [1, 2], timestamp: 123456789 })
+    .then(data => {
+      console.log({ data })
     })
-  // addUser({ id: 4, isAdmin: false, name: 'tamari' })
 
   return (
     <Router>

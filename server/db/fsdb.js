@@ -51,8 +51,7 @@ const addUser = (user) => {
     .then(data => {
       console.log('Current User', data.data())
       return data.data()
-    }
-    )
+    })
     .then(obj => {
       let array = obj.users
       array.push(user)
@@ -60,29 +59,29 @@ const addUser = (user) => {
     })
     .then(obj => {
       db.collection('TestBed')
-        .doc('users')
+        .doc('Users')
         .set(obj)
+      return user
     })
 }
 
 const addMessage = (message) => {
   return db.collection('TestBed')
-    .doc('messages')
+    .doc('Messages')
     .get()
     .then(data => {
-      console.log('Current Message', data.data())
       return data.data()
-    }
-    )
+    })
     .then(obj => {
       let array = obj.messages
       array.push(message)
-      return { users: array }
+      return { messages: array }
     })
     .then(obj => {
       db.collection('TestBed')
-        .doc('messages')
+        .doc('Messages')
         .set(obj)
+      return message
     })
 }
 
