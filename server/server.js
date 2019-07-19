@@ -1,7 +1,6 @@
 const path = require('path')
 const express = require('express')
-const firebase = require('firebase')
-// require('firebase / firestore')
+const fb = require('firebase/firebase-firestore')
 
 const server = express()
 
@@ -10,5 +9,5 @@ server.use(express.static(path.join(__dirname, '../public')))
 
 module.exports = {
   server,
-  firebase
+  fb
 }
