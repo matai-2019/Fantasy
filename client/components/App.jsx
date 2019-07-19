@@ -7,10 +7,10 @@ const App = () => {
   return (
     <>
       <h1>Welcome to Fantasy!!!</h1>
-      {/* <LoginLayout />
-      <AdminLayout /> */}
-      <ChatTemplate />
-      <ButtonExamplePositive />
+      {/* <LoginLayout /> */}
+      <AdminLayout />
+      {/* <ChatTemplate />
+      <ButtonExamplePositive /> */}
       </>
   )
 }
