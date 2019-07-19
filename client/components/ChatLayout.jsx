@@ -4,7 +4,7 @@ import { List, Button, Divider, Grid, Image, Icon, Segment, Input, Checkbox } fr
 export const ChatTemplate = () => (
   <Segment>
     <Grid columns={2} relaxed='very'>
-      <Grid.Column>
+      <Grid.Column floated="left" width={6}>
         <List divided relaxed>
           <List.Item>
             <Grid columns={2} relaxed='very'>
@@ -105,27 +105,17 @@ export const ChatTemplate = () => (
         </List >
       </Grid.Column >
       <Grid.Column>
+        <Divider vertical>+</Divider>
         <List>
           <List.Item>
             <Grid columns={2} relaxed='very'>
-              <Grid.Column>
-                <List.Icon name='grunt' size='large' verticalAlign='middle' />
-                <List.Content>
-                  <List.Header as='a'>Dummy-User</List.Header>
-                  <List.Description as='a'>Updated 34 mins ago</List.Description>
-                </List.Content>
-              </Grid.Column>
-              <Grid.Column floated='right' width={3}>
-                <Segment compact>
-                  <Checkbox />
-                </Segment>
+              <Grid.Column floated="right" width="6">
               </Grid.Column>
             </Grid>
           </List.Item>
         </List>
       </Grid.Column >
     </Grid >
-    <Divider vertical>+</Divider>
   </Segment >
 )
 export const ButtonExamplePositive = () => (
