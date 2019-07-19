@@ -105,7 +105,6 @@ export const ChatTemplate = () => (
         </List >
       </Grid.Column >
       <Grid.Column>
-        <Divider vertical>+</Divider>
         <List>
           <List.Item>
             <Grid columns={2} relaxed='very'>
