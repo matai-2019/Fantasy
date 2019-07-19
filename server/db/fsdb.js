@@ -23,6 +23,7 @@ const getAllUsers = (sessionId) => {
       })
     })
     .then(() => {
+      console.log('All Users', (users))
       return users
     })
 }
@@ -38,16 +39,17 @@ const getAllMessages = (sessionId) => {
       })
     })
     .then(() => {
+      console.log('All Messages', (msgArr))
       return msgArr
     })
 }
 
 const addUser = (user) => {
-  return db.collection('123456789012345')
-    .doc('users')
+  return db.collection('TestBed')
+    .doc('Users')
     .get()
     .then(data => {
-      console.log('CURRENT', data.data())
+      console.log('Current User', data.data())
       return data.data()
     }
     )
@@ -57,8 +59,29 @@ const addUser = (user) => {
       return { users: array }
     })
     .then(obj => {
-      db.collection('123456789012345')
+      db.collection('TestBed')
         .doc('users')
+        .set(obj)
+    })
+}
+
+const addMessage = (message) => {
+  return db.collection('TestBed')
+    .doc('messages')
+    .get()
+    .then(data => {
+      console.log('Current Message', data.data())
+      return data.data()
+    }
+    )
+    .then(obj => {
+      let array = obj.messages
+      array.push(message)
+      return { users: array }
+    })
+    .then(obj => {
+      db.collection('TestBed')
+        .doc('messages')
         .set(obj)
     })
 }
@@ -66,5 +89,6 @@ const addUser = (user) => {
 export {
   getAllUsers,
   getAllMessages,
-  addUser
+  addUser,
+  addMessage
 }
