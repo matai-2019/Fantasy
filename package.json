@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "express": "^4.16.4",
+    "firebase": "^6.3.0",
     "semantic-ui-react": "^0.87.3",
     "superagent": "^5.0.2"
   },
