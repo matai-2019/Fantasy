@@ -16,7 +16,7 @@ const LoginForm = () => (
           <Form size='large'>
             <Segment stacked>
               <Form.Input fluid icon='user' iconPosition='left' placeholder='Username' />
-              <Button color='teal' fluid size='large'>
+              <Button color='teal' fluid size='large'onItemCLick={this.handleItemClick}>
                 Start New Adventure
               </Button>
             </Segment>
