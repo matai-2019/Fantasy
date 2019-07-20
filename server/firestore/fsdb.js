@@ -24,23 +24,12 @@ const getNewID = () => {
 
 const getAllUsers = (sessionId) => {
   return db.collection(sessionId).doc('Users').get()
-    .then(data => {
-      console.log('All Users', data.data())
-      return data.data()
-    })
-}
-
-const getAllMessages = (sessionId) => {
-  return db.collection(sessionId).doc('Messages').get()
-    .then(data => {
-      console.log('All Messages', data.data())
-      return data.data()
-    })
+    .then(data => { return data.data() })
 }
 
 const addUser = (sessionId, userName) => {
   let user
-  getAllUsers(sessionId)
+  return getAllUsers(sessionId)
     .then(obj => {
       let id = getNewID()
       let isAdmin = true
@@ -50,33 +39,40 @@ const addUser = (sessionId, userName) => {
       user = { id, isAdmin, userName }
       obj.users.push(user)
       db.collection(sessionId).doc('Users').set(obj)
+      console.log('addUser', user)
+      return user
     })
-  return user
 }
 
-// const addMessage = (message) => {
-//   return db.collection('TestBed')
-//     .doc('Messages')
-//     .get()
-//     .then(data => {
-//       return data.data()
-//     })
-//     .then(obj => {
-//       obj.messages.push(message)
-//       let id = obj.messages[obj.messages.length - 1].id + 1
-//       let date = new Date()
-//       let timestamp = date.getTime()
-//       let message = { id, userName, messageText, recipients, timestamp }
-//       obj.messages.push(message)
-//       db.collection(sessionId).doc('Messages').set(obj)
-//       return obj.messages
-//     })
-// }
+const getAllMessages = (sessionId) => {
+  return db.collection(sessionId).doc('Messages').get()
+    .then(data => { return data.data() })
+}
+
+const addMessage = (sessionId, userName, recipients, messageText) => {
+  return getAllMessages(sessionId)
+    .then(obj => {
+      let id = obj.messages[obj.messages.length - 1].id + 1
+      let date = new Date()
+      let timestamp = date.getTime()
+      let message = { id, userName, messageText, recipients, timestamp }
+      obj.messages.push(message)
+      db.collection(sessionId).doc('Messages').set(obj)
+      return obj.messages
+    })
+}
+const resetFirestore = (sessionId) => {
+  db.collection(sessionId).doc().delete().then(function () {
+    console.log('Document successfully deleted!')
+  }).catch(function (error) {
+    console.error('Error removing document: ', error)
+  })
+}
 
 export {
   getAllUsers,
   getAllMessages,
   addUser,
-  getNewID
-  // addMessage
+  addMessage,
+  resetFirestore
 }
