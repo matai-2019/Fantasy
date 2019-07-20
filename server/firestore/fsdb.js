@@ -16,7 +16,7 @@ const getNewID = () => {
   let id
   return getAllUsers('TestBed')
     .then(obj => {
-      let sorted = obj.users.map(user => user.id)
+      const sorted = obj.users.map(user => user.id)
       id = sorted.sort((a, b) => a < b)[sorted.length - 1] + 1
       return id
     })
@@ -28,20 +28,24 @@ const getAllUsers = (sessionId) => {
 }
 
 const addUser = (sessionId, userName) => {
-  let user
+  let user, id
   return getAllUsers(sessionId)
     .then(obj => {
-      return getNewID().then(id => {
-        let isAdmin = true
-        obj.users.forEach(user => {
-          if (user.isAdmin === true) isAdmin = false
+      return getNewID()
+        .then(data => {
+          id = data
+          return obj
         })
-        user = { id, isAdmin, userName }
-        obj.users.push(user)
-        db.collection(sessionId).doc('Users').set(obj)
-        console.log('addUser', user)
-        return user
+    })
+    .then(obj => {
+      let isAdmin = true
+      obj.users.forEach(user => {
+        if (user.isAdmin === true) isAdmin = false
       })
+      user = { id, isAdmin, userName }
+      obj.users.push(user)
+      db.collection(sessionId).doc('Users').set(obj)
+      return user
     })
 }
 
@@ -53,10 +57,10 @@ const getAllMessages = (sessionId) => {
 const addMessage = (sessionId, userName, recipients, messageText) => {
   return getAllMessages(sessionId)
     .then(obj => {
-      let id = obj.messages[obj.messages.length - 1].id + 1
-      let date = new Date()
-      let timestamp = date.getTime()
-      let message = { id, userName, messageText, recipients, timestamp }
+      const id = obj.messages[obj.messages.length - 1].id + 1
+      const date = new Date()
+      const timestamp = date.getTime()
+      const message = { id, userName, messageText, recipients, timestamp }
       obj.messages.push(message)
       db.collection(sessionId).doc('Messages').set(obj)
       return obj.messages
