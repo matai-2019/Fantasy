@@ -23,10 +23,10 @@ const App = () => {
       console.log({ messages })
     })
 
-  addUser('TestBed', 'NewNameTest')
+  addUser('TestBed', 'Wizard')
     .then(array => console.log(array))
 
-  addMessage('TestBed', 'Celia', [1, 3], 'NICE')
+  addMessage('TestBed', 'Celia', [1, 3], 'Wizard is the best')
     .then(array => console.log(array))
 
   return (
