@@ -4,7 +4,6 @@ import LoginLayout from './LoginLayout'
 import { ChatTemplate, ButtonExamplePositive } from './ChatLayout'
 import { getAllUsers, getAllMessages, addUser, addMessage, getNewID, resetFirestore } from '../../server/firestore/fsdb'
 import io from 'socket.io-client'
-import { Message } from 'semantic-ui-react';
 
 const socket = io()
 
@@ -58,14 +57,11 @@ class App extends Component {
         { console.log('RENDER STATE', this.state)}
         {(this.state.user.id)
           ? <>
-            
-            {/* <ChatTemplate/>
-            <ButtonExamplePositive /> */}
+            <ChatTemplate/>
+            <ButtonExamplePositive />
           </>
-          : <LoginLayout setUserName={this.setUserName}/>} */}
-        {/* {/* <ChatTemplate /> */}
-        <ButtonExamplePositive />
-      </>
+          : <LoginLayout setUserName={this.setUserName}/>}
+        </>
     )
   }
 }
