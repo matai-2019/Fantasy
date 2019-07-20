@@ -9,9 +9,9 @@ const socket = io()
 
 const saveSession = state => {
   const { id, isAdmin, userName } = state.user
-  sessionStorage.setItem(id)
-  sessionStorage.setItem(isAdmin)
-  sessionStorage.setItem(userName)
+  sessionStorage.setItem('id', id)
+  sessionStorage.setItem('isAdmin', isAdmin)
+  sessionStorage.setItem('userName', userName)
   sessionId = id
   sessionAdmin = isAdmin
   sessionName = userName
@@ -30,7 +30,6 @@ socket.on('get-state', () => {
 let sessionId, sessionAdmin, sessionName
 loadSession()
 console.log('SESSIONID', ssID)
-console.log('NEWID', getNewID())
 
 class App extends Component {
   state = {
@@ -38,14 +37,16 @@ class App extends Component {
   }
 
   setUserName = username => {
-    console.log('UN TEST', username)
-    // addUser('TestBed', username)
-    //   .then(user => {
-    //     this.setState({ user }, () => console.log('YEE', this.state))
-    //   })
+    addUser(ssID, username)
+      .then(user => {
+        this.setState({ user }, () => {
+          saveSession(this.state)
+        })
+      })
   }
 
   users = []
+
   messages = []
 
   render () {
