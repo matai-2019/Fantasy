@@ -10,5 +10,7 @@ app.use(express.static(path.join(__dirname, '../public')))
 
 module.exports = {
   server,
-  io
+  app,
+  io,
+  path
 }
