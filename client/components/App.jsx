@@ -41,7 +41,10 @@ class App extends Component {
         {/* <LoginLayout setUserName={this.setUserName}/> */}
         { console.log('RENDER STATE', this.state)}
         {(this.state.user.id)
-          ? <ChatTemplate/>
+          ? <>
+            <ChatTemplate/>
+            <ButtonExamplePositive />
+          </>
           : <LoginLayout setUserName={this.setUserName}/>}
         {/* <ChatTemplate />
         <ButtonExamplePositive /> */}
