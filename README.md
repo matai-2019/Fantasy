@@ -9,7 +9,7 @@ through other communication apps such as Skype or face to face between players.
 This app allows the DM to message individual or groups of players directly, and for the players to 
 message each other. It is not intended for these "chats" to be kept or stored once the game session ends.
 
-This app is intended for a maximum of 6 players only.
+This app is intended for a maximum of 6 players pre-group.
 
 The DM will have the capability of inviting players to the chatroom, as well as removing players from the
 chatroom.

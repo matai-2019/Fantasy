@@ -7,12 +7,12 @@
   "author": "EDA",
   "license": "ISC",
   "scripts": {
-    "build": "webpack",
-    "server": "node .",
-    "start": "run-s build server",
-    "dev": "run-p dev:server dev:client",
+    "win:start": "run-s build server",
+    "win:dev": "run-p dev:server dev:client",
     "dev:client": "webpack --watch",
     "dev:server": "nodemon .",
+    "start": "webpack && node server",
+    "dev": "nodemon server & webpack --watch",
     "test": "jest --watchAll"
   },
   "babel": {
@@ -35,8 +35,8 @@
     "firebase": "^6.3.1",
     "npm-run-all": "^4.1.5",
     "semantic-ui-react": "^0.87.3",
-    "superagent": "^5.0.2",
-    "webpack": "^4.36.1"
+    "webpack": "^4.36.1",
+    "socket.io": "^2.2.0",
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
@@ -53,6 +53,8 @@
     "nodemon": "^1.19.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "nodemon": "^1.19.1",
+    "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
     "webpack-dev-server": "^3.2.1"
   }
