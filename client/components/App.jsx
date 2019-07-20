@@ -1,43 +1,45 @@
-import React from 'react'
+import React, { Component } from 'react'
 import AdminLayout from './AdminLayout'
 import LoginLayout from './LoginLayout'
 import { ChatTemplate, ButtonExamplePositive } from './ChatLayout'
-import { BrowserRouter as Router } from 'react-router-dom'
-import { getAllUsers, getAllMessages, addUser, addMessage } from '../../server/db/fsdb'
+import { getAllUsers, getAllMessages, addUser, addMessage } from '../../server/firestore/fsdb'
 import io from 'socket.io-client'
 
 const socket = io()
 
-const App = () => {
-  let Users = []
-  getAllUsers('TestBed')
-    .then(data => {
-      Users = data
-      console.log(Users)
-    })
+let sessionId = sessionStorage.getItem('id')
+let sessionAdmin = sessionStorage.getItem('isAdmin')
+let sessionName = sessionStorage.getItem('userName')
 
-  let messages = []
-  getAllMessages('TestBed')
-    .then(info => {
-      messages = info
-      console.log({ messages })
-    })
+socket.on('get-state', () => {
+  socket.emit('set-state', { id: sessionId, isAdmin: sessionAdmin, userName: sessionName })
+})
 
-  addUser('TestBed', 'NewNameTest')
-    .then(array => console.log(array))
+getAllUsers('TestBed')
 
-  addMessage('TestBed', 'Celia', [1, 3], 'NICE')
-    .then(array => console.log(array))
+getAllMessages('TestBed')
 
-  return (
-    <>
-      <h1>Welcome to Fantasy!!!</h1>
-      <LoginLayout />
-      {/* <AdminLayout /> */}
-      {/* {/* <ChatTemplate /> */}
-      {/* <ButtonExamplePositive /> */}
-    </>
-  )
+class App extends Component {
+  state = {
+    user: { id: sessionId, isAdmin: sessionAdmin, userName: sessionName }
+  }
+
+  setUserName = username => {
+
+  }
+
+  users = []
+  messages = []
+  render () {
+    return (
+      <>
+        <h1>Welcome to Fantasy!!!</h1>
+        <LoginLayout setUserName={this.setUserName}/>
+        {/* <ChatTemplate />
+        <ButtonExamplePositive /> */}
+      </>
+    )
+  }
 }
 
 export default App
