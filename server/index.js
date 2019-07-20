@@ -10,10 +10,6 @@ io.on('connection', socket => {
     userId = userState.id
     socket.emit('state-loaded', userState.id)
   })
-  socket.on('state-loaded', () => {
-    if (userId) console.log('Chat-screen')
-    else console.log('Login-screen')
-  })
 })
 
 server.listen(port, function () {
