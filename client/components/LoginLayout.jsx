@@ -10,7 +10,6 @@ function LoginForm ({ setUserName }) {
   }
 
   const handleSubmit = () => {
-    console.log('Welcome', inputValue)
     setUserName(inputValue)
   }
 

@@ -30,6 +30,7 @@ socket.on('get-state', () => {
 let sessionId, sessionAdmin, sessionName
 loadSession()
 console.log('SESSIONID', ssID)
+console.log('NEWID', getNewID())
 
 class App extends Component {
   state = {
@@ -37,10 +38,11 @@ class App extends Component {
   }
 
   setUserName = username => {
-    addUser('TestBed', username)
-      .then(user => {
-        this.setState({ user }, () => console.log('YEE', this.state))
-      })
+    console.log('UN TEST', username)
+    // addUser('TestBed', username)
+    //   .then(user => {
+    //     this.setState({ user }, () => console.log('YEE', this.state))
+    //   })
   }
 
   users = []

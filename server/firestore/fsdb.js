@@ -14,12 +14,12 @@ const db = fire.firestore()
 
 const getNewID = () => {
   let id
-  getAllUsers('TestBed')
+  return getAllUsers('TestBed')
     .then(obj => {
       let sorted = obj.users.map(user => user.id)
       id = sorted.sort((a, b) => a < b)[sorted.length - 1] + 1
+      return id
     })
-  return id
 }
 
 const getAllUsers = (sessionId) => {
@@ -31,16 +31,17 @@ const addUser = (sessionId, userName) => {
   let user
   return getAllUsers(sessionId)
     .then(obj => {
-      let id = getNewID()
-      let isAdmin = true
-      obj.users.forEach(user => {
-        if (user.isAdmin === true) isAdmin = false
+      return getNewID().then(id => {
+        let isAdmin = true
+        obj.users.forEach(user => {
+          if (user.isAdmin === true) isAdmin = false
+        })
+        user = { id, isAdmin, userName }
+        obj.users.push(user)
+        db.collection(sessionId).doc('Users').set(obj)
+        console.log('addUser', user)
+        return user
       })
-      user = { id, isAdmin, userName }
-      obj.users.push(user)
-      db.collection(sessionId).doc('Users').set(obj)
-      console.log('addUser', user)
-      return user
     })
 }
 
@@ -74,5 +75,6 @@ export {
   getAllMessages,
   addUser,
   addMessage,
-  resetFirestore
+  resetFirestore,
+  getNewID
 }
