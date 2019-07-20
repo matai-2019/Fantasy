@@ -11,7 +11,7 @@
     "win:dev": "run-p dev:server dev:client",
     "dev:client": "webpack --watch",
     "dev:server": "nodemon .",
-    "start": "webpack && node server",
+    "start": "webpack & node server",
     "dev": "nodemon server & webpack --watch",
     "test": "jest --watchAll"
   },
