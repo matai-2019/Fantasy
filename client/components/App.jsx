@@ -23,10 +23,7 @@ const App = () => {
       console.log({ messages })
     })
 
-  addUser({ id: 6, isAdmin: false, name: 'Joe Bloggs' })
-    .then(data => {
-      console.log({ data })
-    })
+  addUser('TestBed', 'NewNameTest')
 
   addMessage({ id: 11, authorId: 4, messsage: 'newTest message', recipients: [1, 2], timestamp: 123456789 })
     .then(data => {
