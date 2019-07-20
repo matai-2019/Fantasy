@@ -18,6 +18,7 @@ const getAllUsers = (sessionId) => {
 }
 
 const addUser = (sessionId, userName) => {
+  let user
   return getAllUsers(sessionId)
     .then(obj => {
       let id = obj.users[obj.users.length - 1].id + 1
@@ -25,10 +26,11 @@ const addUser = (sessionId, userName) => {
       obj.users.forEach(user => {
         if (user.isAdmin === true) isAdmin = false
       })
-      let user = { id, isAdmin, userName }
+      user = { id, isAdmin, userName }
       obj.users.push(user)
       db.collection(sessionId).doc('Users').set(obj)
-      return obj.users
+      console.log('addUser', user)
+      return user
     })
 }
 
@@ -63,4 +65,4 @@ export {
   addUser,
   addMessage,
   resetFirestore
-}
+ }
