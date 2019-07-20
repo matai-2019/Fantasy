@@ -2,25 +2,35 @@ import React, { Component } from 'react'
 import AdminLayout from './AdminLayout'
 import LoginLayout from './LoginLayout'
 import { ChatTemplate, ButtonExamplePositive } from './ChatLayout'
-import { BrowserRouter as Router } from 'react-router-dom'
-import { getAllUsers, getAllMessages, addUser, addMessage, resetFirestore } from '../../server/firestore/fsdb'
-
+import { getAllUsers, getAllMessages, addUser, addMessage, getNewID, resetFirestore } from '../../server/firestore/fsdb'
 import io from 'socket.io-client'
 import { Message } from 'semantic-ui-react';
 
 const socket = io()
 
-let sessionId = sessionStorage.getItem('id')
-let sessionAdmin = sessionStorage.getItem('isAdmin')
-let sessionName = sessionStorage.getItem('userName')
+const saveSession = state => {
+  const { id, isAdmin, userName } = state.user
+  sessionStorage.setItem('id', id)
+  sessionStorage.setItem('isAdmin', isAdmin)
+  sessionStorage.setItem('userName', userName)
+  sessionId = id
+  sessionAdmin = isAdmin
+  sessionName = userName
+}
+const loadSession = state => {
+  sessionId = sessionStorage.getItem('id')
+  sessionAdmin = sessionStorage.getItem('isAdmin')
+  sessionName = sessionStorage.getItem('userName')
+}
+const ssID = window.location.pathname.slice(1)
 
 socket.on('get-state', () => {
   socket.emit('set-state', { id: sessionId, isAdmin: sessionAdmin, userName: sessionName })
 })
 
-getAllUsers('TestBed')
-
-getAllMessages('TestBed')
+let sessionId, sessionAdmin, sessionName
+loadSession()
+console.log('SESSIONID', ssID)
 
 class App extends Component {
   state = {
@@ -28,13 +38,16 @@ class App extends Component {
   }
 
   setUserName = username => {
-    addUser('TestBed', username)
+    addUser(ssID, username)
       .then(user => {
-        this.setState({ user }, () => console.log('YEE', this.state))
+        this.setState({ user }, () => {
+          saveSession(this.state)
+        })
       })
   }
 
   users = []
+
   messages = []
 
   render () {
