@@ -34,7 +34,7 @@ const App = () => {
       <h1>Welcome to Fantasy!!!</h1>
       <LoginLayout />
       {/* <AdminLayout /> */}
-      {/* {/* <ChatTemplate /> */}
+      {/* <ChatTemplate /> */}
       {/* <ButtonExamplePositive /> */}
     </>
   )
