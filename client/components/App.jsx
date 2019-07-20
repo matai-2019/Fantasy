@@ -1,4 +1,7 @@
 import React from 'react'
+import AdminLayout from './AdminLayout'
+import LoginLayout from './LoginLayout'
+import { ChatTemplate, ButtonExamplePositive } from './ChatLayout'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { getAllUsers, getAllMessages, addUser, addMessage } from '../../server/db/fsdb'
 import io from 'socket.io-client'
@@ -18,12 +21,13 @@ const App = () => {
     })
 
   return (
-    <Router>
-      <>
-        <h1>Welcome to Fantasy!!!</h1>
-        {users}
-      </>
-    </Router>
+    <>
+      <h1>Welcome to Fantasy!!!</h1>
+      {/* <LoginLayout /> */}
+      <AdminLayout />
+      {/* <ChatTemplate />
+      <ButtonExamplePositive /> */}
+    </>
   )
 }
 
