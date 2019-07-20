@@ -2,22 +2,34 @@ import React, { Component } from 'react'
 import AdminLayout from './AdminLayout'
 import LoginLayout from './LoginLayout'
 import { ChatTemplate, ButtonExamplePositive } from './ChatLayout'
-import { getAllUsers, getAllMessages, addUser, addMessage } from '../../server/firestore/fsdb'
+import { getAllUsers, getAllMessages, addUser, addMessage, getNewID } from '../../server/firestore/fsdb'
 import io from 'socket.io-client'
 
 const socket = io()
 
-let sessionId = sessionStorage.getItem('id')
-let sessionAdmin = sessionStorage.getItem('isAdmin')
-let sessionName = sessionStorage.getItem('userName')
+const saveSession = state => {
+  const { id, isAdmin, userName } = state.user
+  sessionStorage.setItem(id)
+  sessionStorage.setItem(isAdmin)
+  sessionStorage.setItem(userName)
+  sessionId = id
+  sessionAdmin = isAdmin
+  sessionName = userName
+}
+const loadSession = state => {
+  sessionId = sessionStorage.getItem('id')
+  sessionAdmin = sessionStorage.getItem('isAdmin')
+  sessionName = sessionStorage.getItem('userName')
+}
+const ssID = window.location.pathname.slice(1)
 
 socket.on('get-state', () => {
   socket.emit('set-state', { id: sessionId, isAdmin: sessionAdmin, userName: sessionName })
 })
 
-getAllUsers('TestBed')
-
-getAllMessages('TestBed')
+let sessionId, sessionAdmin, sessionName
+loadSession()
+console.log('SESSIONID', ssID)
 
 class App extends Component {
   state = {
@@ -34,7 +46,8 @@ class App extends Component {
     return (
       <>
         <h1>Welcome to Fantasy!!!</h1>
-        <LoginLayout setUserName={this.setUserName}/>
+        {/* <LoginLayout setUserName={this.setUserName}/> */}
+        <AdminLayout />
         {/* <ChatTemplate />
         <ButtonExamplePositive /> */}
       </>
