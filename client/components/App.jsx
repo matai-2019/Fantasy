@@ -6,11 +6,11 @@ import io from 'socket.io-client'
 const socket = io()
 
 const App = () => {
-  let users = []
+  let Users = []
   getAllUsers('TestBed')
     .then(data => {
-      users = data
-      console.log(users)
+      Users = data
+      console.log(Users)
     })
 
   let messages = []
@@ -34,7 +34,7 @@ const App = () => {
     <Router>
       <>
         <h1>Welcome to Fantasy!!!</h1>
-        {users}
+        {Users}
       </>
     </Router>
   )
