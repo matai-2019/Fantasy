@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import AdminLayout from './AdminLayout'
 import LoginLayout from './LoginLayout'
 import { ChatTemplate, ButtonExamplePositive } from './ChatLayout'
-import { getAllUsers, getAllMessages, addUser, addMessage, getNewID } from '../../server/firestore/fsdb'
+import { getAllUsers, getAllMessages, addUser, addMessage, getNewID, resetFirestore } from '../../server/firestore/fsdb'
 import io from 'socket.io-client'
 
 const socket = io()
@@ -37,17 +37,27 @@ class App extends Component {
   }
 
   setUserName = username => {
-
+    addUser('TestBed', username)
+      .then(user => {
+        this.setState({ user }, () => console.log('YEE', this.state))
+      })
   }
 
   users = []
   messages = []
+
   render () {
     return (
       <>
         <h1>Welcome to Fantasy!!!</h1>
         {/* <LoginLayout setUserName={this.setUserName}/> */}
-        <AdminLayout />
+        { console.log('RENDER STATE', this.state)}
+        {(this.state.user.id)
+          ? <>
+            <ChatTemplate/>
+            <ButtonExamplePositive />
+          </>
+          : <LoginLayout setUserName={this.setUserName}/>}
         {/* <ChatTemplate />
         <ButtonExamplePositive /> */}
       </>
