@@ -40,13 +40,7 @@ const App = () => {
       <AdminLayout />
       {/* <ChatTemplate />
       <ButtonExamplePositive /> */}
-      </>
-    <Router>
-      <>
-        <h1>Welcome to Fantasy!!!</h1>
-        {Users}
-      </>
-    </Router>
+    </>
   )
 }
 
