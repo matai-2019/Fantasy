@@ -1,8 +1,18 @@
-import React, { Component } from 'react'
+import 'firebase/firestore'
 
-const db = require('../server/firestore/fsdb')
+import {
+  db,
+  getAllUsers,
+  getAllMessages,
+  addUser,
+  addMessage,
+  resetFirestore
+} from '../server/firestore/fsdb'
 
-test('getAllUsers returns '
+test('getAllUsers returns an array of 4 users', () => {
+  const users = getAllUsers(TestBed2)
+  
+}
 
 )
 const App = () => {
@@ -26,7 +36,7 @@ const App = () => {
   addMessage('TestBed', 'Celia', [1, 3], 'Wizard is the best')
     .then(array => console.log(array))
 
-  resetFirestore('TestBed2')
+  resetFirestore('TestBed3')
 
   return (
     <>

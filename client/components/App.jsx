@@ -21,7 +21,7 @@ getAllUsers('TestBed')
 
 getAllMessages('TestBed')
 
-resetFirestore('TestBed2')
+resetFirestore('TestBed3')
 
 class App extends Component {
   state = {

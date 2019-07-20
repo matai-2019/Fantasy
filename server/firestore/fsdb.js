@@ -51,8 +51,8 @@ const addMessage = (sessionId, userName, recipients, messageText) => {
       return obj.messages
     })
 }
-const resetFirestore = (sessionId) => {
-  db.collection(sessionId).doc(TestBed2).delete().then(function () {
+const resetFirestore = () => {
+  db.collection().doc().delete().then(function () {
     console.log('Document successfully deleted!')
   }).catch(function (error) {
     console.error('Error removing document: ', error)
@@ -60,9 +60,10 @@ const resetFirestore = (sessionId) => {
 }
 
 export {
+  db,
   getAllUsers,
   getAllMessages,
   addUser,
   addMessage,
   resetFirestore
- }
+}
