@@ -6,6 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { getAllUsers, getAllMessages, addUser, addMessage, resetFirestore } from '../../server/firestore/fsdb'
 
 import io from 'socket.io-client'
+import { Message } from 'semantic-ui-react';
 
 const socket = io()
 
@@ -40,16 +41,17 @@ class App extends Component {
     return (
       <>
         <h1>Welcome to Fantasy!!!</h1>
-        {/* <LoginLayout setUserName={this.setUserName}/> */}
+        <LoginLayout setUserName={this.setUserName}/>
         { console.log('RENDER STATE', this.state)}
         {(this.state.user.id)
           ? <>
-            <ChatTemplate/>
-            <ButtonExamplePositive />
+            
+            {/* <ChatTemplate/>
+            <ButtonExamplePositive /> */}
           </>
-          : <LoginLayout setUserName={this.setUserName}/>}
-        {/* <ChatTemplate />
-        <ButtonExamplePositive /> */}
+          : <LoginLayout setUserName={this.setUserName}/>} */}
+        {/* {/* <ChatTemplate /> */}
+        <ButtonExamplePositive />
       </>
     )
   }
