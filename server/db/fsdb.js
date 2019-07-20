@@ -13,34 +13,18 @@ const fire = firebase.initializeApp(firebaseConfig)
 const db = fire.firestore()
 
 const getAllUsers = (sessionId) => {
-  let users = []
-  return db.collection(sessionId).get()
-    .then(sshot => {
-      sshot.forEach(doc => {
-        if (doc.data().users) {
-          users = doc.data().users
-        }
-      })
-    })
-    .then(() => {
-      console.log('All Users', (users))
-      return users
+  return db.collection(sessionId).doc('Users').get()
+    .then(data => {
+      console.log('All Users', data.data())
+      return data.data()
     })
 }
 
 const getAllMessages = (sessionId) => {
-  let msgArr = []
-  return db.collection(sessionId).get()
-    .then(sshot => {
-      sshot.forEach(doc => {
-        if (doc.data().messages) {
-          msgArr = doc.data().messages
-        }
-      })
-    })
-    .then(() => {
-      console.log('All Messages', (msgArr))
-      return msgArr
+  return db.collection(sessionId).doc('Messages').get()
+    .then(data => {
+      console.log('All Messages', data.data())
+      return data.data()
     })
 }
 
