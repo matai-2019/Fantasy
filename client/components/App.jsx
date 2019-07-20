@@ -3,7 +3,7 @@ import AdminLayout from './AdminLayout'
 import LoginLayout from './LoginLayout'
 import { ChatTemplate, ButtonExamplePositive } from './ChatLayout'
 import { BrowserRouter as Router } from 'react-router-dom'
-import { getAllUsers, getAllMessages, addUser, addMessage } from '../../server/db/fsdb'
+import { getAllUsers, getAllMessages, addUser, addMessage, resetFirestore } from '../../server/db/fsdb'
 import io from 'socket.io-client'
 
 const socket = io()
@@ -28,6 +28,8 @@ const App = () => {
 
   addMessage('TestBed', 'Celia', [1, 3], 'Wizard is the best')
     .then(array => console.log(array))
+
+  resetFirestore('TestBed2')
 
   return (
     <>

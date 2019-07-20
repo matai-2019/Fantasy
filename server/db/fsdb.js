@@ -49,10 +49,18 @@ const addMessage = (sessionId, userName, recipients, messageText) => {
       return obj.messages
     })
 }
+const resetFirestore = (sessionId) => {
+  db.collection(sessionId).doc().delete().then(function () {
+    console.log('Document successfully deleted!')
+  }).catch(function (error) {
+    console.error('Error removing document: ', error)
+  })
+}
 
 export {
   getAllUsers,
   getAllMessages,
   addUser,
-  addMessage
+  addMessage,
+  resetFirestore
 }
