@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Container, Button, Icon, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import AdminLayout from './AdminLayout';
 
-function LoginForm () {
+function LoginForm ({ setUserName }) {
   let inputValue = ''
 
   const handleChange = (evt) => {
@@ -9,7 +10,8 @@ function LoginForm () {
   }
 
   const handleSubmit = () => {
-    console.log('CALL FUNCTION:', inputValue)
+    console.log('Welcome', inputValue)
+    setUserName(inputValue)
   }
 
   return (
@@ -17,7 +19,7 @@ function LoginForm () {
       <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
         <Grid.Column style={{ maxWidth: 450 }}>
           <Message>
-              Welcome to Dungeon &#38; Dragons
+              Welcome to Dungeons &#38; Dragons
           </Message>
           <Header as='h2' color='teal' textAlign='center'>
             <Icon name='grunt' size='large' />
