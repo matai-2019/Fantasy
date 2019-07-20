@@ -23,23 +23,19 @@ const App = () => {
       console.log({ messages })
     })
 
-  addUser({ id: 6, isAdmin: false, name: 'Joe Bloggs' })
-    .then(data => {
-      console.log({ data })
-    })
+  addUser('TestBed', 'NewNameTest')
+    .then(array => console.log(array))
 
-  addMessage({ id: 11, authorId: 4, messsage: 'newTest message', recipients: [1, 2], timestamp: 123456789 })
-    .then(data => {
-      console.log({ data })
-    })
+  addMessage('TestBed', 'Celia', [1, 3], 'NICE')
+    .then(array => console.log(array))
 
   return (
     <>
       <h1>Welcome to Fantasy!!!</h1>
-      {/* <LoginLayout /> */}
-      <AdminLayout />
-      {/* <ChatTemplate />
-      <ButtonExamplePositive /> */}
+      <LoginLayout />
+      {/* <AdminLayout /> */}
+      {/* {/* <ChatTemplate /> */}
+      {/* <ButtonExamplePositive /> */}
     </>
   )
 }
