@@ -24,11 +24,10 @@ const App = () => {
     })
 
   addUser('TestBed', 'NewNameTest')
+    .then(array => console.log(array))
 
-  addMessage({ id: 11, authorId: 4, messsage: 'newTest message', recipients: [1, 2], timestamp: 123456789 })
-    .then(data => {
-      console.log({ data })
-    })
+  addMessage('TestBed', 'Celia', [1, 3], 'NICE')
+    .then(array => console.log(array))
 
   return (
     <>
