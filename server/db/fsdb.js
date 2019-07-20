@@ -18,7 +18,6 @@ const getAllUsers = (sessionId) => {
 }
 
 const addUser = (sessionId, userName) => {
-  let user = {}
   return getAllUsers(sessionId)
     .then(obj => {
       let id = obj.users[obj.users.length - 1].id + 1
@@ -26,45 +25,28 @@ const addUser = (sessionId, userName) => {
       obj.users.forEach(user => {
         if (user.isAdmin === true) isAdmin = false
       })
-      user = { id, isAdmin, userName }
-      console.log('User', user)
-      return obj
+      let user = { id, isAdmin, userName }
+      obj.users.push(user)
+      db.collection(sessionId).doc('Users').set(obj)
+      return obj.users
     })
-    .then(obj => {
-      let array = obj.users
-      array.push(user)
-      console.log(array)
-    })
-    // .then(obj => {
-    //   db.collection('TestBed')
-    //     .doc('Users')
-    //     .set(obj)
-    //   return user
-    // })
 }
 
 const getAllMessages = (sessionId) => {
   return db.collection(sessionId).doc('Messages').get()
-    .then(data => { data.data() })
+    .then(data => { return data.data() })
 }
 
-const addMessage = (message) => {
-  return db.collection('TestBed')
-    .doc('Messages')
-    .get()
-    .then(data => {
-      return data.data()
-    })
+const addMessage = (sessionId, userName, recipients, messageText) => {
+  return getAllMessages(sessionId)
     .then(obj => {
-      let array = obj.messages
-      array.push(message)
-      return { messages: array }
-    })
-    .then(obj => {
-      db.collection('TestBed')
-        .doc('Messages')
-        .set(obj)
-      return message
+      let id = obj.messages[obj.messages.length - 1].id + 1
+      let date = new Date()
+      let timestamp = date.getTime()
+      let message = { id, userName, messageText, recipients, timestamp }
+      obj.messages.push(message)
+      db.collection(sessionId).doc('Messages').set(obj)
+      return obj.messages
     })
 }
 
