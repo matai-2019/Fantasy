@@ -49,22 +49,6 @@ const addUser = (user) => {
     })
 }
 
-const getAllMessages = (sessionId) => {
-  let msgArr = []
-  return db.collection(sessionId).get()
-    .then(sshot => {
-      sshot.forEach(doc => {
-        if (doc.data().messages) {
-          msgArr = doc.data().messages
-        }
-      })
-    })
-    .then(() => {
-      console.log('All Messages', (msgArr))
-      return msgArr
-    })
-}
-
 const addMessage = (message) => {
   return db.collection('TestBed')
     .doc('Messages')
