@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Container, Button, Icon, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
-import AdminLayout from './AdminLayout';
+import AdminLayout from './AdminLayout'
 
 function LoginForm ({ setUserName }) {
   let inputValue = ''
