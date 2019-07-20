@@ -31,8 +31,6 @@ let sessionId, sessionAdmin, sessionName
 loadSession()
 console.log('SESSIONID', ssID)
 
-resetFirestore('TestBed3')
-
 class App extends Component {
   state = {
     user: { id: sessionId, isAdmin: sessionAdmin, userName: sessionName }
