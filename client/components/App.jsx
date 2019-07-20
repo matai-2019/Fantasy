@@ -21,6 +21,8 @@ getAllUsers('TestBed')
 
 getAllMessages('TestBed')
 
+resetFirestore('TestBed2')
+
 class App extends Component {
   state = {
     user: { id: sessionId, isAdmin: sessionAdmin, userName: sessionName }
