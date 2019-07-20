@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-||||||| merged common ancestors
-import React from 'react'
-
-const App = () => {
-  return (
-    <h1>React development has begun!</h1>
-  )
-}
-
-export default App
-=======
 import React, { Component } from 'react'
 import AdminLayout from './AdminLayout'
 import LoginLayout from './LoginLayout'
@@ -81,4 +69,3 @@ class App extends Component {
 }
 
 export default App
->>>>>>> 0c8a2bab2e7538576ab3b444d5f937a077d7189f
