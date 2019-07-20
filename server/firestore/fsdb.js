@@ -12,6 +12,16 @@ const firebaseConfig = {
 const fire = firebase.initializeApp(firebaseConfig)
 const db = fire.firestore()
 
+const getNewID = () => {
+  let id
+  getAllUsers('TestBed')
+    .then(obj => {
+      let sorted = obj.users.map(user => user.id)
+      id = sorted.sort((a, b) => a < b)[sorted.length - 1] + 1
+    })
+  return id
+}
+
 const getAllUsers = (sessionId) => {
   return db.collection(sessionId).doc('Users').get()
     .then(data => {
@@ -29,18 +39,19 @@ const getAllMessages = (sessionId) => {
 }
 
 const addUser = (sessionId, userName) => {
-  return getAllUsers(sessionId)
+  let user
+  getAllUsers(sessionId)
     .then(obj => {
-      let id = obj.users[obj.users.length - 1].id + 1
+      let id = getNewID()
       let isAdmin = true
       obj.users.forEach(user => {
         if (user.isAdmin === true) isAdmin = false
       })
-      let user = { id, isAdmin, userName }
+      user = { id, isAdmin, userName }
       obj.users.push(user)
       db.collection(sessionId).doc('Users').set(obj)
-      return obj.users
     })
+  return user
 }
 
 // const addMessage = (message) => {
@@ -65,6 +76,7 @@ const addUser = (sessionId, userName) => {
 export {
   getAllUsers,
   getAllMessages,
-  addUser
-  //addMessage
+  addUser,
+  getNewID
+  // addMessage
 }
