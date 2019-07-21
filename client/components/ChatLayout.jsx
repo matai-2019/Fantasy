@@ -1,5 +1,5 @@
 import React from 'react'
-import { List, Button, Divider, Grid, Image, Icon, Segment, Input, Checkbox, Container } from 'semantic-ui-react'
+import { List, Button, Popup, Divider, Grid, Image, Icon, Segment, Input, Checkbox, Container, Header } from 'semantic-ui-react'
 
 export const ChatTemplate = ({ userArray, messageArray }) => {
   return <>
@@ -125,10 +125,10 @@ export const ChatTemplate = ({ userArray, messageArray }) => {
 }
 
 export const ButtonExamplePositive = () => (
-  <div>
     <Container>
       <Button positive>Admin Options</Button>
-      <Input icon='users' iconPosition='left' placeholder='Your message goes here...' />
+      <Input icon='users' iconPosition='left'   placeholder='Your message goes here...' />
+      <Button>Send</Button>
     </Container>
-  </div>
 )
+

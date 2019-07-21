@@ -83,7 +83,7 @@ class App extends Component {
             <ButtonExamplePositive />
           </>
           : <LoginLayout setUserName={this.setUserName}/>}
-        </>
+      </>
     )
   }
 }
