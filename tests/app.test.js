@@ -2,15 +2,16 @@ import React from 'react'
 import { mount } from 'enzyme'
 
 import App from '../client/components/App'
+import LoginLayout from '../client/components/LoginLayout'
 
-describe('<App /> tests', () => {
+describe('<LoginLayout /> tests', () => {
   it('jest working', () => {
     expect(true).toBeTruthy()
   })
 
   it('renders Welcome to Fantasy!!!', () => {
     const expected = 'Welcome to Fantasy!!!'
-    const wrapper = mount(<App />)
+    const wrapper = mount(<LoginLayout />)
     expect(wrapper.text()).toMatch(expected)
   })
 

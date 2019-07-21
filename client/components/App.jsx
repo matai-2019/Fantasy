@@ -2,7 +2,13 @@ import React, { Component } from 'react'
 import AdminLayout from './AdminLayout'
 import LoginLayout from './LoginLayout'
 import { ChatTemplate, ButtonExamplePositive } from './ChatLayout'
-import { getAllUsers, getAllMessages, addUser, addMessage, getNewID, resetFirestore } from '../../server/firestore/fsdb'
+import { 
+  addUser,
+  getNewID,
+  resetFirestore,
+  getUserMessages
+} from '../../server/firestore/fsdb'
+
 import io from 'socket.io-client'
 
 // client consts
@@ -76,6 +82,7 @@ class App extends Component {
     return (
       <>
         <h1>Welcome to Fantasy!!!</h1>
+        {/* <LoginLayout setUserName={this.setUserName}/> */}
         { console.log('RENDER STATE', this.state)}
         {(this.state.user.id)
           ? <>
@@ -83,6 +90,9 @@ class App extends Component {
             <ButtonExamplePositive />
           </>
           : <LoginLayout setUserName={this.setUserName}/>}
+        {/* <ChatTemplate />
+        <ButtonExamplePositive /> */}
+
       </>
     )
   }
