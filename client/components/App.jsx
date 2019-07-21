@@ -53,7 +53,6 @@ class App extends Component {
     return (
       <>
         <h1>Welcome to Fantasy!!!</h1>
-        {/* <LoginLayout setUserName={this.setUserName}/> */}
         { console.log('RENDER STATE', this.state)}
         {(this.state.user.id)
           ? <>
@@ -61,9 +60,7 @@ class App extends Component {
             <ButtonExamplePositive />
           </>
           : <LoginLayout setUserName={this.setUserName}/>}
-        {/* <ChatTemplate />
-        <ButtonExamplePositive /> */}
-      </>
+        </>
     )
   }
 }
