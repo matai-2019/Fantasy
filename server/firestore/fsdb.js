@@ -48,6 +48,16 @@ const addUser = (sessionId, userName) => {
       return user
     })
 }
+const removeUser = (sessionId, userID) => {
+  return db.collection(sessionId).doc('Users').get()
+    .then(sshot => {
+      const obj = sshot.data()
+      console.log(obj)
+      console.log(obj.users.splice(userID, 1))
+      db.collection(sessionId).doc('Users').set(obj)
+      return obj
+    })
+}
 
 const getAllMessages = (sessionId) => {
   return db.collection(sessionId).doc('Messages').get()
@@ -70,8 +80,7 @@ const addMessage = (sessionId, userName, recipients, messageText) => {
   return getAllMessages(sessionId)
     .then(obj => {
       const id = obj.messages[obj.messages.length - 1].id + 1
-      const date = new Date()
-      const timestamp = date.getTime()
+      const timestamp = Date.getTime().seconds
       const message = { id, userName, messageText, recipients, timestamp }
       obj.messages.push(message)
       db.collection(sessionId).doc('Messages').set(obj)
@@ -80,12 +89,12 @@ const addMessage = (sessionId, userName, recipients, messageText) => {
 }
 
 const resetFirestore = (sessionId) => {
-  let Users
-  db.collection(sessionId).doc(Users).delete().then(function () {
-    console.log('Document successfully deleted!')
-  }).catch(function (error) {
-    console.error('Error removing document: ', error)
-  })
+  return db.collection(sessionId).doc('Users').delete()
+    .then(function () {
+      console.log('Document successfully deleted!')
+    }).catch(function (error) {
+      console.error('Error removing document: ', error)
+    })
 }
 
 export {
@@ -96,5 +105,6 @@ export {
   addUser,
   addMessage,
   resetFirestore,
-  getNewID
+  getNewID,
+  removeUser
 }

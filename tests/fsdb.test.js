@@ -1,6 +1,7 @@
 import { exportAllDeclaration } from '@babel/types'
 
 import {
+  db,
   getAllUsers,
   getAllMessages,
   getViewableMessages,
@@ -18,7 +19,7 @@ test('getAllUsers returns an array of 4 users', (done) => {
     })
 })
 
-test.skip('addUser adds a new user to db with a sequential userId and if Admin already exists sets it to false', (sessionID, done) => {
+test('addUser adds a new user to db with a sequential userId and if Admin already exists sets it to false', (sessionID, done) => {
   addUser('TestBed2', 'Wizard')
     .then(array => console.log(array))
   // .then(user => {
@@ -41,12 +42,13 @@ test.skip('addUser adds a new user to db with a sequential userId and if Admin a
 //       })
 //     })
 // }
-//   resetFirestore('TestBed3')
+// addUser('TestBed', 'Wizard')
+//   .then(array => console.log(array))
 
 test('getAllMessages returns an array of 3 messages', (done) => {
   getAllMessages('TestBed2')
     .then(obj => {
-      expect(obj.messages).toHaveLength(4)
+      expect(obj.messages).toHaveLength(3)
       done()
     })
 })
@@ -60,7 +62,7 @@ test('addMessage adds a new message to db', (done) => {
     })
 })
 
-test('getViewableMessages gets only messages a player can see', (done) => {
+test.skip('getViewableMessages gets only messages a player can see', (done) => {
   getViewableMessages('TestBed2', '2')
     .then(userMessages => {
       console.log(userMessages)
@@ -69,14 +71,9 @@ test('getViewableMessages gets only messages a player can see', (done) => {
 })
 
 test('resetFirestore deletes a document', (done) => {
-  resetFirestore('TestBed3')
-    .then(function () {
-      console.log('Document successfully deleted!')
-    })
-    .catch(function (error) {
-      console.error('Error removing document: ', error)
+  resetFirestore('123456789012345')
+    .then(() => {
+      expect(db.collection('123456789012345').doc('Users')).not(null)
+      done()
     })
 })
-
-// addUser('TestBed', 'Wizard')
-//   .then(array => console.log(array))
