@@ -11,7 +11,7 @@ io.on('connection', socket => {
     socket.emit('state-loaded', userState.id)
   })
   socket.on('new-user', () => {
-    io.emit('new-user')
+    io.emit('pull-users')
   })
 })
 

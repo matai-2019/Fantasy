@@ -3,7 +3,7 @@ import { List, Button, Divider, Grid, Image, Icon, Segment, Input, Checkbox, Con
 
 export const ChatTemplate = ({ userArray, messageArray }) => {
   return <>
-  { console.log(userArray)}
+  { console.log('render', userArray)}
   { console.log(messageArray) }
   <Container>
     <Segment>

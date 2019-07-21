@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import AdminLayout from './AdminLayout'
 import LoginLayout from './LoginLayout'
 import { ChatTemplate, ButtonExamplePositive } from './ChatLayout'
-import { getAllUsers, getAllMessages, addUser, addMessage, getNewID, resetFirestore } from '../../server/firestore/fsdb'
+import { getAllUsers, getAllMessages, addUser, addMessage, getNewID, resetFirestore } from '../../../server/firestore/fsdb'
 import io from 'socket.io-client'
 
 // client consts
@@ -34,6 +34,7 @@ const saveUsers = () => {
   getAllUsers(ssID)
     .then(obj => {
       userArray = obj.users
+      console.log('saveUsers', userArray)
     })
 }
 
@@ -44,8 +45,11 @@ socket.on('get-state', () => {
 socket.on('new-message', () => {
   saveMessages()
 })
-socket.on('new-user', () => {
+socket.on('pull-users', () => {
   saveUsers()
+})
+socket.on('testing', () => {
+  console.log('TESTING SUCCESSFUL, YEET')
 })
 
 // Variables for client + App class interaction
@@ -65,10 +69,11 @@ class App extends Component {
   setUserName = username => {
     addUser(ssID, username)
       .then(user => {
-        this.setState({ user }, () => {
-          saveSession(this.state)
-        })
         socket.emit('new-user')
+        return user
+      })
+      .then(() => {
+        this.setState({})
       })
   }
 
