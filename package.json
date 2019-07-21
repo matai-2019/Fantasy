@@ -12,7 +12,7 @@
     "dev:client": "webpack --watch",
     "dev:server": "nodemon .",
     "start": "node server/index",
-    "localStart": "webpack -p && node server",
+    "localStart": "webpack -p && cp client/index.html build && node server",
     "dev": "webpack --watch & nodemon server",
     "test": "jest --watchAll",
     "deploy:sandbox": "webpack && git push heroku sandbox:master"

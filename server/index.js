@@ -20,10 +20,6 @@ server.listen(port, function () {
   console.log('Listening on port', port)
 })
 
-app.get('/', (req, res) => {
-  res.sendfile(path.join(__dirname, '../public/base.html'))
-})
-
-app.get('/:sessionId', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/app.html'))
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build/index.html'))
 })
