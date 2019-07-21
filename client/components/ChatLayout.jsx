@@ -1,6 +1,7 @@
 import React from 'react'
-import { List, Button, Divider, Grid, Image, Icon, Segment, Input, Checkbox, Container } from 'semantic-ui-react'
+import { List, Button, Divider, Grid, Image, Icon, Segment, Input, Checkbox, Container, Header } from 'semantic-ui-react'
 
+// export const ImageExampleFluid = () => <Image src='../img/wp-1.jpg' fluid />
 export const ChatTemplate = () => (
   <Container>
     <Segment>
@@ -121,7 +122,10 @@ export const ChatTemplate = () => (
 )
 export const ButtonExamplePositive = () => (
   <div>
-    <Button positive>Admin Options</Button>
-    <Input icon='users' iconPosition='left' placeholder='Your message goes here...' />
+    <Container>
+      <Button positive>Admin Options</Button>
+      <Input icon='users' iconPosition='left'   placeholder='Your message goes here...' />
+    </Container>
   </div>
 )
+
