@@ -49,15 +49,12 @@ const addUser = (sessionId, userName) => {
     })
 }
 const removeUser = (sessionId, userID) => {
-  let user, id
-  return getAllUsers(sessionId).doc('Users').get()
-    .then(obj => {
-      obj.users.forEach(user => {
-        console.log(user)
-      })
-      // user = { id, isAdmin, userName }
-      // obj.users.push(user)
-      // db.collection(sessionId).doc('Users').set(obj)
+  return db.collection(sessionId).doc('Users').get()
+    .then(sshot => {
+      const obj = sshot.data()
+      console.log(obj)
+      console.log(obj.users.splice(userID, 1))
+      db.collection(sessionId).doc('Users').set(obj)
       return obj
     })
 }
