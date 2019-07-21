@@ -9,12 +9,12 @@
   "scripts": {
     "win:start": "run-s build server",
     "win:dev": "run-p dev:server dev:client",
-    "dev:client": "webpack -d --watch",
+    "dev:client": "webpack --watch",
     "dev:server": "nodemon .",
     "start": "node server/index",
     "dev": "webpack --watch & nodemon server",
     "test": "jest --watchAll",
-    "deploy:sandbox": "webpack -p && git push heroku sandbox:master"
+    "deploy:sandbox": "webpack && git push heroku sandbox:master"
   },
   "babel": {
     "presets": [
