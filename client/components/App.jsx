@@ -74,7 +74,10 @@ class App extends Component {
         return user
       })
       .then(user => {
-        this.setState({ user })
+        saveUsers().then(() => {
+          this.setState({ user })
+        }
+        )
       })
   }
 
@@ -85,7 +88,7 @@ class App extends Component {
         { console.log('RENDER STATE', this.state)}
         {(this.state.user.id)
           ? <>
-            <ChatTemplate messageArray={messages} userArray={userArray}/>
+            <ChatTemplate socket={socket} messageArray={messages} userArray={userArray} renderProp={true}/>
             <ButtonExamplePositive />
           </>
           : <LoginLayout setUserName={this.setUserName}/>}
