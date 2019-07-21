@@ -1,5 +1,4 @@
 const { server, io, path, app } = require('./server')
-// const { getSession } = require('../client/index')
 const port = process.env.PORT || 3000
 
 io.on('connection', socket => {
@@ -9,9 +8,13 @@ io.on('connection', socket => {
   socket.on('set-state', userState => {
     userId = userState.id
     socket.emit('state-loaded', userState.id)
+    io.emit('pull-users')
   })
   socket.on('new-user', () => {
     io.emit('pull-users')
+  })
+  socket.on('disconnect', () => {
+    console.log('DC')
   })
 })
 
