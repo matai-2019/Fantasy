@@ -11,7 +11,7 @@
     "win:dev": "run-p dev:server dev:client",
     "dev:client": "webpack --watch",
     "dev:server": "nodemon .",
-    "start": "webpack && node server",
+    "start": "node server",
     "dev": "webpack --watch & nodemon server",
     "test": "jest --watchAll"
   },
@@ -34,9 +34,7 @@
     "express": "^4.16.4",
     "firebase": "^6.3.1",
     "npm-run-all": "^4.1.5",
-    "react-router-dom": "^5.0.1",
     "semantic-ui-react": "^0.87.3",
-    "webpack": "^4.36.1",
     "socket.io": "^2.2.0"
   },
   "devDependencies": {
