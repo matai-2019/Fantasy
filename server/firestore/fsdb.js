@@ -12,9 +12,15 @@ const firebaseConfig = {
 const fire = firebase.initializeApp(firebaseConfig)
 const db = fire.firestore()
 
+<<<<<<< HEAD
 const getNewID = (sessionId) => {
   let id
   return getAllUsers(sessionId)
+=======
+const getNewID = (ssID) => {
+  let id
+  return getAllUsers(ssID)
+>>>>>>> 5a3e7fe3817c3e59f715817a70c2d71935d7469d
     .then(obj => {
       const sorted = obj.users.map(user => user.id)
       id = sorted.sort((a, b) => a < b)[sorted.length - 1] + 1
@@ -31,7 +37,7 @@ const addUser = (sessionId, userName) => {
   let user, id
   return getAllUsers(sessionId)
     .then(obj => {
-      return getNewID()
+      return getNewID(sessionId)
         .then(data => {
           id = data
           return obj
