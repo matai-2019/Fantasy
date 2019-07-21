@@ -10,6 +10,9 @@ io.on('connection', socket => {
     userId = userState.id
     socket.emit('state-loaded', userState.id)
   })
+  socket.on('new-user', () => {
+    io.emit('new-user')
+  })
 })
 
 server.listen(port, function () {

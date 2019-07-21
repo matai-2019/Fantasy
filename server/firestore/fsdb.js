@@ -12,9 +12,9 @@ const firebaseConfig = {
 const fire = firebase.initializeApp(firebaseConfig)
 const db = fire.firestore()
 
-const getNewID = () => {
+const getNewID = (ssID) => {
   let id
-  return getAllUsers('TestBed')
+  return getAllUsers(ssID)
     .then(obj => {
       const sorted = obj.users.map(user => user.id)
       id = sorted.sort((a, b) => a < b)[sorted.length - 1] + 1
@@ -31,7 +31,7 @@ const addUser = (sessionId, userName) => {
   let user, id
   return getAllUsers(sessionId)
     .then(obj => {
-      return getNewID()
+      return getNewID(sessionId)
         .then(data => {
           id = data
           return obj
@@ -66,6 +66,7 @@ const addMessage = (sessionId, userName, recipients, messageText) => {
       return obj.messages
     })
 }
+
 const resetFirestore = (sessionId) => {
   db.collection(sessionId).doc().delete().then(function () {
     console.log('Document successfully deleted!')

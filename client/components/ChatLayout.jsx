@@ -1,7 +1,10 @@
 import React from 'react'
 import { List, Button, Popup, Divider, Grid, Image, Icon, Segment, Input, Checkbox, Container, Header } from 'semantic-ui-react'
 
-export const ChatTemplate = ({ users }) => (
+export const ChatTemplate = ({ userArray, messageArray }) => {
+  return <>
+  { console.log(userArray)}
+  { console.log(messageArray) }
   <Container>
     <Segment>
       <Grid columns={2} relaxed='very'>
@@ -123,14 +126,14 @@ export const ChatTemplate = ({ users }) => (
       </Grid >
     </Segment >
   </Container>
-)
-
-console.log(users)
+  </>
+}
 
 export const ButtonExamplePositive = () => (
-  <Container>
-    <Button positive>Admin Options</Button>
-    <Input icon='users' iconPosition='left' placeholder='Your message goes here...' />
-    <Button>Send</Button>
-  </Container>
+  <div>
+    <Container>
+      <Button positive>Admin Options</Button>
+      <Input icon='users' iconPosition='left' placeholder='Your message goes here...' />
+    </Container>
+  </div>
 )
