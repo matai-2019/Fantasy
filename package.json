@@ -11,7 +11,7 @@
     "win:dev": "run-p dev:server dev:client",
     "dev:client": "webpack -d --watch",
     "dev:server": "nodemon .",
-    "start": "webpack -d && node server/index",
+    "start": "node server/index",
     "dev": "webpack --watch & nodemon server",
     "test": "jest --watchAll",
     "deploy:sandbox": "webpack -p && git push heroku sandbox:master"
