@@ -1,5 +1,4 @@
 const { server, io, path, app } = require('./server')
-// const { getSession } = require('../client/index')
 const port = process.env.PORT || 3000
 
 io.on('connection', socket => {
@@ -9,6 +8,13 @@ io.on('connection', socket => {
   socket.on('set-state', userState => {
     userId = userState.id
     socket.emit('state-loaded', userState.id)
+    io.emit('pull-users')
+  })
+  socket.on('new-user', () => {
+    io.emit('pull-users')
+  })
+  socket.on('disconnect', () => {
+    console.log('DC')
   })
 })
 
@@ -17,10 +23,6 @@ server.listen(port, function () {
   console.log('Listening on port', port)
 })
 
-app.get('/', (req, res) => {
-  res.sendfile(path.join(__dirname, '../public/base.html'))
-})
-
-app.get('/:sessionId', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/app.html'))
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../build/index.html'))
 })

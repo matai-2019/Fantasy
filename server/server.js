@@ -6,7 +6,7 @@ const server = require('http').Server(app)
 const io = require('socket.io')(server)
 
 app.use(express.json())
-app.use(express.static(path.join(__dirname, '../public')))
+app.use(express.static(path.join(__dirname, '../build')))
 
 module.exports = {
   server,

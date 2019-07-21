@@ -12,9 +12,9 @@ const firebaseConfig = {
 const fire = firebase.initializeApp(firebaseConfig)
 const db = fire.firestore()
 
-const getNewID = () => {
+const getNewID = (ssID) => {
   let id
-  return getAllUsers('TestBed')
+  return getAllUsers(ssID)
     .then(obj => {
       const sorted = obj.users.map(user => user.id)
       id = sorted.sort((a, b) => a < b)[sorted.length - 1] + 1
@@ -31,7 +31,7 @@ const addUser = (sessionId, userName) => {
   let user, id
   return getAllUsers(sessionId)
     .then(obj => {
-      return getNewID()
+      return getNewID(sessionId)
         .then(data => {
           id = data
           return obj
@@ -48,37 +48,63 @@ const addUser = (sessionId, userName) => {
       return user
     })
 }
+const removeUser = (sessionId, userID) => {
+  return db.collection(sessionId).doc('Users').get()
+    .then(sshot => {
+      const obj = sshot.data()
+      console.log(obj)
+      console.log(obj.users.splice(userID, 1))
+      db.collection(sessionId).doc('Users').set(obj)
+      return obj
+    })
+}
 
 const getAllMessages = (sessionId) => {
   return db.collection(sessionId).doc('Messages').get()
     .then(data => { return data.data() })
 }
 
+const getViewableMessages = (sessionId, userId) => {
+  let messageArray
+  return db.collection(sessionId).doc('Messages').get()
+    .then(data => {
+      let obj = data.data()
+      obj.messages.forEach(message => {
+        return (message.recipients.includes(userId))
+      })
+      return obj
+    })
+}
+
 const addMessage = (sessionId, userName, recipients, messageText) => {
   return getAllMessages(sessionId)
     .then(obj => {
       const id = obj.messages[obj.messages.length - 1].id + 1
-      const date = new Date()
-      const timestamp = date.getTime()
+      const timestamp = Date.getTime().seconds
       const message = { id, userName, messageText, recipients, timestamp }
       obj.messages.push(message)
       db.collection(sessionId).doc('Messages').set(obj)
       return obj.messages
     })
 }
+
 const resetFirestore = (sessionId) => {
-  db.collection(sessionId).doc().delete().then(function () {
-    console.log('Document successfully deleted!')
-  }).catch(function (error) {
-    console.error('Error removing document: ', error)
-  })
+  return db.collection(sessionId).doc('Users').delete()
+    .then(function () {
+      console.log('Document successfully deleted!')
+    }).catch(function (error) {
+      console.error('Error removing document: ', error)
+    })
 }
 
 export {
+  db,
   getAllUsers,
   getAllMessages,
+  getViewableMessages,
   addUser,
   addMessage,
   resetFirestore,
-  getNewID
+  getNewID,
+  removeUser
 }
