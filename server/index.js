@@ -9,7 +9,7 @@ io.on('connection', socket => {
   socket.on('set-state', userState => {
     userId = userState.id
     socket.emit('state-loaded', userState.id)
-    socket.emit('new-user')
+    io.emit('pull-users')
   })
   socket.on('new-user', () => {
     io.emit('pull-users')
