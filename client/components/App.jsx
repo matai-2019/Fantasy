@@ -64,7 +64,7 @@ class App extends Component {
         {/* <ChatTemplate />
         <ButtonExamplePositive /> */}
       </>
-        </>
+      
     )
   }
 }
