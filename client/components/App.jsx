@@ -73,8 +73,8 @@ class App extends Component {
         socket.emit('new-user')
         return user
       })
-      .then(() => {
-        this.setState({})
+      .then(user => {
+        this.setState({ user })
       })
   }
 
