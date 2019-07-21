@@ -121,7 +121,9 @@ export const ChatTemplate = () => (
 )
 export const ButtonExamplePositive = () => (
   <div>
-    <Button positive>Admin Options</Button>
-    <Input icon='users' iconPosition='left' placeholder='Your message goes here...' />
+    <Container>
+      <Button positive>Admin Options</Button>
+      <Input icon='users' iconPosition='left' placeholder='Your message goes here...' />
+    </Container>
   </div>
 )
