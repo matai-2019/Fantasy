@@ -12,9 +12,9 @@ const firebaseConfig = {
 const fire = firebase.initializeApp(firebaseConfig)
 const db = fire.firestore()
 
-const getNewID = () => {
+const getNewID = (sessionId) => {
   let id
-  return getAllUsers('TestBed')
+  return getAllUsers(sessionId)
     .then(obj => {
       const sorted = obj.users.map(user => user.id)
       id = sorted.sort((a, b) => a < b)[sorted.length - 1] + 1
@@ -54,6 +54,18 @@ const getAllMessages = (sessionId) => {
     .then(data => { return data.data() })
 }
 
+const getUserMessages = (sessionId, userId) => {
+  let messageArray
+  return db.collection(sessionId).doc('Messages').get()
+    .then(data => {
+      let obj = data.data()
+      obj.messages.forEach(message => {
+        return (message.recipients.includes(userId))
+      })
+      return obj
+    })
+}
+
 const addMessage = (sessionId, userName, recipients, messageText) => {
   return getAllMessages(sessionId)
     .then(obj => {
@@ -78,6 +90,7 @@ export {
   db,
   getAllUsers,
   getAllMessages,
+  getUserMessages,
   addUser,
   addMessage,
   resetFirestore,
