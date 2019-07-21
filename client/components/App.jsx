@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import AdminLayout from './AdminLayout'
 import LoginLayout from './LoginLayout'
 import { ChatTemplate, ButtonExamplePositive } from './ChatLayout'
-import { getAllUsers, getAllMessages, addUser, addMessage, getNewID, resetFirestore } from '../../server/firestore/fsdb'
+import { getAllUsers, getAllMessages, addUser, removeUser, addMessage, getNewID, resetFirestore } from '../../server/firestore/fsdb'
 import io from 'socket.io-client'
 
 // client consts
@@ -57,9 +57,12 @@ socket.on('testing', () => {
 let sessionId, sessionAdmin, sessionName
 let messages = []
 let userArray = []
+
+// onLoad functions
 loadSession()
 saveMessages()
 saveUsers()
+removeUser(ssID, 1)
 console.log('SESSIONID', ssID)
 
 class App extends Component {

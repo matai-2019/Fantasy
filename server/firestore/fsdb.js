@@ -48,6 +48,19 @@ const addUser = (sessionId, userName) => {
       return user
     })
 }
+const removeUser = (sessionId, userID) => {
+  let user, id
+  return getAllUsers(sessionId).doc('Users').get()
+    .then(obj => {
+      obj.users.forEach(user => {
+        console.log(user)
+      })
+      // user = { id, isAdmin, userName }
+      // obj.users.push(user)
+      // db.collection(sessionId).doc('Users').set(obj)
+      return obj
+    })
+}
 
 const getAllMessages = (sessionId) => {
   return db.collection(sessionId).doc('Messages').get()
@@ -80,5 +93,6 @@ export {
   addUser,
   addMessage,
   resetFirestore,
-  getNewID
+  getNewID,
+  removeUser
 }
