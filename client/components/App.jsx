@@ -66,7 +66,7 @@ let messageArray = []
 let userArray = []
 
 // onLoad functions
-loadSession()loadSession()
+loadSession()
 socket.emit('user-loaded', sessionId)
 console.log('Session Obj', sessionName)
 saveMessages()
@@ -109,3 +109,17 @@ class App extends Component {
 }
 
 export default App
+
+function sendMessage (message) {
+  getAllUsers(sessionId)
+    .then(obj => {
+      return obj.users.map(user => user.id)
+    })
+    .then(recipients => {
+      // use addMessage to add to FS
+      addMessage()
+        .then(obj => {
+          // socket.emit('new-message')
+        })
+    })
+}
