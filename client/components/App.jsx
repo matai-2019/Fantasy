@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import AdminLayout from './AdminLayout'
 import LoginLayout from './LoginLayout'
 import { ChatTemplate, ButtonExamplePositive } from './ChatLayout'
-import { getAllUsers, getAllMessages, addUser, addMessage, getNewID, resetFirestore } from '../../../server/firestore/fsdb'
+import { getAllUsers, getAllMessages, addUser, addMessage, getNewID, resetFirestore } from '../../server/firestore/fsdb'
 import io from 'socket.io-client'
 
 // client consts

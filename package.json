@@ -2,19 +2,19 @@
   "name": "boilerplate-react-webpack",
   "version": "0.2.2",
   "description": "A webpack React starter",
-  "repository": "https://github.com/dev-academy-challenges/boilerplate-react-webpack.git",
+  "repository": "https://github.com/matai-2019/Fantasy.git",
   "main": "server/index.js",
   "author": "EDA",
   "license": "ISC",
   "scripts": {
     "win:start": "run-s build server",
     "win:dev": "run-p dev:server dev:client",
-    "dev:client": "webpack --watch",
+    "dev:client": "webpack -d --watch",
     "dev:server": "nodemon .",
-    "start": "node server/index",
+    "start": "webpack -d && node server/index",
     "dev": "webpack --watch & nodemon server",
     "test": "jest --watchAll",
-    "deploy:sandbox": "git push heroku sandbox:master"
+    "deploy:sandbox": "webpack -p && git push heroku sandbox:master"
   },
   "babel": {
     "presets": [
