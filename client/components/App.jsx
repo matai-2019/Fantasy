@@ -16,6 +16,8 @@ const saveSession = state => {
   sessionStorage.setItem('id', id)
   sessionStorage.setItem('isAdmin', isAdmin)
   sessionStorage.setItem('userName', userName)
+  sessionStorage.setItem('users', JSON.stringify(userArray))
+  sessionStorage.setItem('messages', JSON.stringify(messageArray))
   sessionId = id
   sessionAdmin = isAdmin
   sessionName = userName
@@ -24,11 +26,13 @@ const loadSession = () => {
   sessionId = sessionStorage.getItem('id')
   sessionAdmin = sessionStorage.getItem('isAdmin')
   sessionName = sessionStorage.getItem('userName')
+  userArray = JSON.parse(sessionStorage.getItem('users'))
+  messageArray = JSON.parse(sessionStorage.getItem('messages'))
 }
 const saveMessages = () => {
   getAllMessages(ssID)
     .then(obj => {
-      messages = obj.messages
+      messageArray = obj.messages
     })
 }
 const saveUsers = () => {
@@ -52,17 +56,21 @@ socket.on('pull-users', () => {
 socket.on('testing', () => {
   console.log('TESTING SUCCESSFUL, YEET')
 })
+socket.on('disconnect', () => {
+  console.log('DC')
+})
 
 // Variables for client + App class interaction
 let sessionId, sessionAdmin, sessionName
-let messages = []
+let messageArray = []
 let userArray = []
 
 // onLoad functions
 loadSession()
+socket.emit('user-loaded', sessionId)
+console.log('Session Obj', sessionName)
 saveMessages()
 saveUsers()
-removeUser(ssID, 1)
 console.log('SESSIONID', ssID)
 
 class App extends Component {
@@ -78,7 +86,9 @@ class App extends Component {
       })
       .then(user => {
         saveUsers().then(() => {
-          this.setState({ user })
+          this.setState({ user }, () => {
+            saveSession(this.state)
+          })
         }
         )
       })
@@ -90,10 +100,7 @@ class App extends Component {
         <h1>Welcome to Fantasy!!!</h1>
         { console.log('RENDER STATE', this.state)}
         {(this.state.user.id)
-          ? <>
-            <ChatTemplate socket={socket} messageArray={messages} userArray={userArray} renderProp={true}/>
-            <ButtonExamplePositive />
-          </>
+          ? <ChatTemplate socket={socket} messageArray={messageArray} userArray={userArray} renderProp={true}/>
           : <LoginLayout setUserName={this.setUserName}/>}
         </>
     )
