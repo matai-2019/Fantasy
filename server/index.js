@@ -14,6 +14,8 @@ io.on('connection', socket => {
   socket.on('new-user', () => {
     io.emit('pull-users')
   })
+  socket.on('disconnect', userId => {
+  })
 })
 
 server.listen(port, function () {
