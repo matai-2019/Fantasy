@@ -3,7 +3,6 @@ import { List, Button, Divider, Grid, Image, Icon, Segment, Input, Checkbox, Con
 
 export const ChatTemplate = ({ userArray, messageArray, socket, renderProp }) => {
   socket.on('pull-user', () => {
-    console.log('Lmao she worked')
     renderProp = renderProp !== true
   })
 
