@@ -32,7 +32,7 @@ const saveMessages = () => {
     })
 }
 const saveUsers = () => {
-  getAllUsers(ssID)
+  return getAllUsers(ssID)
     .then(obj => {
       userArray = obj.users
       console.log('saveUsers', userArray)
