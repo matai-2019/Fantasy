@@ -8,6 +8,7 @@ import io from 'socket.io-client'
 // client consts
 const socket = io()
 const ssID = window.location.pathname.slice(1)
+console.log(window.location.pathname)
 
 // client-only functions
 const saveSession = state => {
