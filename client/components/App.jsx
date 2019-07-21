@@ -9,6 +9,7 @@ import io from 'socket.io-client'
 const socket = io()
 const ssID = window.location.pathname.slice(1)
 console.log(window.location.pathname)
+let renderProp = true
 
 // client-only functions
 const saveSession = state => {
@@ -40,6 +41,7 @@ const saveUsers = () => {
     .then(obj => {
       userArray = obj.users
       console.log('saveUsers', userArray)
+      renderProp = renderProp !== true
     })
 }
 
@@ -51,10 +53,8 @@ socket.on('new-message', () => {
   saveMessages()
 })
 socket.on('pull-users', () => {
+  console.log('received pull-users')
   saveUsers()
-})
-socket.on('testing', () => {
-  console.log('TESTING SUCCESSFUL, YEET')
 })
 socket.on('disconnect', () => {
   console.log('DC')
@@ -66,7 +66,7 @@ let messageArray = []
 let userArray = []
 
 // onLoad functions
-loadSession()
+loadSession()loadSession()
 socket.emit('user-loaded', sessionId)
 console.log('Session Obj', sessionName)
 saveMessages()
@@ -81,13 +81,10 @@ class App extends Component {
   setUserName = username => {
     addUser(ssID, username)
       .then(user => {
-        socket.emit('new-user')
-        return user
-      })
-      .then(user => {
         saveUsers().then(() => {
           this.setState({ user }, () => {
             saveSession(this.state)
+            socket.emit('new-user')
           })
         }
         )
@@ -101,7 +98,7 @@ class App extends Component {
         {/* <LoginLayout setUserName={this.setUserName}/> */}
         { console.log('RENDER STATE', this.state)}
         {(this.state.user.id)
-          ? <ChatTemplate socket={socket} messageArray={messageArray} userArray={userArray} renderProp={true}/>
+          ? <ChatTemplate socket={socket} messageArray={messageArray} userArray={userArray} renderProp={renderProp}/>
           : <LoginLayout setUserName={this.setUserName}/>}
         {/* <ChatTemplate />
         <ButtonExamplePositive /> */}
