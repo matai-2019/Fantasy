@@ -3,6 +3,7 @@ import { exportAllDeclaration } from '@babel/types'
 import {
   getAllUsers,
   getAllMessages,
+  getViewableMessages,
   addUser,
   addMessage,
   resetFirestore
@@ -43,7 +44,6 @@ test.skip('addUser adds a new user to db with a sequential userId and if Admin a
 //   resetFirestore('TestBed3')
 
 test('getAllMessages returns an array of 3 messages', (done) => {
-  expect.assertions(1)
   getAllMessages('TestBed2')
     .then(obj => {
       expect(obj.messages).toHaveLength(4)
@@ -60,7 +60,7 @@ test('addMessage adds a new message to db', (done) => {
     })
 })
 
-test.skip('getViewableMessages gets only messages a player can see', (done) => {
+test('getViewableMessages gets only messages a player can see', (done) => {
   getViewableMessages('TestBed2', '2')
     .then(userMessages => {
       console.log(userMessages)
@@ -68,7 +68,15 @@ test.skip('getViewableMessages gets only messages a player can see', (done) => {
     })
 })
 
+test('resetFirestore deletes a document', (done) => {
+  resetFirestore('TestBed3')
+    .then(function () {
+      console.log('Document successfully deleted!')
+    })
+    .catch(function (error) {
+      console.error('Error removing document: ', error)
+    })
+})
+
 // addUser('TestBed', 'Wizard')
 //   .then(array => console.log(array))
-
-// test.skip(resetFirestore('TestBed2'))
