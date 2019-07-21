@@ -1,7 +1,7 @@
 const path = require('path')
 
 module.exports = (env, arg) => {
-  console.log('ENV', env.production)
+  console.log('ENV', env)
   return {
     entry: './client/index.js',
     output: {
@@ -9,7 +9,7 @@ module.exports = (env, arg) => {
       path: path.join(__dirname, '/build'),
       filename: 'bundle.js'
     },
-    mode: env.production ? 'production' : 'development',
+    mode: env ? 'production' : 'development',
     module: {
       rules: [{
         test: /\.jsx?$/,
