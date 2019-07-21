@@ -130,10 +130,9 @@ export const ChatTemplate = ({ userArray, messageArray }) => {
 }
 
 export const ButtonExamplePositive = () => (
-  <div>
-    <Container>
-      <Button positive>Admin Options</Button>
-      <Input icon='users' iconPosition='left' placeholder='Your message goes here...' />
-    </Container>
-  </div>
+  <Container>
+    <Button positive>Admin Options</Button>
+    <Input icon='users' iconPosition='left' placeholder='Your message goes here...' />
+    <Button>Send</Button>
+  </Container>
 )
