@@ -1,7 +1,12 @@
 import React from 'react'
 import { List, Button, Divider, Grid, Image, Icon, Segment, Input, Checkbox, Container } from 'semantic-ui-react'
 
-export const ChatTemplate = ({ userArray, messageArray }) => {
+export const ChatTemplate = ({ userArray, messageArray, socket, renderProp }) => {
+  socket.on('pull-user', () => {
+    console.log('Lmao she worked')
+    renderProp = renderProp !== true
+  })
+
   return <>
   { console.log('render', userArray)}
   { console.log(messageArray) }
@@ -10,7 +15,7 @@ export const ChatTemplate = ({ userArray, messageArray }) => {
       <Grid columns={2} relaxed='very'>
         <Grid.Column floated="left" width={6}>
           <List divided relaxed>
-            {this.messageArray.map(user => {
+            {userArray.map(user => {
               return <>
                 <List.Item>
                   <Grid columns={2} relaxed='very'>
