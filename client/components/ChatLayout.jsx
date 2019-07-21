@@ -1,7 +1,9 @@
 import React from 'react'
 import { List, Button, Divider, Grid, Image, Icon, Segment, Input, Checkbox, Container } from 'semantic-ui-react'
 
-export const ChatTemplate = () => (
+
+
+export const ChatTemplate = ({ users }) => (
   <Container>
     <Segment>
       <Grid columns={2} relaxed='very'>
@@ -12,7 +14,12 @@ export const ChatTemplate = () => (
                 <Grid.Column>
                   <List.Icon name='grunt' size='large' verticalAlign='middle' />
                   <List.Content>
-                    <List.Header as='a'>User-1</List.Header>
+                    <List.Header as='a'>
+                      {users.map(userObj => {
+                        <h2>{userObj.userName}</h2>
+                      })
+                      }
+                    </List.Header>
                     <List.Description as='a'>Updated 10 mins ago</List.Description>
                   </List.Content>
                 </Grid.Column>
@@ -119,6 +126,9 @@ export const ChatTemplate = () => (
     </Segment >
   </Container>
 )
+
+console.log(users)
+
 export const ButtonExamplePositive = () => (
   <div>
     <Button positive>Admin Options</Button>
