@@ -1,5 +1,5 @@
 import React from 'react'
-import { List, Button, Divider, Grid, Image, Icon, Segment, Input, Checkbox, Container, Header } from 'semantic-ui-react'
+import { List, Button, Popup, Divider, Grid, Image, Icon, Segment, Input, Checkbox, Container, Header } from 'semantic-ui-react'
 
 // export const ImageExampleFluid = () => <Image src='../img/wp-1.jpg' fluid />
 export const ChatTemplate = () => (
@@ -121,11 +121,10 @@ export const ChatTemplate = () => (
   </Container>
 )
 export const ButtonExamplePositive = () => (
-  <div>
     <Container>
       <Button positive>Admin Options</Button>
       <Input icon='users' iconPosition='left'   placeholder='Your message goes here...' />
+      <Button>Send</Button>
     </Container>
-  </div>
 )
 
