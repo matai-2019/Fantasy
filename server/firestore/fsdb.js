@@ -54,6 +54,18 @@ const getAllMessages = (sessionId) => {
     .then(data => { return data.data() })
 }
 
+const getViewableMessages = (sessionId, userId) => {
+  let messageArray
+  return db.collection(sessionId).doc('Messages').get()
+    .then(data => {
+      let obj = data.data()
+      obj.messages.forEach(message => {
+        return (message.recipients.includes(userId))
+      })
+      return obj
+    })
+}
+
 const addMessage = (sessionId, userName, recipients, messageText) => {
   return getAllMessages(sessionId)
     .then(obj => {
@@ -68,16 +80,19 @@ const addMessage = (sessionId, userName, recipients, messageText) => {
 }
 
 const resetFirestore = (sessionId) => {
-  db.collection(sessionId).doc().delete().then(function () {
-    console.log('Document successfully deleted!')
-  }).catch(function (error) {
-    console.error('Error removing document: ', error)
-  })
+  return db.collection(sessionId).doc('Users').delete()
+    .then(function () {
+      console.log('Document successfully deleted!')
+    }).catch(function (error) {
+      console.error('Error removing document: ', error)
+    })
 }
 
 export {
+  db,
   getAllUsers,
   getAllMessages,
+  getViewableMessages,
   addUser,
   addMessage,
   resetFirestore,
