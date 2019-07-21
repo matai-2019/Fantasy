@@ -80,12 +80,12 @@ const addMessage = (sessionId, userName, recipients, messageText) => {
 }
 
 const resetFirestore = (sessionId) => {
-  let Users
-  db.collection(sessionId).doc(Users).delete().then(function () {
-    console.log('Document successfully deleted!')
-  }).catch(function (error) {
-    console.error('Error removing document: ', error)
-  })
+  return db.collection(sessionId).doc('Users').delete()
+    .then(function () {
+      console.log('Document successfully deleted!')
+    }).catch(function (error) {
+      console.error('Error removing document: ', error)
+    })
 }
 
 export {
