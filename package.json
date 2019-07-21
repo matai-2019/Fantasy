@@ -13,7 +13,8 @@
     "dev:server": "nodemon .",
     "start": "node server/index",
     "dev": "webpack --watch & nodemon server",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "deploy:sandbox": "git push heroku sandbox:master"
   },
   "babel": {
     "presets": [
