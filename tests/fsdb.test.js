@@ -5,11 +5,10 @@ import {
   getAllMessages,
   addUser,
   addMessage,
-  resetFirestore,
-  getNewID
+  resetFirestore
 } from '../server/firestore/fsdb'
 
-test.skip('getAllUsers returns an array of 4 users', (done) => {
+test('getAllUsers returns an array of 4 users', (done) => {
   expect.assertions(1)
   getAllUsers('TestBed2')
     .then(obj => {
@@ -18,36 +17,45 @@ test.skip('getAllUsers returns an array of 4 users', (done) => {
     })
 })
 
-test.skip('addUser adds a new user to db', (done) => {
-  const user = 'Wizard'
-  addUser('TestBed2', user)
-    // .then(array => {
-    //   console.log(array)
-    //   expect({ user }).toEqual({ user: 'Wizard' })
-    //   done()
-    // })
-    .then(obj => {
-      expect(obj.users).toHaveLength(5)
-      done()
-    })
+test.skip('addUser adds a new user to db with a sequential userId and if Admin already exists sets it to false', (sessionID, done) => {
+  addUser('TestBed2', 'Wizard')
+    .then(array => console.log(array))
+  // .then(user => {
+  //   console.log(user)
+  //   expect({ user }).toEqual({ user: 'Wizard' })
+  //   done()
+  // })
+  // .then(obj => {
+  //   console.log(obj.users)
+  //   expect(obj.users).toHaveLength(5)
+  //   done()
+  // })
 })
 
+// setUserName = username => {
+//   addUser(ssID, username)
+//     .then(user => {
+//       this.setState({ user }, () => {
+//         saveSession(this.state)
+//       })
+//     })
+// }
 //   resetFirestore('TestBed3')
 
-test.skip('getAllMessages returns an array of 3 messages', (done) => {
+test('getAllMessages returns an array of 3 messages', (done) => {
   expect.assertions(1)
   getAllMessages('TestBed2')
     .then(obj => {
-      expect(obj.messages).toHaveLength(3)
+      expect(obj.messages).toHaveLength(4)
       done()
     })
 })
 
-test.skip('addMessage adds a new message to db', (done) => {
+test('addMessage adds a new message to db', (done) => {
   addMessage('TestBed2', 'Celia', [1, 3], 'Wizard is the best')
-    .then(array => {
-      console.log(array)
-      // expect([array]).toMatch(message)
+    .then(messages => {
+      expect(messages[3].messageText).toBe('Wizard is the best')
+      expect(messages.length).toBe(5)
       done()
     })
 })
@@ -59,3 +67,8 @@ test.skip('getViewableMessages gets only messages a player can see', (done) => {
       done()
     })
 })
+
+// addUser('TestBed', 'Wizard')
+//   .then(array => console.log(array))
+
+// test.skip(resetFirestore('TestBed2'))
