@@ -16,8 +16,10 @@ const getNewID = (ssID) => {
   let id
   return getAllUsers(ssID)
     .then(obj => {
-      const sorted = obj.users.map(user => user.id)
-      id = sorted.sort((a, b) => a < b)[sorted.length - 1] + 1
+      if (obj.users.length > 0) {
+        const sorted = obj.users.map(user => user.id)
+        id = sorted.sort((a, b) => a < b)[sorted.length - 1] + 1
+      } else id = 1
       return id
     })
 }
@@ -86,7 +88,8 @@ const addMessage = (sessionId, userName, recipients, messageText) => {
   return getAllMessages(sessionId)
     .then(obj => {
       const id = obj.messages[obj.messages.length - 1].id + 1
-      const timestamp = Date.getTime().seconds
+      const timestamp = Math.round(Date.now() / 1000)
+      console.log(timestamp)
       const message = { id, userName, messageText, recipients, timestamp }
       obj.messages.push(message)
       db.collection(sessionId).doc('Messages').set(obj)
