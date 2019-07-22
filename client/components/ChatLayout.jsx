@@ -21,47 +21,8 @@ export const ChatTemplate = ({ userArray, messageArray, socket, renderProp }) =>
   { console.log(messageArray) }
   <Container>
     <div>
-      <Grid columns={2} relaxed='very'>
-        <Grid.Column floated="left" width={6}>
-          <List divided relaxed>
-            {userArray.map(user => {
-              return <>
-                <List.Item>
-                  <Grid columns={2} relaxed='very'>
-                    <Grid.Column>
-                      <List.Content>
-                        <List.Header as='a'>{user.userName}</List.Header>
-                      </List.Content>
-                    </Grid.Column>
-                    <Grid.Column floated='right' width={3}>
-                      <Segment compact>
-                        <Checkbox />
-                      </Segment>
-                    </Grid.Column>
-                  </Grid>
-                </List.Item>
-              </>
-            })}
-          </List>
-        </Grid.Column >
-        <Grid.Column>
-          <List divided relaxed>
-            {messageArray.map(message => {
-              return <>
-                <List.Item>
-                  <List.Content>
-                    <List.Header>{message.userName}</List.Header>
-                    <List.Description>{message.message}</List.Description>
-                  </List.Content>
-                </List.Item>
-              </>
-            })}
-          </List>
-        </Grid.Column>
-      </Grid >
-    </div >
-    <Segment.Group horizontal>
-      <Modal trigger={<Button color='blue'>Admin Modal</Button>} closeIcon>
+
+      <Modal trigger={<Button color='blue'>Admin</Button>} closeIcon>
         <Header icon='cogs' content='Admin Settings' />
         <Modal.Content>
           <p>
@@ -142,7 +103,47 @@ export const ChatTemplate = ({ userArray, messageArray, socket, renderProp }) =>
           </p>
         </Modal.Content>
       </Modal>
-    </Segment.Group>
+
+      <Grid columns={2} relaxed='very'>
+        <Grid.Column floated="left" width={6}>
+          <List divided relaxed>
+            {userArray.map(user => {
+              return <>
+                <List.Item>
+                  <Grid columns={2} relaxed='very'>
+                    <Grid.Column>
+                      <List.Content>
+                        <List.Header as='a'>{user.userName}</List.Header>
+                      </List.Content>
+                    </Grid.Column>
+                    <Grid.Column floated='right' width={3}>
+                      <Segment compact>
+                        <Checkbox />
+                      </Segment>
+                    </Grid.Column>
+                  </Grid>
+                </List.Item>
+              </>
+            })}
+          </List>
+        </Grid.Column >
+        <Grid.Column>
+          <List divided relaxed>
+            {messageArray.map(message => {
+              return <>
+                <List.Item>
+                  <List.Content>
+                    <List.Header>{message.userName}</List.Header>
+                    <List.Description>{message.message}</List.Description>
+                  </List.Content>
+                </List.Item>
+              </>
+            })}
+          </List>
+        </Grid.Column>
+      </Grid >
+    </div >
+
   </Container>
   <Input fluid action='Send' id="messageInput" placeholder='Your message goes here...' onChange={handleChange} />
   {/* <Button floated='right' type='submit' onClick={handleSend}>Send</Button> */}
