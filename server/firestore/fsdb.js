@@ -10,7 +10,7 @@ const firebaseConfig = {
   appId: '1:325113898596:web:c745fc7aa34f979b'
 }
 const fire = firebase.initializeApp(firebaseConfig)
-const db = fire.firestore()
+let db = fire.firestore()
 
 const getNewID = (ssID) => {
   let id
@@ -24,6 +24,7 @@ const getNewID = (ssID) => {
 
 const getAllUsers = (sessionId) => {
   return db.collection(sessionId).doc('Users').get()
+    .then(data => console.log)
     .then(data => { return data.data() })
 }
 
@@ -102,8 +103,13 @@ const resetFirestore = (sessionId) => {
     })
 }
 
+const replaceDB = (newDB) => {
+  db = newDB
+}
+
 export {
   db,
+  replaceDB,
   addUser,
   removeUser,
   getAllUsers,
