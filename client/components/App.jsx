@@ -44,7 +44,7 @@ const saveUsers = () => {
 
 // socket events
 socket.on('get-state', () => {
-  socket.emit('set-state', { renderPropid: sessionId, isAdmin: sessionAdmin, userName: sessionName })
+  socket.emit('set-state', { id: sessionId, isAdmin: sessionAdmin, userName: sessionName })
 })
 socket.on('pull-messages', () => {
   console.log('received pull-users')
