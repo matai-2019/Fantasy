@@ -1,24 +1,18 @@
 import React from 'react'
-import { List, Button, Grid, Icon, Segment, Input, Checkbox, Container, Header, Modal, Form } from 'semantic-ui-react'
+import { List, Button, Grid, Icon, Segment, Input, Checkbox, Container, Header, Modal, Form, Label, Image } from 'semantic-ui-react'
 
 let inputValue = ''
 
-export const ChatTemplate = ({ userArray, messageArray, socket, renderProp }) => {
-  socket.on('pull-user', () => {
-    renderProp = renderProp !== true
-  })
-
+export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
   const handleChange = event => {
     inputValue = event.target.value
   }
 
   const handleSend = () => {
-    console.log(inputValue)
+    sendMessage(inputValue)
   }
 
   return <>
-  { console.log('render', userArray)}
-  { console.log(messageArray) }
   <Container>
     <div>
       <Modal trigger={<Button floated="right" animated='vertical' color='violet'>
@@ -131,14 +125,12 @@ export const ChatTemplate = ({ userArray, messageArray, socket, renderProp }) =>
           <Grid.Column>
             <List divided relaxed>
               {messageArray.map(message => {
-                return <>
-                <List.Item>
-                  <List.Content>
-                    <List.Header>{message.userName}</List.Header>
-                    <List.Description>{message.message}</List.Description>
-                  </List.Content>
-                </List.Item>
-              </>
+                return <div key={message.timestamp}>
+                  <Segment.Group horizontal>
+                    <Segment compact>{message.userName}</Segment>
+                    <Segment compact>{message.messageText}</Segment>
+                  </Segment.Group>
+                </div>
               })}
             </List>
           </Grid.Column>
@@ -146,7 +138,7 @@ export const ChatTemplate = ({ userArray, messageArray, socket, renderProp }) =>
       </Segment>
     </div >
 
-    <Input fluid action='Send' id="messageInput" placeholder='Your message goes here...' onChange={handleChange} />
+    <Input fluid action={<Button onClick={handleSend}>Send</Button>} id="messageInput" placeholder='Your message goes here...' onChange={handleChange}/>
     {/* <Button floated='right' type='submit' onClick={handleSend}>Send</Button> */}
   </Container>
   <br></br>

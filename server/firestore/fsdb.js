@@ -16,8 +16,13 @@ const getNewID = (ssID) => {
   let id
   return getAllUsers(ssID)
     .then(obj => {
-      const sorted = obj.users.map(user => user.id)
-      id = sorted.sort((a, b) => a < b)[sorted.length - 1] + 1
+      console.log('users', obj.users)
+      if (obj.users.length > 0) {
+        const sorted = obj.users.map(user => user.id)
+        console.log('sorted', sorted)
+        id = sorted.sort((a, b) => a > b)[sorted.length - 1] + 1
+      } else id = 1
+      console.log('ID', id)
       return id
     })
 }
@@ -28,7 +33,7 @@ const getAllUsers = (sessionId) => {
 }
 
 const addUser = (sessionId, userName) => {
-  let user, id
+  let id
   return getAllUsers(sessionId)
     .then(obj => {
       return getNewID(sessionId)
@@ -38,22 +43,25 @@ const addUser = (sessionId, userName) => {
         })
     })
     .then(obj => {
-      let isAdmin = true
-      obj.users.forEach(user => {
-        if (user.isAdmin === true) isAdmin = false
-      })
-      user = { id, isAdmin, userName }
-      obj.users.push(user)
-      db.collection(sessionId).doc('Users').set(obj)
-      return user
+      return sendUser(obj, id, userName, sessionId)
     })
 }
+
+const sendUser = (obj, id, userName, sessionId) => {
+  let isAdmin = true
+  obj.users.forEach(user => {
+    if (user.isAdmin === true) isAdmin = false
+  })
+  const user = { id, isAdmin, userName }
+  obj.users.push(user)
+  db.collection(sessionId).doc('Users').set(obj)
+  return user
+}
+
 const removeUser = (sessionId, userID) => {
   return db.collection(sessionId).doc('Users').get()
     .then(sshot => {
       const obj = sshot.data()
-      console.log(obj)
-      console.log(obj.users.splice(userID, 1))
       db.collection(sessionId).doc('Users').set(obj)
       return obj
     })
@@ -65,10 +73,9 @@ const getAllMessages = (sessionId) => {
 }
 
 const getViewableMessages = (sessionId, userId) => {
-  let messageArray
   return db.collection(sessionId).doc('Messages').get()
     .then(data => {
-      let obj = data.data()
+      const obj = data.data()
       obj.messages.forEach(message => {
         return (message.recipients.includes(userId))
       })
@@ -80,7 +87,8 @@ const addMessage = (sessionId, userName, recipients, messageText) => {
   return getAllMessages(sessionId)
     .then(obj => {
       const id = obj.messages[obj.messages.length - 1].id + 1
-      const timestamp = Date.getTime().seconds
+      const timestamp = Math.round(Date.now() / 1000)
+      console.log(timestamp)
       const message = { id, userName, messageText, recipients, timestamp }
       obj.messages.push(message)
       db.collection(sessionId).doc('Messages').set(obj)
@@ -99,12 +107,12 @@ const resetFirestore = (sessionId) => {
 
 export {
   db,
+  addUser,
+  removeUser,
   getAllUsers,
+  getNewID,
+  addMessage,
   getAllMessages,
   getViewableMessages,
-  addUser,
-  addMessage,
-  resetFirestore,
-  getNewID,
-  removeUser
+  resetFirestore
 }
