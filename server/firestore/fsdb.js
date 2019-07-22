@@ -28,7 +28,7 @@ const getAllUsers = (sessionId) => {
 }
 
 const addUser = (sessionId, userName) => {
-  let user, id
+  let id
   return getAllUsers(sessionId)
     .then(obj => {
       return getNewID(sessionId)
@@ -38,16 +38,21 @@ const addUser = (sessionId, userName) => {
         })
     })
     .then(obj => {
-      let isAdmin = true
-      obj.users.forEach(user => {
-        if (user.isAdmin === true) isAdmin = false
-      })
-      user = { id, isAdmin, userName }
-      obj.users.push(user)
-      db.collection(sessionId).doc('Users').set(obj)
-      return user
+      return sendUser(obj, id, userName, sessionId)
     })
 }
+
+const sendUser = (obj, id, userName, sessionId) => {
+  let isAdmin = true
+  obj.users.forEach(user => {
+    if (user.isAdmin === true) isAdmin = false
+  })
+  const user = { id, isAdmin, userName }
+  obj.users.push(user)
+  db.collection(sessionId).doc('Users').set(obj)
+  return user
+}
+
 const removeUser = (sessionId, userID) => {
   return db.collection(sessionId).doc('Users').get()
     .then(sshot => {
@@ -68,7 +73,7 @@ const getViewableMessages = (sessionId, userId) => {
   let messageArray
   return db.collection(sessionId).doc('Messages').get()
     .then(data => {
-      let obj = data.data()
+      const obj = data.data()
       obj.messages.forEach(message => {
         return (message.recipients.includes(userId))
       })
@@ -100,12 +105,12 @@ const resetFirestore = (sessionId) => {
 
 export {
   db,
+  addUser,
+  removeUser,
   getAllUsers,
+  getNewID,
+  addMessage,
   getAllMessages,
   getViewableMessages,
-  addUser,
-  addMessage,
-  resetFirestore,
-  getNewID,
-  removeUser
+  resetFirestore
 }
