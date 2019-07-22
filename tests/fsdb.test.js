@@ -95,12 +95,7 @@ describe('getAllUsers', () => {
   })
 })
 
-<<<<<<< HEAD
 test.skip('getAllUsers returns an array of 4 users', (done) => {
-=======
-test('getAllUsers returns an array of 4 users', (done) => {
-
->>>>>>> d7a78580f8d5e0bf4aa0149dd22d2ff31fcd58a3
   getAllUsers('TestBed2')
     .then(obj => {
       expect(obj.Users).toHaveLength(4)
