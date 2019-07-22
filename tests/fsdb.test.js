@@ -41,6 +41,7 @@ const getAllMessagesMock = () => {
 }
 
 test('getAllUsers returns an array of 4 users', (done) => {
+
   getAllUsers('TestBed2')
     .then(obj => {
       expect(obj.Users).toHaveLength(4)
@@ -49,7 +50,7 @@ test('getAllUsers returns an array of 4 users', (done) => {
 })
 
 test.skip('addUser adds a new user to db with a sequential userId and if Admin already exists sets it to false', (sessionID, done) => {
-  addUser('TestBed2', 'Wizard')
+  addUser('TestBedAddUsers', 'Wizard')
     .then(array => console.log(array))
   // .then(user => {
   //   console.log(user)
@@ -74,10 +75,11 @@ test.skip('addUser adds a new user to db with a sequential userId and if Admin a
 // addUser('TestBed', 'Wizard')getAllMessages
 //   .then(array => console.log(array))
 
-test.skip('getAllMessages returns an array of 3 messages', (done) => {
-  getAllMessagesMock()
+
+test.skip('getAllMessages returns an array of 4 messages', (done) => {
+  getAllMessages('TestBed2')
     .then(obj => {
-      expect(obj.messages).toHaveLength(3)
+      expect(obj.messages).toHaveLength(4)
       done()
     })
 })
