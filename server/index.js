@@ -3,8 +3,8 @@ const port = process.env.PORT || 3000
 
 io.on('connection', socket => {
   let userId
-  console.log('a user connected')
-  socket.emit('get-state')
+  console.log('User connected')
+  socket.emit('load-user')
   socket.on('set-state', userState => {
     userId = userState.id
     socket.emit('state-loaded', userState.id)
@@ -13,8 +13,11 @@ io.on('connection', socket => {
   socket.on('new-user', () => {
     io.emit('pull-users')
   })
+  socket.on('new-message', () => {
+    io.emit('pull-messages')
+  })
   socket.on('disconnect', () => {
-    console.log('DC')
+    console.log('User disconnect:', userId)
   })
 })
 
@@ -23,6 +26,9 @@ server.listen(port, function () {
   console.log('Listening on port', port)
 })
 
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
+  res.send('TO BE DONE')
+})
+app.get('/:ssID', (req, res) => {
   res.sendFile(path.join(__dirname, '../build/index.html'))
 })

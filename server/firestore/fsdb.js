@@ -10,25 +10,32 @@ const firebaseConfig = {
   appId: '1:325113898596:web:c745fc7aa34f979b'
 }
 const fire = firebase.initializeApp(firebaseConfig)
-const db = fire.firestore()
+let db = fire.firestore()
 
 const getNewID = (ssID) => {
   let id
   return getAllUsers(ssID)
     .then(obj => {
-      const sorted = obj.users.map(user => user.id)
-      id = sorted.sort((a, b) => a < b)[sorted.length - 1] + 1
+      console.log('users', obj.users)
+      if (obj.users.length > 0) {
+        const sorted = obj.users.map(user => user.id)
+        console.log('sorted', sorted)
+        id = sorted.sort((a, b) => a > b)[sorted.length - 1] + 1
+      } else id = 1
+      console.log('ID', id)
       return id
     })
 }
 
 const getAllUsers = (sessionId) => {
   return db.collection(sessionId).doc('Users').get()
-    .then(data => { return data.data() })
+    .then(data => {
+      return data.data()
+    })
 }
 
 const addUser = (sessionId, userName) => {
-  let user, id
+  let id
   return getAllUsers(sessionId)
     .then(obj => {
       return getNewID(sessionId)
@@ -38,24 +45,35 @@ const addUser = (sessionId, userName) => {
         })
     })
     .then(obj => {
-      let isAdmin = true
-      obj.users.forEach(user => {
-        if (user.isAdmin === true) isAdmin = false
-      })
-      user = { id, isAdmin, userName }
-      obj.users.push(user)
-      db.collection(sessionId).doc('Users').set(obj)
-      return user
+      return sendUser(obj, id, userName, sessionId)
     })
 }
-const removeUser = (sessionId, userID) => {
+
+const sendUser = (obj, id, userName, sessionId) => {
+  let isAdmin = true
+  obj.users.forEach(user => {
+    if (user.isAdmin === true) isAdmin = false
+  })
+  const user = { id, isAdmin, userName }
+  obj.users.push(user)
+  db.collection(sessionId).doc('Users').set(obj)
+  return user
+}
+
+const removeUser = (sessionId, Userid) => {
   return db.collection(sessionId).doc('Users').get()
-    .then(sshot => {
-      const obj = sshot.data()
-      console.log(obj)
-      console.log(obj.users.splice(userID, 1))
-      db.collection(sessionId).doc('Users').set(obj)
+    .then(obj => {
+      obj = obj.data()
+      let removed = obj.users.filter(user => user.id === Userid)[0]
+      let index = obj.users.indexOf(removed)
+      index = index === -1 ? null : obj.users.splice(index, 1)
       return obj
+    })
+    .then((obj) => {
+      return db.collection(sessionId).doc('Users').set(obj)
+        .then(() => {
+          return obj
+        })
     })
 }
 
@@ -65,10 +83,9 @@ const getAllMessages = (sessionId) => {
 }
 
 const getViewableMessages = (sessionId, userId) => {
-  let messageArray
   return db.collection(sessionId).doc('Messages').get()
     .then(data => {
-      let obj = data.data()
+      const obj = data.data()
       obj.messages.forEach(message => {
         return (message.recipients.includes(userId))
       })
@@ -80,7 +97,8 @@ const addMessage = (sessionId, userName, recipients, messageText) => {
   return getAllMessages(sessionId)
     .then(obj => {
       const id = obj.messages[obj.messages.length - 1].id + 1
-      const timestamp = Date.getTime().seconds
+      const timestamp = Math.round(Date.now() / 1000)
+      console.log(timestamp)
       const message = { id, userName, messageText, recipients, timestamp }
       obj.messages.push(message)
       db.collection(sessionId).doc('Messages').set(obj)
@@ -97,14 +115,19 @@ const resetFirestore = (sessionId) => {
     })
 }
 
+const replaceDB = (newDB) => {
+  db = newDB
+}
+
 export {
   db,
+  replaceDB,
+  addUser,
+  removeUser,
   getAllUsers,
+  getNewID,
+  addMessage,
   getAllMessages,
   getViewableMessages,
-  addUser,
-  addMessage,
-  resetFirestore,
-  getNewID,
-  removeUser
+  resetFirestore
 }
