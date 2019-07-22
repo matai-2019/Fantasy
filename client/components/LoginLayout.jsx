@@ -10,7 +10,11 @@ function LoginForm ({ setUserName }) {
   }
 
   const handleSubmit = () => {
-    setUserName(inputValue)
+    if (inputValue.length > 0) setUserName(inputValue)
+    else {
+      document.getElementById('loginInput').placeholder = 'Please enter a name'
+      setTimeout(document.getElementById('loginInput').placeholder = 'Username', 1000)
+    }
   }
 
   return (
@@ -27,12 +31,13 @@ function LoginForm ({ setUserName }) {
           <Form onSubmit={handleSubmit} size='large'>
             <Segment stacked>
               <Form.Input
+                id='loginInput'
                 fluid icon='user'
                 iconPosition='left'
                 defaultValue=''
                 onChange={handleChange}
                 placeholder='Username' />
-              <Button color='violet' fluid size='large' type='submit'>
+              <Button id='loginButton' color='violet' fluid size='large' type='submit'>
                 <h3>Start New Adventure</h3>
               </Button>
             </Segment>

@@ -9,7 +9,10 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
   }
 
   const handleSend = () => {
-    sendMessage(inputValue)
+    if (inputValue.length > 0) sendMessage(inputValue)
+    else {
+
+    }
   }
 
   return <>
