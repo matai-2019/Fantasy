@@ -9,3 +9,5 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('app')
   )
 })
+
+export default ReactDOM

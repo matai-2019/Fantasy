@@ -16,8 +16,10 @@ const getNewID = (ssID) => {
   let id
   return getAllUsers(ssID)
     .then(obj => {
-      const sorted = obj.users.map(user => user.id)
-      id = sorted.sort((a, b) => a < b)[sorted.length - 1] + 1
+      if (obj.users.length > 0) {
+        const sorted = obj.users.map(user => user.id)
+        id = sorted.sort((a, b) => a < b)[sorted.length - 1] + 1
+      } else id = 1
       return id
     })
 }
