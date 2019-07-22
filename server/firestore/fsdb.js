@@ -104,12 +104,12 @@ const resetFirestore = (sessionId) => {
 
 export {
   db,
+  addUser,
+  removeUser,
   getAllUsers,
+  getNewID,
+  addMessage,
   getAllMessages,
   getViewableMessages,
-  addUser,
-  addMessage,
-  resetFirestore,
-  getNewID,
-  removeUser
+  resetFirestore
 }
