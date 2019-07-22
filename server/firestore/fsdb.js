@@ -16,10 +16,13 @@ const getNewID = (ssID) => {
   let id
   return getAllUsers(ssID)
     .then(obj => {
+      console.log('users', obj.users)
       if (obj.users.length > 0) {
         const sorted = obj.users.map(user => user.id)
-        id = sorted.sort((a, b) => a < b)[sorted.length - 1] + 1
+        console.log('sorted', sorted)
+        id = sorted.sort((a, b) => a > b)[sorted.length - 1] + 1
       } else id = 1
+      console.log('ID', id)
       return id
     })
 }
@@ -80,7 +83,6 @@ const getAllMessages = (sessionId) => {
 }
 
 const getViewableMessages = (sessionId, userId) => {
-  let messageArray
   return db.collection(sessionId).doc('Messages').get()
     .then(data => {
       const obj = data.data()

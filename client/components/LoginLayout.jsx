@@ -15,14 +15,14 @@ function LoginForm ({ setUserName }) {
 
   return (
     <Container>
-      <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
-        <Grid.Column style={{ maxWidth: 450 }}>
+      <Grid textAlign='center' style={{ height: '90vh' }} verticalAlign='middle'>
+        <Grid.Column style={{ maxWidth: 650 }}>
           <Message>
-              Welcome to Dungeons &#38; Dragons
+            <h2>Welcome to Dungeons &#38; Dragons</h2>
           </Message>
-          <Header as='h2' color='teal' textAlign='center'>
-            <Icon name='grunt' size='large' />
-              Brace Yourself
+          <Header as='h2' color='violet' textAlign='center'>
+
+            <h1>Brace Yourself <Icon name='grunt' size='large' /></h1>
           </Header>
           <Form onSubmit={handleSubmit} size='large'>
             <Segment stacked>
@@ -32,8 +32,8 @@ function LoginForm ({ setUserName }) {
                 defaultValue=''
                 onChange={handleChange}
                 placeholder='Username' />
-              <Button color='teal' fluid size='large' type='submit'>
-                  Start New Adventure
+              <Button color='violet' fluid size='large' type='submit'>
+                <h3>Start New Adventure</h3>
               </Button>
             </Segment>
           </Form>

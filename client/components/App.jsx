@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import AdminLayout from './AdminLayout'
 import LoginLayout from './LoginLayout'
-import { ChatTemplate, ButtonExamplePositive } from './ChatLayout'
+import { ChatTemplate } from './ChatLayout'
 import { getAllUsers, getAllMessages, addUser, removeUser, addMessage, getNewID, resetFirestore } from '../../server/firestore/fsdb'
 import io from 'socket.io-client'
 import ReactDOM from '../index'
@@ -30,9 +29,10 @@ const loadSession = () => {
   messageArray = JSON.parse(sessionStorage.getItem('messages'))
 }
 const saveMessages = () => {
-  getAllMessages(ssID)
+  return getAllMessages(ssID)
     .then(obj => {
       messageArray = obj.messages
+      return obj
     })
 }
 const saveUsers = () => {
@@ -43,12 +43,12 @@ const saveUsers = () => {
 }
 
 // socket events
-socket.on('get-state', () => {
+socket.on('load-user', () => {
   socket.emit('set-state', { id: sessionId, isAdmin: sessionAdmin, userName: sessionName })
 })
 
 socket.on('pull-messages', () => {
-  console.log('received pull-users')
+  console.log('received pull-messages')
   saveMessages()
     .then(() => {
       ReactDOM.render(<App />, document.getElementById('app'))
@@ -62,7 +62,6 @@ socket.on('pull-users', () => {
     })
 })
 socket.on('disconnect', () => {
-  console.log('DC')
 })
 
 // Variables for client + App class interaction
@@ -72,7 +71,6 @@ let userArray = []
 
 // onLoad functions
 loadSession()
-socket.emit('user-loaded', sessionId)
 console.log('Session Obj', sessionName)
 saveMessages()
 saveUsers()
@@ -95,49 +93,30 @@ class App extends Component {
   }
 
   sendMessage = (message) => {
-    console.log(ssID)
     getAllUsers(ssID)
-    .then(obj => {
-      return obj.users.map(user => user.id)
-    })
-    .then(recipients => {
-      addMessage(ssID, sessionName, recipients, message)
-        .then(obj => {
-          socket.emit('new-message')
-        })
-    })
+      .then(obj => {
+        return obj.users.map(user => user.id)
+      })
+      .then(recipients => {
+        addMessage(ssID, sessionName, recipients, message)
+          .then(obj => {
+            console.log('emit new-msg')
+            socket.emit('new-message')
+          })
+      })
   }
 
   render () {
     return (
       <>
-        <h1>Welcome to Fantasy!!!</h1>
-        {/* <LoginLayout setUserName={this.setUserName}/> */}
-        { console.log('APP RENDERED, STATE:', this.state)}
-        {console.log('userArr', userArray)}
-        {(this.state.user.id)
-          ? <ChatTemplate socket={socket} messageArray={messageArray} userArray={userArray}/>
-          : <LoginLayout setUserName={this.setUserName}/>}
-        {/* <ChatTemplate />
-        <ButtonExamplePositive /> */}
-
+      <br/>
+      <h1 align="center">Welcome to Fantasy!!!</h1>
+         {(this.state.user.id)
+           ? <ChatTemplate socket={socket} messageArray={messageArray} userArray={userArray} sendMessage={this.sendMessage}/>
+           : <LoginLayout setUserName={this.setUserName}/>}
       </>
     )
   }
 }
 
 export default App
-
-function sendMessage (message) {
-  getAllUsers(sessionId)
-    .then(obj => {
-      return obj.users.map(user => user.id)
-    })
-    .then(recipients => {
-      // use addMessage to add to FS
-      addMessage()
-        .then(obj => {
-          // socket.emit('new-message')
-        })
-    })
-}
