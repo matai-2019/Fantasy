@@ -22,7 +22,14 @@ export const ChatTemplate = ({ userArray, messageArray, socket, renderProp }) =>
   <Container>
     <div>
 
-      <Modal trigger={<Button color='blue'>Admin</Button>} closeIcon>
+      <Modal trigger={<Button floated="right" animated='vertical' color='blue'>
+
+        <Button.Content hidden>Admin</Button.Content>
+        <Button.Content visible>
+          <Icon name='cog' />
+        </Button.Content>
+
+      </Button>} closeIcon>
         <Header icon='cogs' content='Admin Settings' />
         <Modal.Content>
           <p>

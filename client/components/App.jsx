@@ -97,15 +97,13 @@ class App extends Component {
   render () {
     return (
       <>
+      <br></br>
         <h1 align="center">Welcome to Fantasy!!!</h1>
-        {/* <LoginLayout setUserName={this.setUserName}/> */}
+        <br></br>
         { console.log('RENDER STATE', this.state)}
         {(this.state.user.id)
           ? <ChatTemplate socket={socket} messageArray={messageArray} userArray={userArray} renderProp={true}/>
           : <LoginLayout setUserName={this.setUserName}/>}
-        {/* <ChatTemplate />
-        <ButtonExamplePositive /> */}
-
       </>
     )
   }
