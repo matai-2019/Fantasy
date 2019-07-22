@@ -13,6 +13,9 @@ io.on('connection', socket => {
   socket.on('new-user', () => {
     io.emit('pull-users')
   })
+  socket.on('new-message', () => {
+    io.emit('pull-messages')
+  })
   socket.on('disconnect', () => {
     console.log('User disconnect:', userId)
   })

@@ -1,31 +1,111 @@
 import React from 'react'
-import { List, Button, Popup, Divider, Grid, Image, Icon, Segment, Input, Checkbox, Container, Header } from 'semantic-ui-react'
+import { List, Button, Grid, Icon, Segment, Input, Checkbox, Container, Header, Modal, Form, Label, Image } from 'semantic-ui-react'
 
 let inputValue = ''
 
-export const ChatTemplate = ({ userArray, messageArray, socket, renderProp }) => {
-  socket.on('pull-user', () => {
-    renderProp = renderProp !== true
-  })
-
+export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
   const handleChange = event => {
     inputValue = event.target.value
   }
 
   const handleSend = () => {
-    console.log(inputValue)
+    sendMessage(inputValue)
   }
 
   return <>
-  { console.log('render', userArray)}
-  { console.log(messageArray) }
   <Container>
     <div>
-      <Grid columns={2} relaxed='very'>
-        <Grid.Column floated="left" width={6}>
-          <List divided relaxed>
-            {userArray.map(user => {
-              return <>
+      <Modal trigger={<Button floated="right" animated='vertical' color='violet'>
+        <Button.Content hidden>Admin</Button.Content>
+        <Button.Content visible>
+          <Icon name='cog' />
+        </Button.Content>
+      </Button>} closeIcon>
+        <Header icon='cogs' content='Admin Settings' />
+        <br></br>
+        <Modal.Content>
+          <p>
+            <Segment>
+              <Grid columns={2} relaxed='very'>
+                <Grid.Column floated="left" width={7}>
+                  <Form>
+                    <Form.Field>
+                      <label>Dungeon Name</label>
+                      <input placeholder='session ID' />
+                    </Form.Field>
+                    <Button animated='fade' color='violet' fluid >
+                      <Button.Content visible>Begin New Adventure Now <Icon name='copy'/></Button.Content>
+                      <Button.Content hidden>Copy ID </Button.Content>
+                    </Button>
+                  </Form>
+                </Grid.Column>
+                <Grid.Column>
+                  <List divided relaxed>
+                    <Grid relaxed='very'>
+                      <Grid.Column horizontal floated="right" width={8}>
+              User-1 <Button color='red' type='Kill' onClick={handleSend}>
+                          <Icon name='close' />
+                Del</Button>
+                      </Grid.Column>
+                    </Grid>
+                  </List>
+                  <List divided relaxed>
+                    <Grid relaxed='very'>
+                      <Grid.Column horizontal floated="right" width={8}>
+              User-2 <Button color='red' type='Kill' onClick={handleSend}>
+                          <Icon name='close' />
+                Del</Button>
+                      </Grid.Column>
+                    </Grid>
+                  </List>
+                  <List divided relaxed>
+                    <Grid relaxed='very'>
+                      <Grid.Column horizontal floated="right" width={8}>
+              User-3 <Button color='red' type='Kill' onClick={handleSend}>
+                          <Icon name='close' />
+                Del</Button>
+                      </Grid.Column>
+                    </Grid>
+                  </List>
+                  <List divided relaxed>
+                    <Grid relaxed='very'>
+                      <Grid.Column horizontal floated="right" width={8}>
+              User-4 <Button color='red' type='Kill' onClick={handleSend}>
+                          <Icon name='close' />
+                Del</Button>
+                      </Grid.Column>
+                    </Grid>
+                  </List>
+                  <List divided relaxed>
+                    <Grid relaxed='very'>
+                      <Grid.Column horizontal floated="right" width={8}>
+              User-5 <Button color='red' type='Kill' onClick={handleSend}>
+                          <Icon name='close' />
+                Del</Button>
+                      </Grid.Column>
+                    </Grid>
+                  </List>
+                  <List divided relaxed>
+                    <Grid relaxed='very'>
+                      <Grid.Column horizontal floated="right" width={8}>
+              User-6 <Button color='red' type='Kill' onClick={handleSend}>
+                          <Icon name='close' />
+                Del</Button>
+                      </Grid.Column>
+                    </Grid>
+                  </List>
+                </Grid.Column>
+              </Grid>
+            </Segment>
+          </p>
+        </Modal.Content>
+      </Modal>
+      <Segment>
+        <Grid columns={2} relaxed='very'>
+          <Grid.Column floated="left" width={6}>
+            <List divided relaxed>
+              {userArray.map(user => {
+                return <>
                 <List.Item>
                   <Grid columns={2} relaxed='very'>
                     <Grid.Column>
@@ -34,39 +114,33 @@ export const ChatTemplate = ({ userArray, messageArray, socket, renderProp }) =>
                       </List.Content>
                     </Grid.Column>
                     <Grid.Column floated='right' width={3}>
-                      <Segment compact>
-                        <Checkbox />
-                      </Segment>
+                      <Checkbox />
                     </Grid.Column>
                   </Grid>
                 </List.Item>
               </>
-            })}
-          </List>
-        </Grid.Column >
-        <Grid.Column>
-          <List divided relaxed>
-            {messageArray.map(message => {
-              return <>
-                <List.Item>
-                  <List.Content>
-                    <List.Header>{message.userName}</List.Header>
-                    <List.Description>{message.message}</List.Description>
-                  </List.Content>
-                </List.Item>
-              </>
-            })}
-          </List>
-        </Grid.Column>
-      </Grid >
+              })}
+            </List>
+          </Grid.Column >
+          <Grid.Column>
+            <List divided relaxed>
+              {messageArray.map(message => {
+                return <div key={message.timestamp}>
+                  <Segment.Group horizontal>
+                    <Segment compact>{message.userName}</Segment>
+                    <Segment compact>{message.messageText}</Segment>
+                  </Segment.Group>
+                </div>
+              })}
+            </List>
+          </Grid.Column>
+        </Grid >
+      </Segment>
     </div >
-    <Segment.Group horizontal>
-      <Button floated='left' positive>Admin Options</Button>
-      <div floated='right'>
-        <Input type='text' id="messageInput" placeholder='Your message goes here...' onChange={handleChange} />
-        <Button type='submit' onClick={handleSend}>Send</Button>
-      </div>
-    </Segment.Group>
+
+    <Input fluid action={<Button onClick={handleSend}>Send</Button>} id="messageInput" placeholder='Your message goes here...' onChange={handleChange}/>
+    {/* <Button floated='right' type='submit' onClick={handleSend}>Send</Button> */}
   </Container>
-  </>
+  <br></br>
+    </>
 }
