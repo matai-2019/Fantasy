@@ -63,42 +63,50 @@ const FirestoreMock = {
 //   return { sessionResult }
 // }
 
-describe('getAllUsers', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
-  const docData = {
-    users: [
-      { id: 1, isAdmin: true, userName: 'Andre' },
-      { id: 2, isAdmin: false, userName: 'Ruslan' },
-      { id: 3, isAdmin: false, userName: 'Keith' },
-      { id: 4, isAdmin: false, userName: 'Taine' }
-    ]
-  }
-  const docResult = {
-    users: () => docData
-  }
-  // db = jest.fn().mockReturnValue({
-  //   collection: jest.fn('test').mockReturnValue({
-  //     doc: jest.fn().mockReturnValue({
-  //       get: jest.fn(() => Promise.resolve(docResult))
-  //     })
-  //   })
-  // })
-  let newDB = jest.fn()
-  newDB.prototype.collection = jest
-  replaceDB(newDB)
-  it('getAllUsers accesses session', (done) => {
-    console.log(newDB)
-    expect(getAllUsers()).toBe('k')
-    done()
-  })
-})
+// describe('getAllUsers', () => {
+//   beforeEach(() => {
+//     jest.clearAllMocks()
+//   })
+//   const docData = {
+//     users: [
+//       { id: 1, isAdmin: true, userName: 'Andre' },
+//       { id: 2, isAdmin: false, userName: 'Ruslan' },
+//       { id: 3, isAdmin: false, userName: 'Keith' },
+//       { id: 4, isAdmin: false, userName: 'Taine' }
+//     ]
+//   }
+//   const docResult = {
+//     users: () => docData
+//   }
+// db = jest.fn().mockReturnValue({
+//   collection: jest.fn('test').mockReturnValue({
+//     doc: jest.fn().mockReturnValue({
+//       get: jest.fn(() => Promise.resolve(docResult))
+//     })
+//   })
+// })
+//   let newDB = jest.fn()
+//   newDB.prototype.collection = jest
+//   replaceDB(newDB)
+//   it('getAllUsers accesses session', (done) => {
+//     console.log(newDB)
+//     expect(getAllUsers()).toBe('k')
+//     done()
+//   })
+// })
 
 test.skip('getAllUsers returns an array of 4 users', (done) => {
   getAllUsers('TestBed2')
     .then(obj => {
       expect(obj.Users).toHaveLength(4)
+      done()
+    })
+})
+
+test('removeUser removes a user', (done) => {
+  removeUser('testbed', 2)
+    .then(obj => {
+      expect(obj.users).toHaveLength(10)
       done()
     })
 })
@@ -128,7 +136,6 @@ test.skip('addUser adds a new user to db with a sequential userId and if Admin a
 // }
 // addUser('TestBed', 'Wizard')getAllMessages
 //   .then(array => console.log(array))
-
 
 test.skip('getAllMessages returns an array of 4 messages', (done) => {
   getAllMessages('TestBed2')
