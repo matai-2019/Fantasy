@@ -46,6 +46,7 @@ const saveUsers = () => {
 socket.on('get-state', () => {
   socket.emit('set-state', { id: sessionId, isAdmin: sessionAdmin, userName: sessionName })
 })
+
 socket.on('pull-messages', () => {
   console.log('received pull-users')
   saveMessages()
@@ -91,6 +92,20 @@ class App extends Component {
           socket.emit('new-user')
         })
       })
+  }
+
+  sendMessage = (message) => {
+    console.log(ssID)
+    getAllUsers(ssID)
+    .then(obj => {
+      return obj.users.map(user => user.id)
+    })
+    .then(recipients => {
+      addMessage(ssID, sessionName, recipients, message)
+        .then(obj => {
+          socket.emit('new-message')
+        })
+    })
   }
 
   render () {

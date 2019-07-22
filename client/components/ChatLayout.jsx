@@ -10,6 +10,7 @@ export const ChatTemplate = ({ userArray, messageArray, socket }) => {
 
   const handleSend = () => {
     console.log(inputValue)
+    sendMessage(inputValue)
   }
 
   return <>
