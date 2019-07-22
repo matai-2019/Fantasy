@@ -48,6 +48,7 @@ socket.on('get-state', () => {
   socket.emit('set-state', { id: sessionId, isAdmin: sessionAdmin, userName: sessionName })
 })
 socket.on('new-message', () => {
+  console.log('new message event received')
   saveMessages()
 })
 socket.on('pull-users', () => {
@@ -94,6 +95,20 @@ class App extends Component {
       })
   }
 
+  sendMessage = (message) => {
+    console.log(ssID)
+    getAllUsers(ssID)
+    .then(obj => {
+      return obj.users.map(user => user.id)
+    })
+    .then(recipients => {
+      addMessage(ssID, sessionName, recipients, message)
+        .then(obj => {
+          socket.emit('new-message')
+        })
+    })
+  }
+
   render () {
     return (
       <>
@@ -101,7 +116,7 @@ class App extends Component {
         {/* <LoginLayout setUserName={this.setUserName}/> */}
         { console.log('RENDER STATE', this.state)}
         {(this.state.user.id)
-          ? <ChatTemplate socket={socket} messageArray={messageArray} userArray={userArray} renderProp={true}/>
+          ? <ChatTemplate socket={socket} messageArray={messageArray} userArray={userArray} renderProp={true} sendMessage={this.sendMessage}/>
           : <LoginLayout setUserName={this.setUserName}/>}
         {/* <ChatTemplate />
         <ButtonExamplePositive /> */}

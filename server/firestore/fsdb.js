@@ -80,7 +80,7 @@ const addMessage = (sessionId, userName, recipients, messageText) => {
   return getAllMessages(sessionId)
     .then(obj => {
       const id = obj.messages[obj.messages.length - 1].id + 1
-      const timestamp = Date.getTime().seconds
+      const timestamp = Math.round((new Date()).getTime()/1000)
       const message = { id, userName, messageText, recipients, timestamp }
       obj.messages.push(message)
       db.collection(sessionId).doc('Messages').set(obj)

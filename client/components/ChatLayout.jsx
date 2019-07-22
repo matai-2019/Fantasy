@@ -3,7 +3,7 @@ import { List, Button, Popup, Divider, Grid, Image, Icon, Segment, Input, Checkb
 
 let inputValue = ''
 
-export const ChatTemplate = ({ userArray, messageArray, socket, renderProp }) => {
+export const ChatTemplate = ({ userArray, messageArray, socket, sendMessage }) => {
   socket.on('pull-user', () => {
     renderProp = renderProp !== true
   })
@@ -14,6 +14,7 @@ export const ChatTemplate = ({ userArray, messageArray, socket, renderProp }) =>
 
   const handleSend = () => {
     console.log(inputValue)
+    sendMessage(inputValue)
   }
 
   return <>
