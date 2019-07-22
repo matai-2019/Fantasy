@@ -10,7 +10,7 @@ const firebaseConfig = {
   appId: '1:325113898596:web:c745fc7aa34f979b'
 }
 const fire = firebase.initializeApp(firebaseConfig)
-const db = fire.firestore()
+let db = fire.firestore()
 
 const getNewID = (ssID) => {
   let id
@@ -29,7 +29,9 @@ const getNewID = (ssID) => {
 
 const getAllUsers = (sessionId) => {
   return db.collection(sessionId).doc('Users').get()
-    .then(data => { return data.data() })
+    .then(data => {
+      return data.data()
+    })
 }
 
 const addUser = (sessionId, userName) => {
@@ -58,12 +60,20 @@ const sendUser = (obj, id, userName, sessionId) => {
   return user
 }
 
-const removeUser = (sessionId, userID) => {
+const removeUser = (sessionId, Userid) => {
   return db.collection(sessionId).doc('Users').get()
-    .then(sshot => {
-      const obj = sshot.data()
-      db.collection(sessionId).doc('Users').set(obj)
+    .then(obj => {
+      obj = obj.data()
+      let removed = obj.users.filter(user => user.id === Userid)[0]
+      let index = obj.users.indexOf(removed)
+      index = index === -1 ? null : obj.users.splice(index, 1)
       return obj
+    })
+    .then((obj) => {
+      return db.collection(sessionId).doc('Users').set(obj)
+        .then(() => {
+          return obj
+        })
     })
 }
 
@@ -105,8 +115,13 @@ const resetFirestore = (sessionId) => {
     })
 }
 
+const replaceDB = (newDB) => {
+  db = newDB
+}
+
 export {
   db,
+  replaceDB,
   addUser,
   removeUser,
   getAllUsers,

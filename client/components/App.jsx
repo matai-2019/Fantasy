@@ -43,7 +43,7 @@ const saveUsers = () => {
 }
 
 // socket events
-socket.on('get-state', () => {
+socket.on('load-user', () => {
   socket.emit('set-state', { id: sessionId, isAdmin: sessionAdmin, userName: sessionName })
 })
 
@@ -62,7 +62,6 @@ socket.on('pull-users', () => {
     })
 })
 socket.on('disconnect', () => {
-  console.log('DC')
 })
 
 // Variables for client + App class interaction
@@ -72,7 +71,6 @@ let userArray = []
 
 // onLoad functions
 loadSession()
-socket.emit('user-loaded', sessionId)
 console.log('Session Obj', sessionName)
 saveMessages()
 saveUsers()

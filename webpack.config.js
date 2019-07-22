@@ -1,7 +1,6 @@
 const path = require('path')
 
 module.exports = (env, arg) => {
-  console.log('ENV', env)
   return {
     entry: './client/index.js',
     output: {
