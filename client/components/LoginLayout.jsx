@@ -1,8 +1,6 @@
 import React from 'react'
 import { getAllUsers } from '../../server/firestore/fsdb'
 import { Container, Button, Icon, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
-import { defaultCipherList } from 'constants';
-import { url } from 'inspector';
 
 function LoginForm ({ setUserName, userArray, ssID }) {
   let inputValue = ''
