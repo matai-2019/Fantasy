@@ -8,6 +8,7 @@ import ReactDOM from '../index'
 // client consts
 const socket = io()
 const ssID = window.location.pathname.slice(1)
+const fullPath = window.location.href
 
 // client-only functions
 const saveSession = userObj => {
@@ -28,40 +29,33 @@ const loadSession = () => {
   userArray = (sessionStorage.getItem('users') === null) ? [] : JSON.parse(sessionStorage.getItem('users'))
   messageArray = (sessionStorage.getItem('messages') === null) ? [] : JSON.parse(sessionStorage.getItem('messages'))
 }
-const saveMessages = () => {
-  loadSession()
+const pullFirestore = () => {
+  console.log(sessionId, '|', sessionName, '|', sessionAdmin)
   return getViewableMessages(ssID, Number(sessionId))
-    .then(obj => {
-      if (obj) messageArray = obj
-      return obj
+    .then(array => {
+      return getAllUsers(ssID)
+        .then(obj => {
+          userArray = obj.users
+          console.log('users', userArray)
+          if (array) {
+            messageArray = array
+            console.log('msgs', messageArray)
+          }
+          saveSession({ id: sessionId, isAdmin: sessionAdmin, userName: sessionName })
+        })
     })
 }
-const saveUsers = () => {
-  loadSession()
-  return getAllUsers(ssID)
-    .then(obj => {
-      userArray = obj.users
+const renderUpdate = () => {
+  pullFirestore()
+    .then(() => {
+      ReactDOM.render(<App />, document.getElementById('app'))
     })
-}
-const renderDOM = () => {
-  ReactDOM.render(<App />, document.getElementById('app'))
 }
 
 // socket events
-socket.on('load-user', () => {
-  socket.emit('set-state', { id: sessionId, isAdmin: sessionAdmin, userName: sessionName })
-})
-socket.on('pull-messages', () => {
-  saveMessages()
-    .then(() => {
-      renderDOM()
-    })
-})
-socket.on('pull-users', () => {
-  saveUsers()
-    .then(() => {
-      renderDOM()
-    })
+socket.on('update-sockets', () => {
+  console.log('updateSockets')
+  renderUpdate()
 })
 socket.on('disconnect', () => {
 })
@@ -72,23 +66,19 @@ let userArray = []
 let messageArray = []
 
 // onLoad functions
-saveUsers()
-saveMessages()
 loadSession()
+renderUpdate()
+console.log('Session Obj', sessionName)
 
 class App extends Component {
-  state = {
-    user: { id: sessionId, isAdmin: sessionAdmin, userName: sessionName }
-  }
-
   setUserName = username => {
     addUser(ssID, username)
       .then(user => {
-        saveUsers()
-          .then(() => {
-            saveSession(user)
-            this.setState({ user }, () => socket.emit('new-user'))
-          })
+        saveSession(user)
+        socket.emit('set-state', { id: sessionId, isAdmin: sessionAdmin, userName: sessionName })
+        loadSession()
+        socket.emit('change-occured')
+        console.log('setUserName')
       })
   }
 
@@ -100,7 +90,8 @@ class App extends Component {
       .then(recipients => {
         addMessage(ssID, sessionName, recipients, message)
           .then(obj => {
-            socket.emit('new-message')
+            socket.emit('change-occured')
+            console.log('sendMessage')
           })
       })
   }
@@ -111,9 +102,14 @@ class App extends Component {
         <div style={{ backgroundImage: './img/wp-1.jpg' }}>
           <br/>
           <h1 style={{ color: 'white' }} align="center">Welcome {sessionName}!</h1>
-          {(this.state.user.id)
-            ? <ChatTemplate socket={socket} messageArray={messageArray} userArray={userArray} sendMessage={this.sendMessage}/>
-            : <LoginLayout setUserName={this.setUserName} userArray={userArray}/>}
+          {(sessionId)
+            ? <ChatTemplate
+              socket={socket}
+              messageArray={messageArray}
+              userArray={userArray}
+              sendMessage={this.sendMessage}
+              fullPath={fullPath}/>
+            : <LoginLayout ssID={ssID} setUserName={this.setUserName} userArray={userArray}/>}
         </div>
       </>
     )
