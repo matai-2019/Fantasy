@@ -31,7 +31,6 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
                   <Grid.Column floated="left" width={7}>
                     <Form>
                       <Form.Field>
-                        {/* <label>Dungeon Name</label> */}
                         <input placeholder='session ID' />
                       </Form.Field>
                       <Button animated='fade' color='violet' fluid >
