@@ -5,13 +5,19 @@ import { List, Button, Grid, Icon, Segment, Input, Checkbox, Container, Header, 
 let inputValue = ''
 const recipients = ''
 
-export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
+export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath }) => {
   const handleChange = event => {
     inputValue = event.target.value
   }
 
   const handleSend = () => {
     if (inputValue.length > 0) sendMessage(inputValue)
+  }
+
+  const handleAddSession = event => {
+    let sessionID = document.getElementById('ssIDButton')
+    sessionID.select()
+    document.execCommand('copy')
   }
 
   return <>
@@ -32,18 +38,20 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
                   <Grid.Column floated="left" width={7}>
                     <Form>
                       <Form.Field>
-                        <input placeholder='session ID' />
+                        <div placeholder='session ID'></div>
                       </Form.Field>
-                      <Button animated='fade' color='violet' fluid >
-                        <Button.Content visible>Begin New Adventure Now <Icon name='copy'/></Button.Content>
-                        <Button.Content hidden>Copy ID </Button.Content>
-                      </Button>
+                      <div className="ui action input">
+                        <input type="text" value={`${fullPath}`} onClick={handleAddSession} id='ssIDButton'/>
+                        <button className="ui teal right labeled icon button">
+                          Copy This URL
+                        </button>
+                      </div>
                     </Form>
                   </Grid.Column>
                   <Grid.Column floated="right" width={7} style={{ maxHeight: '300px', overflowY: 'scroll' }}>
                     <List divided relaxed>
                       {userArray.map(user => {
-                        return <div key={ user.id}>
+                        return <div key={user.id}>
                           <List.Item>
                             <Grid columns={2} relaxed='very'>
                               <Grid.Column floated="left">
@@ -54,7 +62,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
                               <Grid.Column floated="right">
                                 <Button color='red' type='Kill'>
                                   <Icon name='close' />
-                                      Del</Button>
+                                  Del</Button>
                               </Grid.Column>
                             </Grid>
                           </List.Item>
@@ -72,7 +80,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
             <Grid.Column floated="left" width={6} style={{ maxHeight: '400px' }}>
               <List divided relaxed>
                 {userArray.map(user => {
-                  return <div key={ user.id }>
+                  return <div key={user.id}>
                     <List.Item>
                       <Grid columns={2} relaxed='very'>
                         <Grid.Column>
@@ -101,7 +109,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
             </Grid.Column>
           </Grid >
         </Segment>
-        <Input fluid action={<Button onClick={handleSend}>Send</Button>} id="messageInput" placeholder='Your message goes here...' onChange={handleChange}/>
+        <Input fluid action={<Button onClick={handleSend}>Send</Button>} id="messageInput" placeholder='Your message goes here...' onChange={handleChange} />
       </Container>
     </div>
   </>
