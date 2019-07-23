@@ -43,6 +43,9 @@ const saveUsers = () => {
       userArray = obj.users
     })
 }
+const renderDOM = () => {
+  ReactDOM.render(<App />, document.getElementById('app'))
+}
 
 // socket events
 socket.on('load-user', () => {
@@ -53,14 +56,15 @@ socket.on('pull-messages', () => {
   console.log('received pull-messages')
   saveMessages()
     .then(() => {
-      ReactDOM.render(<App />, document.getElementById('app'))
+      renderDOM()
     })
 })
+
 socket.on('pull-users', () => {
   console.log('received pull-users')
   saveUsers()
     .then(() => {
-      ReactDOM.render(<App />, document.getElementById('app'))
+      renderDOM()
     })
 })
 socket.on('disconnect', () => {
@@ -84,11 +88,11 @@ class App extends Component {
   setUserName = username => {
     addUser(ssID, username)
       .then(user => {
-        saveUsers().then(() => {
-          saveSession(user)
-          this.setState({ user })
-          socket.emit('new-user')
-        })
+        saveUsers()
+          .then(() => {
+            saveSession(user)
+            this.setState({ user }, () => socket.emit('new-user'))
+          })
       })
   }
 
@@ -100,7 +104,6 @@ class App extends Component {
       .then(recipients => {
         addMessage(ssID, sessionName, recipients, message)
           .then(obj => {
-            console.log('emit new-msg')
             socket.emit('new-message')
           })
       })
