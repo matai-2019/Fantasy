@@ -106,14 +106,14 @@ class App extends Component {
       })
   }
 
-  render () {
+  render() {
     return (
       <>
       <br/>
       <h1 align="center">Welcome to Fantasy!!!</h1>
          {(this.state.user.id)
            ? <ChatTemplate socket={socket} messageArray={messageArray} userArray={userArray} sendMessage={this.sendMessage}/>
-           : <LoginLayout setUserName={this.setUserName}/>}
+           : <LoginLayout setUserName={this.setUserName} userArray={userArray}/>}
       </>
     )
   }
