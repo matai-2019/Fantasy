@@ -5,7 +5,6 @@ import { List, Button, Grid, Icon, Segment, Input, Checkbox, Container, Header, 
 let inputValue = ''
 const recipients = ''
 
-
 export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
   const handleChange = event => {
     inputValue = event.target.value
@@ -93,7 +92,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
                 {messageArray.map(message => {
                   return <div key={message.timestamp + message.id}>
                     <Segment style={{ padding: '5px', margin: '10px' }}>
-                      <div>21:39</div>
+                      {/* <div>{txtTo.Text = DateTime.Now.ToString('MM/dd/yyyy HH:mm:ss')}</div> */}
                       <Message
                         header={message.userName}
                         content={message.messageText}
