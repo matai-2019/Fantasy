@@ -11,7 +11,6 @@ io.on('connection', socket => {
     io.emit('pull-messages')
   })
   socket.on('change-occured', () => {
-    console.log('changeOccured')
     io.emit('update-sockets')
   })
   socket.on('disconnect', () => {

@@ -57,6 +57,13 @@ const renderUpdate = () => {
       ReactDOM.render(<App />, document.getElementById('app'))
     })
 }
+const handleKickUser = (userid) => {
+  console.log(ssID, userid)
+  removeUser(ssID, userid)
+    .then(() => {
+      socket.emit('change-occured')
+    })
+}
 
 // socket events
 socket.on('update-sockets', () => {
@@ -77,7 +84,7 @@ renderUpdate()
 console.log('Session Obj', sessionName)
 
 class App extends Component {
-  setUserName = username => {
+  setUserName = (username) => {
     addUser(ssID, username)
       .then(user => {
         saveSession(user)
@@ -114,7 +121,9 @@ class App extends Component {
               messageArray={messageArray}
               userArray={userArray}
               sendMessage={this.sendMessage}
-              fullPath={fullPath}/>
+              fullPath={fullPath}
+              handleKickUser={handleKickUser}
+            />
             : <LoginLayout ssID={ssID} setUserName={this.setUserName} userArray={userArray}/>}
         </div>
       </>
