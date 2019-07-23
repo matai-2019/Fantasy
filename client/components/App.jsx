@@ -75,7 +75,6 @@ let messageArray = []
 saveUsers()
 saveMessages()
 loadSession()
-console.log('Session Obj', sessionName)
 
 class App extends Component {
   state = {
