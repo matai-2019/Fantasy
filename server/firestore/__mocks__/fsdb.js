@@ -12,22 +12,22 @@ const firebaseConfig = {
 const fire = firebase.initializeApp(firebaseConfig)
 let db = fire.firestore()
 
-const getAllUsers = (sessionId) => {
-  return db.collection(sessionId).doc('Users').get()
-    .then(data => {
-      return data.data()
-    })
-}
-
 const getNewID = (ssID) => {
   let id
   return getAllUsers(ssID)
     .then(obj => {
       if (obj.users.length > 0) {
         const sorted = obj.users.map(user => user.id)
-        id = sorted.sort((a, b) => a > b)[sorted.length - 1] + 1
+        id = sorted.sort((a, b) => a < b)[sorted.length - 1] + 1
       } else id = 1
       return id
+    })
+}
+
+const getAllUsers = (sessionId) => {
+  return db.collection(sessionId).doc('Users').get()
+    .then(data => {
+      return data.data()
     })
 }
 
@@ -80,6 +80,7 @@ const getAllMessages = (sessionId) => {
 }
 
 const getViewableMessages = (sessionId, userId) => {
+  let messageArray
   return db.collection(sessionId).doc('Messages').get()
     .then(data => {
       const obj = data.data()
@@ -95,29 +96,13 @@ const addMessage = (sessionId, userName, recipients, messageText) => {
     .then(obj => {
       const id = obj.messages[obj.messages.length - 1].id + 1
       const timestamp = Math.round(Date.now() / 1000)
+      console.log(timestamp)
       const message = { id, userName, messageText, recipients, timestamp }
       obj.messages.push(message)
       db.collection(sessionId).doc('Messages').set(obj)
       return obj.messages
     })
 }
-
-// const removeRecipientFromMsg = (sessionId, Userid) => {
-//   return db.collection(sessionId).doc('Messages').get()
-//   .then(obj => {
-//     obj = obj.data()
-//       let removed = obj.users.filter(user => user.id === Userid)[0]
-//       let index = obj.users.indexOf(removed)
-//       index = index === -1 ? null : obj.users.splice(index, 1)
-//       return obj
-//     })
-//     .then((obj) => {
-//       return db.collection(sessionId).doc('Users').set(obj)
-//         .then(() => {
-//           return obj
-//         })
-//     })
-// }
 
 const resetFirestore = (sessionId) => {
   return db.collection(sessionId).doc('Users').delete()
@@ -142,6 +127,5 @@ export {
   addMessage,
   getAllMessages,
   getViewableMessages,
-  removeRecipientFromMsg,
   resetFirestore
 }
