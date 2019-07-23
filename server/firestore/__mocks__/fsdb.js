@@ -104,6 +104,38 @@ const addMessage = (sessionId, userName, recipients, messageText) => {
     })
 }
 
+const getRecipient = (sessionId, userId) => {
+  return db.collection(sessionId).doc('Messages').get()
+    .then(obj => {
+      obj = obj.data()
+    }
+      let recipientsAfterDelete = []
+    )
+  if (recipient[i] === userId) {
+    recipientsAfterDelete.splice(recipient[i], 1)
+  }
+
+}
+const removeRecipientFromMsg = (sessionId, Userid) => {
+  return db.collection(sessionId).doc('Messages').get()
+    .then(obj => {
+      obj = obj.data()
+      let recipient = [
+        user.id[0]
+      ]
+      let removed = obj.recipients.filter(recipient => user.id === Userid)[0]
+      let index = obj.messages.indexOf(removed)
+      index = index === -1 ? null : obj.recipients.splice(index, 1)
+      return obj
+    })
+    .then((obj) => {
+      return db.collection(sessionId).doc('Messages').set(obj)
+        .then(() => {
+          return obj
+        })
+    })
+}
+
 const resetFirestore = (sessionId) => {
   return db.collection(sessionId).doc('Users').delete()
     .then(function () {
