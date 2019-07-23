@@ -1,4 +1,5 @@
 const path = require('path')
+const CopyPlugin = require('copy-webpack-plugin')
 
 module.exports = (env, arg) => {
   return {
@@ -16,6 +17,11 @@ module.exports = (env, arg) => {
         exclude: /node_modules/
       }]
     },
+    plugins: [
+      new CopyPlugin([
+        { from: 'public' }
+      ])
+    ],
     resolve: {
       extensions: ['.js', '.jsx']
     },

@@ -29,13 +29,15 @@ const loadSession = () => {
   messageArray = JSON.parse(sessionStorage.getItem('messages'))
 }
 const saveMessages = () => {
-  return getViewableMessages(ssID)
+  loadSession()
+  return getViewableMessages(ssID, Number(sessionId))
     .then(obj => {
-      messageArray = obj.messages
+      messageArray = obj
       return obj
     })
 }
 const saveUsers = () => {
+  loadSession()
   return getAllUsers(ssID)
     .then(obj => {
       userArray = obj.users
@@ -72,8 +74,6 @@ let userArray = []
 // onLoad functions
 loadSession()
 console.log('Session Obj', sessionName)
-saveMessages()
-saveUsers()
 console.log('SESSIONID', ssID)
 
 class App extends Component {
@@ -107,13 +107,16 @@ class App extends Component {
   }
 
   render () {
+    console.log("marr", messageArray)
     return (
       <>
-      <br/>
-      <h1 align="center">Welcome to Fantasy!!!</h1>
-         {(this.state.user.id)
-           ? <ChatTemplate socket={socket} messageArray={messageArray} userArray={userArray} sendMessage={this.sendMessage}/>
-           : <LoginLayout setUserName={this.setUserName}/>}
+        <div style={{backgroundImage: './img/wp-1.jpg'}}>
+          <br/>
+          <h1 align="center">Welcome to Fantasy!!!</h1>
+            {(this.state.user.id)
+              ? <ChatTemplate socket={socket} messageArray={messageArray} userArray={userArray} sendMessage={this.sendMessage}/>
+              : <LoginLayout setUserName={this.setUserName}/>}
+        </div>
       </>
     )
   }

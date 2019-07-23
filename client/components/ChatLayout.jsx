@@ -120,7 +120,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
                     </Grid.Column>
                     <Grid.Column floated='right' width={3}>
                       <div className="ui checkbox">
-                       <input onClick={handleSelect} userid={user.id}/>
+                        <input onClick={handleSelect} userid={user.id}/>
                       </div>
                     </Grid.Column>
                   </Grid>
@@ -132,7 +132,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
           <Grid.Column>
             <List divided relaxed>
               {messageArray.map(message => {
-                return <div key={message.timestamp+message.id}>
+                return <div key={message.timestamp + message.id}>
                   <Segment.Group horizontal>
                     <Segment compact>{message.userName}</Segment>
                     <Segment compact>{message.messageText}</Segment>
