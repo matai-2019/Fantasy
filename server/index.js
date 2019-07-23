@@ -7,15 +7,12 @@ io.on('connection', socket => {
   socket.emit('load-user')
   socket.on('set-state', userState => {
     userId = userState.id
-    socket.emit('state-loaded', userState.id)
     io.emit('pull-users')
     io.emit('pull-messages')
   })
-  socket.on('new-user', () => {
-    io.emit('pull-users')
-  })
-  socket.on('new-message', () => {
-    io.emit('pull-messages')
+  socket.on('change-occured', () => {
+    console.log('changeOccured')
+    io.emit('update-sockets')
   })
   socket.on('disconnect', () => {
     console.log('User disconnect:', userId)

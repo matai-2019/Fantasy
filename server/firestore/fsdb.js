@@ -99,8 +99,13 @@ const addMessage = (sessionId, userName, recipients, messageText) => {
       const timestamp = Math.round(Date.now() / 1000)
       const message = { id, userName, messageText, recipients, timestamp }
       obj.messages.push(message)
-      db.collection(sessionId).doc('Messages').set(obj)
-      return obj.messages
+      return obj
+    })
+    .then(obj => {
+      return db.collection(sessionId).doc('Messages').set(obj)
+        .then(() => {
+          return obj.messages
+        })
     })
 }
 
