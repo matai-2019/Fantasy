@@ -30,8 +30,6 @@ function LoginForm ({ setUserName, userArray, ssID }) {
             <h2>Welcome to Dungeons &#38; Dragons</h2>
           </Message>
           <Header as='h2' color='violet' textAlign='center'>
-
-            <h1>Brace Yourself <Icon name='grunt' size='large' /></h1>
           </Header>
           <Form onSubmit={handleSubmit} size='large'>
             <Segment stacked inverted>

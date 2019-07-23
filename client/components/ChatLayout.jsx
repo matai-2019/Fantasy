@@ -120,18 +120,3 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath })
     </div>
   </>
 }
-
-// if (!user.isAdmin) return <>
-//                         <List.Item>
-//                           <Grid columns={2} relaxed='very'>
-//                             <Grid.Column>
-//                               <List.Header as='a'>{user.userName}</List.Header>
-//                             </Grid.Column>
-//                             <Grid.Column floated='right' width={3}>
-//                             <div className="ui checkbox">
-//                               <input userid={user.id} onClick={handleSelect} style={{height: '10px', width: '10px'}}></input>
-//                             </div>
-//                             </Grid.Column>
-//                           </Grid>
-//                         </List.Item>
-//                       </>
