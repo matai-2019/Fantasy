@@ -11,9 +11,6 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
 
   const handleSend = () => {
     if (inputValue.length > 0) sendMessage(inputValue)
-    else {
-
-    }
   }
 
   return <>
