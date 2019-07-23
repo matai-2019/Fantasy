@@ -29,7 +29,7 @@ function LoginForm ({ setUserName }) {
             <h1>Brace Yourself <Icon name='grunt' size='large' /></h1>
           </Header>
           <Form onSubmit={handleSubmit} size='large'>
-            <Segment stacked>
+            <Segment stacked inverted>
               <Form.Input
                 id='loginInput'
                 fluid icon='user'
