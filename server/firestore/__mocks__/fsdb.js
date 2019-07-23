@@ -1,6 +1,5 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
-import { arrayExpression } from '@babel/types'
 const firebaseConfig = {
   apiKey: 'AIzaSyAGK7lTDySjyb-huj2kUzjSoz_pSsLmafM',
   authDomain: 'fantasy-scroll.firebaseapp.com',
@@ -13,22 +12,22 @@ const firebaseConfig = {
 const fire = firebase.initializeApp(firebaseConfig)
 let db = fire.firestore()
 
-const getAllUsers = (sessionId) => {
-  return db.collection(sessionId).doc('Users').get()
-    .then(data => {
-      return data.data()
-    })
-}
-
 const getNewID = (ssID) => {
   let id
   return getAllUsers(ssID)
     .then(obj => {
       if (obj.users.length > 0) {
         const sorted = obj.users.map(user => user.id)
-        id = sorted.sort((a, b) => a > b)[sorted.length - 1] + 1
+        id = sorted.sort((a, b) => a < b)[sorted.length - 1] + 1
       } else id = 1
       return id
+    })
+}
+
+const getAllUsers = (sessionId) => {
+  return db.collection(sessionId).doc('Users').get()
+    .then(data => {
+      return data.data()
     })
 }
 
@@ -81,14 +80,14 @@ const getAllMessages = (sessionId) => {
 }
 
 const getViewableMessages = (sessionId, userId) => {
-  let newArr = []
+  let messageArray
   return db.collection(sessionId).doc('Messages').get()
     .then(data => {
       const obj = data.data()
       obj.messages.forEach(message => {
-        if (message.recipients.includes(userId)) newArr.push(message)
+        return (message.recipients.includes(userId))
       })
-      return newArr
+      return obj
     })
 }
 
@@ -97,10 +96,43 @@ const addMessage = (sessionId, userName, recipients, messageText) => {
     .then(obj => {
       const id = obj.messages[obj.messages.length - 1].id + 1
       const timestamp = Math.round(Date.now() / 1000)
+      console.log(timestamp)
       const message = { id, userName, messageText, recipients, timestamp }
       obj.messages.push(message)
       db.collection(sessionId).doc('Messages').set(obj)
       return obj.messages
+    })
+}
+
+const getRecipient = (sessionId, userId) => {
+  return db.collection(sessionId).doc('Messages').get()
+    .then(obj => {
+      obj = obj.data()
+    }
+      let recipientsAfterDelete = []
+    )
+  if (recipient[i] === userId) {
+    recipientsAfterDelete.splice(recipient[i], 1)
+  }
+
+}
+const removeRecipientFromMsg = (sessionId, Userid) => {
+  return db.collection(sessionId).doc('Messages').get()
+    .then(obj => {
+      obj = obj.data()
+      let recipient = [
+        user.id[0]
+      ]
+      let removed = obj.recipients.filter(recipient => user.id === Userid)[0]
+      let index = obj.messages.indexOf(removed)
+      index = index === -1 ? null : obj.recipients.splice(index, 1)
+      return obj
+    })
+    .then((obj) => {
+      return db.collection(sessionId).doc('Messages').set(obj)
+        .then(() => {
+          return obj
+        })
     })
 }
 

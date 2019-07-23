@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Container, Button, Icon, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 import AdminLayout from './AdminLayout'
 
-function LoginForm ({ setUserName }) {
+function LoginForm ({ setUserName, userArray }) {
   let inputValue = ''
 
   const handleChange = (evt) => {
@@ -10,11 +10,10 @@ function LoginForm ({ setUserName }) {
   }
 
   const handleSubmit = () => {
-    if (inputValue.length > 0) setUserName(inputValue)
-    else {
-      document.getElementById('loginInput').placeholder = 'Please enter a name'
-      setTimeout(document.getElementById('loginInput').placeholder = 'Username', 1000)
-    }
+    if (userArray.length >= 7 ) {
+      // thou shout not pass
+      document.getElementById('loginInput').value = 'you shall not pass'
+    } else setUserName(inputValue)
   }
 
   return (
@@ -31,7 +30,7 @@ function LoginForm ({ setUserName }) {
           <Form onSubmit={handleSubmit} size='large'>
             <Segment stacked inverted>
               <Form.Input
-                id='loginInput'
+                id="loginInput"
                 fluid icon='user'
                 iconPosition='left'
                 defaultValue=''
