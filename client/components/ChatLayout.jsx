@@ -18,6 +18,8 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
   }
 
   return <>
+    {console.log('render', userArray)}
+    {console.log(messageArray)}
   <Container>
     <div>
       <Modal trigger={<Button floated="right" animated='vertical' color='violet'>
@@ -39,7 +41,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
                       <input placeholder='session ID' />
                     </Form.Field>
                     <Button animated='fade' color='violet' fluid >
-                      <Button.Content visible>Begin New Adventure Now <Icon name='copy'/></Button.Content>
+                      <Button.Content visible>Begin New Adventure Now<Icon name='copy'/></Button.Content>
                       <Button.Content hidden>Copy ID </Button.Content>
                     </Button>
                   </Form>
