@@ -1,11 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { List, Button, Grid, Icon, Segment, Input, Checkbox, Container, Header, Modal, Form, Label, Image, Message, GridColumn } from 'semantic-ui-react'
+import { removeUser } from '../../server/firestore/fsdb'
 
 let inputValue = ''
 const recipients = ''
 
-export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath }) => {
+export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, handleKickUser }) => {
   const handleChange = event => {
     inputValue = event.target.value
   }
@@ -18,6 +19,14 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath })
     let sessionID = document.getElementById('ssIDButton')
     sessionID.select()
     document.execCommand('copy')
+  }
+
+  const handleKick = event => {
+    return () => {
+      let userid = event
+      console.log('event', event)
+      handleKickUser(userid)
+    }
   }
 
   return <>
@@ -60,9 +69,9 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath })
                                 </List.Content>
                               </Grid.Column>
                               <Grid.Column floated="right">
-                                <Button color='red' type='Kill'>
+                                <button className="ui red button" color='red' type='Kill' onClick={handleKick(user.id)}>
                                   <Icon name='close' />
-                                  Del</Button>
+                                  Del</button>
                               </Grid.Column>
                             </Grid>
                           </List.Item>
