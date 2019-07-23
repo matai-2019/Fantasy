@@ -107,7 +107,6 @@ class App extends Component {
   }
 
   render () {
-    console.log("marr", messageArray)
     return (
       <>
         <div style={{backgroundImage: './img/wp-1.jpg'}}>
