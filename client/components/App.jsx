@@ -112,7 +112,12 @@ class App extends Component {
           <br/>
           <h1 style={{ color: 'white' }} align="center">Welcome {sessionName}!</h1>
           {(this.state.user.id)
-            ? <ChatTemplate socket={socket} messageArray={messageArray} userArray={userArray} sendMessage={this.sendMessage}/>
+            ? <ChatTemplate 
+            socket={socket} 
+            messageArray={messageArray} 
+            userArray={userArray} 
+            sendMessage={this.sendMessage} 
+            ssID={ssID}/>
             : <LoginLayout setUserName={this.setUserName} userArray={userArray}/>}
         </div>
       </>
