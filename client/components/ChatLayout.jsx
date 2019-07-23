@@ -2,6 +2,7 @@ import React from 'react'
 import { List, Button, Grid, Icon, Segment, Input, Checkbox, Container, Header, Modal, Form, Label, Image } from 'semantic-ui-react'
 
 let inputValue = ''
+let recipients = ''
 
 export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
   const handleChange = event => {
@@ -9,7 +10,11 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
   }
 
   const handleSend = () => {
-    sendMessage(inputValue)
+    sendMessage(inputValue, recipients)
+  }
+
+  const handleSelect = event => {
+    event.target
   }
 
   return <>
@@ -114,7 +119,9 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
                       </List.Content>
                     </Grid.Column>
                     <Grid.Column floated='right' width={3}>
-                      <Checkbox />
+                      <div className="ui checkbox">
+                       <input onClick={handleSelect} userid={user.id}/>
+                      </div>
                     </Grid.Column>
                   </Grid>
                 </List.Item>
@@ -125,7 +132,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
           <Grid.Column>
             <List divided relaxed>
               {messageArray.map(message => {
-                return <div key={message.timestamp}>
+                return <div key={message.timestamp+message.id}>
                   <Segment.Group horizontal>
                     <Segment compact>{message.userName}</Segment>
                     <Segment compact>{message.messageText}</Segment>
