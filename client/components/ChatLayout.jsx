@@ -39,7 +39,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
                       <input placeholder='session ID' />
                     </Form.Field>
                     <Button animated='fade' color='violet' fluid >
-                      <Button.Content visible>Begin New Adventure Now <Icon name='copy'/></Button.Content>
+                      <Button.Content visible>Begin New Adventure Now<Icon name='copy'/></Button.Content>
                       <Button.Content hidden>Copy ID </Button.Content>
                     </Button>
                   </Form>
