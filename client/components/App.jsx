@@ -8,7 +8,7 @@ import ReactDOM from '../index'
 // client consts
 const socket = io()
 const ssID = window.location.pathname.slice(1)
-const fullPath = window.location.href
+const fullPath = window.location
 
 // client-only functions
 const saveSession = userObj => {
