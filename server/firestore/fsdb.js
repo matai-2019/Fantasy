@@ -102,23 +102,6 @@ const addMessage = (sessionId, userName, recipients, messageText) => {
     })
 }
 
-// const removeRecipientFromMsg = (sessionId, Userid) => {
-//   return db.collection(sessionId).doc('Messages').get()
-//   .then(obj => {
-//     obj = obj.data()
-//       let removed = obj.users.filter(user => user.id === Userid)[0]
-//       let index = obj.users.indexOf(removed)
-//       index = index === -1 ? null : obj.users.splice(index, 1)
-//       return obj
-//     })
-//     .then((obj) => {
-//       return db.collection(sessionId).doc('Users').set(obj)
-//         .then(() => {
-//           return obj
-//         })
-//     })
-// }
-
 const resetFirestore = (sessionId) => {
   return db.collection(sessionId).doc('Users').delete()
     .then(function () {
@@ -142,6 +125,5 @@ export {
   addMessage,
   getAllMessages,
   getViewableMessages,
-  removeRecipientFromMsg,
   resetFirestore
 }
