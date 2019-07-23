@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { getAllUsers } from '../../server/firestore/fsdb'
 import { Container, Button, Icon, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
-import AdminLayout from './AdminLayout'
 
-function LoginForm ({ setUserName, userArray }) {
+function LoginForm ({ setUserName, userArray, ssID }) {
   let inputValue = ''
 
   const handleChange = (evt) => {
@@ -10,10 +10,16 @@ function LoginForm ({ setUserName, userArray }) {
   }
 
   const handleSubmit = () => {
-    if (userArray.length >= 7) {
-      // thou shout not pass
-      document.getElementById('loginInput').value = 'you shall not pass'
-    } else setUserName(inputValue)
+    getAllUsers(ssID)
+      .then(obj => {
+        if (userArray.length >= 7) {
+          document.getElementById('loginInput').value = ''
+          document.getElementById('loginInput').placeholder = 'Room is full!'
+        } else {
+          document.getElementById('loginInput').value = ''
+          setUserName(inputValue)
+        }
+      })
   }
 
   return (
