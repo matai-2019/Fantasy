@@ -109,7 +109,7 @@ class App extends Component {
   render () {
     return (
       <>
-        <div style={{ backgroundImage: './img/wp-1.jpg' }}>
+        <div>
           <br/>
           <h1 style={{ color: 'white' }} align="center">Welcome {sessionName}!</h1>
           {(sessionId)
