@@ -29,31 +29,32 @@ const loadSession = () => {
   userArray = (sessionStorage.getItem('users') === null) ? [] : JSON.parse(sessionStorage.getItem('users'))
   messageArray = (sessionStorage.getItem('messages') === null) ? [] : JSON.parse(sessionStorage.getItem('messages'))
 }
-const saveUser = (user) => {
-
-}
-const updateFromFS = () => {
+const pullFirestore = () => {
+  console.log(sessionId, '|', sessionName, '|', sessionAdmin)
   return getViewableMessages(ssID, Number(sessionId))
     .then(array => {
-      if (array) messageArray = array
       return getAllUsers(ssID)
         .then(obj => {
           userArray = obj.users
+          console.log('users', userArray)
+          if (array) {
+            messageArray = array
+            console.log('msgs', messageArray)
+          }
+          saveSession({ id: sessionId, isAdmin: sessionAdmin, userName: sessionName })
         })
     })
 }
 const renderUpdate = () => {
-  updateFromFS()
+  pullFirestore()
     .then(() => {
       ReactDOM.render(<App />, document.getElementById('app'))
     })
 }
 
 // socket events
-socket.on('load-user', () => {
-  socket.emit('set-state', { id: sessionId, isAdmin: sessionAdmin, userName: sessionName })
-})
 socket.on('update-sockets', () => {
+  console.log('updateSockets')
   renderUpdate()
 })
 socket.on('disconnect', () => {
@@ -70,15 +71,14 @@ renderUpdate()
 console.log('Session Obj', sessionName)
 
 class App extends Component {
-  state = {
-    user: { id: sessionId, isAdmin: sessionAdmin, userName: sessionName }
-  }
-
   setUserName = username => {
     addUser(ssID, username)
       .then(user => {
         saveSession(user)
+        socket.emit('set-state', { id: sessionId, isAdmin: sessionAdmin, userName: sessionName })
+        loadSession()
         socket.emit('change-occured')
+        console.log('setUserName')
       })
   }
 
@@ -91,6 +91,7 @@ class App extends Component {
         addMessage(ssID, sessionName, recipients, message)
           .then(obj => {
             socket.emit('change-occured')
+            console.log('sendMessage')
           })
       })
   }
