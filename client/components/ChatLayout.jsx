@@ -1,11 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { List, Button, Grid, Icon, Segment, Input, Checkbox, Container, Header, Modal, Form, Label, Image, Message, GridColumn } from 'semantic-ui-react'
+import { removeUser } from '../../server/firestore/fsdb'
 
 let inputValue = ''
 const recipients = []
 
-export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath }) => {
+export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, handleKickUser }) => {
   const handleChange = event => {
     inputValue = event.target.value
   }
@@ -24,6 +25,14 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath })
     let sessionID = document.getElementById('ssIDButton')
     sessionID.select()
     document.execCommand('copy')
+  }
+
+  const handleKick = event => {
+    return () => {
+      let userid = event
+      console.log('event', event)
+      handleKickUser(userid)
+    }
   }
 
   return <>
@@ -66,9 +75,9 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath })
                                 </List.Content>
                               </Grid.Column>
                               <Grid.Column floated="right">
-                                <Button color='red' type='Kill'>
+                                <button className="ui red button" color='red' type='Kill' onClick={handleKick(user.id)}>
                                   <Icon name='close' />
-                                  Del</Button>
+                                  Del</button>
                               </Grid.Column>
                             </Grid>
                           </List.Item>
@@ -90,7 +99,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath })
                     <List.Item>
                       <Grid columns={2} relaxed='very'>
                         <Grid.Column>
-                          <List.Header as='a'>{user.userName}</List.Header>
+                          <List.Header as='a'><h2>{user.userName}</h2></List.Header>
                         </Grid.Column>
                         <Grid.Column floated='right' width={3}>
                           <Checkbox />
@@ -105,10 +114,14 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath })
               <div>
                 {messageArray.map(message => {
                   return <div key={message.timestamp + message.id}>
-                    <Segment.Group horizontal>
-                      <Segment compact>{message.userName}</Segment>
-                      <Segment compact>{message.messageText}</Segment>
-                    </Segment.Group>
+                    <Segment style={{ padding: '5px', margin: '10px' }}>
+                      <div>{Date.now()}</div>
+                      <Message
+                        header={message.userName}
+                        content={message.messageText}
+                        // onDismiss={(event) => console.log(event.target)}
+                      />
+                    </Segment>
                   </div>
                 })}
               </div>
