@@ -111,7 +111,7 @@ class App extends Component {
       <>
         <div style={{ backgroundImage: './img/wp-1.jpg' }}>
           <br/>
-          <h1 align="center">Welcome to Fantasy!!!</h1>
+          <h1 style={{ color: 'white' }} align="center">Welcome {sessionName}!</h1>
           {(this.state.user.id)
             ? <ChatTemplate socket={socket} messageArray={messageArray} userArray={userArray} sendMessage={this.sendMessage}/>
             : <LoginLayout setUserName={this.setUserName} userArray={userArray}/>}
