@@ -5,6 +5,7 @@ import { List, Button, Grid, Icon, Segment, Input, Checkbox, Container, Header, 
 let inputValue = ''
 const recipients = ''
 
+
 export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
   const handleChange = event => {
     inputValue = event.target.value
@@ -76,7 +77,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
                     <List.Item>
                       <Grid columns={2} relaxed='very'>
                         <Grid.Column>
-                          <List.Header as='a'>{user.userName}</List.Header>
+                          <List.Header as='a'><h3>{user.userName}</h3></List.Header>
                         </Grid.Column>
                         <Grid.Column floated='right' width={3}>
                           <Checkbox />
@@ -91,17 +92,21 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
               <div>
                 {messageArray.map(message => {
                   return <div key={message.timestamp + message.id}>
-                    <Segment.Group horizontal>
-                      <Segment compact>{message.userName}</Segment>
-                      <Segment compact>{message.messageText}</Segment>
-                    </Segment.Group>
+                    <Segment style={{ padding: '5px', margin: '10px' }}>
+                      <div>21:39</div>
+                      <Message
+                        header={message.userName}
+                        content={message.messageText}
+                        onDismiss={(event) => console.log(event.target)}
+                      />
+                    </Segment>
                   </div>
                 })}
               </div>
             </Grid.Column>
           </Grid >
         </Segment>
-        <Input fluid action={<Button onClick={handleSend}>Send</Button>} id="messageInput" placeholder='Your message goes here...' onChange={handleChange}/>
+        <Input id='messageInput' fluid action={<Button onClick={handleSend}>Send</Button>} placeholder='Your message goes here...' onChange={handleChange}/>
       </Container>
     </div>
   </>
