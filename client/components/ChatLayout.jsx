@@ -6,7 +6,7 @@ import { removeUser } from '../../server/firestore/fsdb'
 let inputValue = ''
 const recipients = []
 
-export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, handleKickUser }) => {
+export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, handleKickUser, sessionAdmin }) => {
   const handleChange = event => {
     inputValue = event.target.value
   }
@@ -38,6 +38,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
   return <>
     <div>
       <Container inverted='true'>
+        { (sessionAdmin === 'true') ? <>
         <Modal trigger={<Button floated="left" animated='vertical' color='violet'>
           <Button.Content hidden>Admin</Button.Content>
           <Button.Content visible>
@@ -90,6 +91,9 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
             </p>
           </Modal.Content>
         </Modal>
+        </>
+          : <> </>
+        }
         <Segment inverted={true} as={Form}>
           <Grid columns={2} relaxed='very'>
             <Grid.Column floated="left" width={6} style={{ maxHeight: '400px' }}>
