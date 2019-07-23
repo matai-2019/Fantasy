@@ -103,10 +103,10 @@ test.skip('getAllUsers returns an array of 4 users', (done) => {
     })
 })
 
-test('removeUser removes a user', (done) => {
-  removeUser('testbed', 2)
+test.skip('removeUser removes a user', (done) => {
+  removeUser('testbed', 18)
     .then(obj => {
-      expect(obj.users).toHaveLength(10)
+      expect(obj.users).toHaveLength(15)
       done()
     })
 })
@@ -137,6 +137,15 @@ test.skip('addUser adds a new user to db with a sequential userId and if Admin a
 // addUser('TestBed', 'Wizard')getAllMessages
 //   .then(array => console.log(array))
 
+test.skip('getViewableMessages returns only viewable messages', (done) => {
+  getViewableMessages('TestBed2', 4)
+    .then(messages => {
+      console.log(messages)
+      expect(messages).toHaveLength(4)
+      done()
+    })
+})
+
 test.skip('getAllMessages returns an array of 4 messages', (done) => {
   getAllMessages('TestBed2')
     .then(obj => {
@@ -165,7 +174,7 @@ test.skip('getViewableMessages gets only messages a player can see', (done) => {
 test.skip('resetFirestore deletes a document', (done) => {
   resetFirestore('123456789012345')
     .then(() => {
-      expect(db.collection('123456789012345').doc('Users')).not(null)
+      expect(db.collection('123456789012345').doc('Users1')).not(null)
       done()
     })
 })
