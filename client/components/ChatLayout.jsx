@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { List, Button, Grid, Icon, Segment, Input, Checkbox, Container, Header, Modal, Form, Label, Image, Message } from 'semantic-ui-react'
-import TextareaAutosize from 'react-textarea-autosize'
 
 let inputValue = ''
 
@@ -18,9 +17,9 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
   }
 
   return <>
-    <div>
+    <div style={{ maxHeight: '400px' }}>
       <Container inverted>
-        <Modal trigger={<Button floated="right" animated='vertical' color='violet'>
+        <Modal trigger={<Button floated="left" animated='vertical' color='violet'>
           <Button.Content hidden>Admin</Button.Content>
           <Button.Content visible>
             <Icon name='cog' />
@@ -44,60 +43,26 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
                       </Button>
                     </Form>
                   </Grid.Column>
-                  <Grid.Column>
+
+                  <Grid.Column floated="right" width={6} style={{ maxHeight: '300px', overflowY: 'scroll' }}>
                     <List divided relaxed>
-                      <Grid relaxed='very'>
-                        <Grid.Column horizontal floated="right" width={8}>
-              User-1<Button color='red' type='Kill' onClick={handleSend}>
-                            <Icon name='close' />
-                Del</Button>
-                        </Grid.Column>
-                      </Grid>
-                    </List>
-                    <List divided relaxed>
-                      <Grid relaxed='very'>
-                        <Grid.Column horizontal floated="right" width={8}>
-              User-2 <Button color='red' type='Kill' onClick={handleSend}>
-                            <Icon name='close' />
-                Del</Button>
-                        </Grid.Column>
-                      </Grid>
-                    </List>
-                    <List divided relaxed>
-                      <Grid relaxed='very'>
-                        <Grid.Column horizontal floated="right" width={8}>
-              User-3 <Button color='red' type='Kill' onClick={handleSend}>
-                            <Icon name='close' />
-                Del</Button>
-                        </Grid.Column>
-                      </Grid>
-                    </List>
-                    <List divided relaxed>
-                      <Grid relaxed='very'>
-                        <Grid.Column horizontal floated="right" width={8}>
-              User-4 <Button color='red' type='Kill' onClick={handleSend}>
-                            <Icon name='close' />
-                Del</Button>
-                        </Grid.Column>
-                      </Grid>
-                    </List>
-                    <List divided relaxed>
-                      <Grid relaxed='very'>
-                        <Grid.Column horizontal floated="right" width={8}>
-              User-5 <Button color='red' type='Kill' onClick={handleSend}>
-                            <Icon name='close' />
-                Del</Button>
-                        </Grid.Column>
-                      </Grid>
-                    </List>
-                    <List divided relaxed>
-                      <Grid relaxed='very'>
-                        <Grid.Column horizontal floated="right" width={8}>
-              User-6 <Button color='red' type='Kill' onClick={handleSend}>
-                            <Icon name='close' />
-                Del</Button>
-                        </Grid.Column>
-                      </Grid>
+                      {userArray.map(user => {
+                        return <>
+                              <List.Item>
+                                <Grid columns={2} relaxed='very'>
+                                  <Grid.Column>
+                                    <List.Content>
+                                      <List.Header as='a'><h3>{user.userName}</h3><Button color='red' type='Kill' onClick={handleSend}>
+                                        <Icon name='close' />
+                              Del</Button></List.Header>
+                                    </List.Content>
+                                  </Grid.Column>
+                                  <Grid.Column floated='right' width={3}>
+                                  </Grid.Column>
+                                </Grid>
+                              </List.Item>
+                            </>
+                      })}
                     </List>
                   </Grid.Column>
                 </Grid>
@@ -107,7 +72,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
         </Modal>
         <Segment inverted as={Form}>
           <Grid columns={2} relaxed='very'>
-            <Grid.Column floated="left" width={6}>
+            <Grid.Column floated="left" width={6} style={{ maxHeight: '400px' }}>
               <List divided relaxed>
                 {userArray.map(user => {
                   return <>
@@ -127,7 +92,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
                 })}
               </List>
             </Grid.Column >
-            <Grid.Column style={{ maxHeight: '850px', overflowY: 'scroll' }}>
+            <Grid.Column style={{ maxHeight: '400px', overflowY: 'scroll' }}>
               <div >
                 {messageArray.map(message => {
                   return <div key={message.timestamp + message.id}>
