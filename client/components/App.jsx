@@ -21,6 +21,7 @@ const saveSession = userObj => {
   sessionId = id
   sessionAdmin = isAdmin
   sessionName = userName
+
 }
 const loadSession = () => {
   sessionId = sessionStorage.getItem('id')
@@ -91,7 +92,7 @@ class App extends Component {
         addMessage(ssID, sessionName, recipients, message)
           .then(obj => {
             socket.emit('change-occured')
-            console.log('sendMessage')
+            // console.log('sendMessage')
           })
       })
   }
@@ -117,3 +118,4 @@ class App extends Component {
 }
 
 export default App
+
