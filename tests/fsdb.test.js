@@ -104,7 +104,7 @@ test.skip('getAllUsers returns an array of 4 users', (done) => {
 })
 
 test.skip('removeUser removes a user', (done) => {
-  removeUser('testbed', 15)
+  removeUser('testbed', 18)
     .then(obj => {
       expect(obj.users).toHaveLength(15)
       done()
@@ -165,7 +165,7 @@ test.skip('getViewableMessages gets only messages a player can see', (done) => {
 test.skip('resetFirestore deletes a document', (done) => {
   resetFirestore('123456789012345')
     .then(() => {
-      expect(db.collection('123456789012345').doc('Users')).not(null)
+      expect(db.collection('123456789012345').doc('Users1')).not(null)
       done()
     })
 })
