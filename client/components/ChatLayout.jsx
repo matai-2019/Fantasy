@@ -2,7 +2,7 @@ import React from 'react'
 import { List, Button, Grid, Icon, Segment, Input, Checkbox, Container, Header, Modal, Form, Label, Image, Message, GridColumn } from 'semantic-ui-react'
 
 let inputValue = ''
-const recipients = ''
+const recipients = []
 
 export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
   const handleChange = event => {
@@ -10,7 +10,13 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
   }
 
   const handleSend = () => {
-    if (inputValue.length > 0) sendMessage(inputValue)
+    if (inputValue.length > 0) sendMessage(inputValue, recipients)
+  }
+  
+  const handleSelect = event => {
+    const userID = event.target
+    console.log(userID)
+    recipients.push(userID)
   }
 
   return <>
@@ -71,14 +77,16 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
             <Grid.Column floated="left" width={6} style={{ maxHeight: '400px' }}>
               <List divided relaxed>
                 {userArray.map(user => {
-                  return <>
+                  if (!user.isAdmin) return <>
                         <List.Item>
                           <Grid columns={2} relaxed='very'>
                             <Grid.Column>
                               <List.Header as='a'>{user.userName}</List.Header>
                             </Grid.Column>
                             <Grid.Column floated='right' width={3}>
-                              <Checkbox />
+                            <div className="ui checkbox">
+                              <input userid={user.id} onClick={handleSelect} style={{height: '10px', width: '10px'}}></input>
+                            </div>
                             </Grid.Column>
                           </Grid>
                         </List.Item>
