@@ -1,10 +1,11 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import { List, Button, Grid, Icon, Segment, Input, Checkbox, Container, Header, Modal, Form, Label, Image, Message, GridColumn } from 'semantic-ui-react'
 
 let inputValue = ''
 const recipients = ''
 
-export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
+export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath }) => {
   const handleChange = event => {
     inputValue = event.target.value
   }
@@ -13,9 +14,15 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
     if (inputValue.length > 0) sendMessage(inputValue)
   }
 
+  const handleAddSession = event => {
+    let sessionID = document.getElementById('ssIDButton')
+    sessionID.select()
+    document.execCommand('copy')
+  }
+
   return <>
-    <div style={{ maxHeight: '400px' }}>
-      <Container inverted>
+    <div>
+      <Container inverted='true'>
         <Modal trigger={<Button floated="left" animated='vertical' color='violet'>
           <Button.Content hidden>Admin</Button.Content>
           <Button.Content visible>
@@ -26,38 +33,40 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
           <br></br>
           <Modal.Content>
             <p>
-              <Segment inverted>
+              <Segment inverted={true}>
                 <Grid columns={2} relaxed='very'>
                   <Grid.Column floated="left" width={7}>
                     <Form>
                       <Form.Field>
-                        <input placeholder='session ID' />
+                        <div placeholder='session ID'></div>
                       </Form.Field>
-                      <Button animated='fade' color='violet' fluid >
-                        <Button.Content visible>Begin New Adventure Now <Icon name='copy'/></Button.Content>
-                        <Button.Content hidden>Copy ID </Button.Content>
-                      </Button>
+                      <div className="ui action input">
+                        <input type="text" value={`${fullPath}`} onClick={handleAddSession} id='ssIDButton'/>
+                        <button className="ui teal right labeled icon button">
+                          Copy This URL
+                        </button>
+                      </div>
                     </Form>
                   </Grid.Column>
                   <Grid.Column floated="right" width={7} style={{ maxHeight: '300px', overflowY: 'scroll' }}>
                     <List divided relaxed>
                       {userArray.map(user => {
-                        return <>
-                            <List.Item>
-                              <Grid columns={2} relaxed='very'>
-                                <Grid.Column floated="left">
-                                  <List.Content>
-                                    <List><h3>{user.userName}</h3></List>
-                                  </List.Content>
-                                </Grid.Column>
-                                <Grid.Column floated="right">
-                                  <Button color='red' type='Kill'>
-                                    <Icon name='close' />
-                                      Del</Button>
-                                </Grid.Column>
-                              </Grid>
-                            </List.Item>
-                          </>
+                        return <div key={user.id}>
+                          <List.Item>
+                            <Grid columns={2} relaxed='very'>
+                              <Grid.Column floated="left">
+                                <List.Content>
+                                  <List><h3>{user.userName}</h3></List>
+                                </List.Content>
+                              </Grid.Column>
+                              <Grid.Column floated="right">
+                                <Button color='red' type='Kill'>
+                                  <Icon name='close' />
+                                  Del</Button>
+                              </Grid.Column>
+                            </Grid>
+                          </List.Item>
+                        </div>
                       })}
                     </List>
                   </Grid.Column>
@@ -66,30 +75,28 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
             </p>
           </Modal.Content>
         </Modal>
-        <Segment inverted as={Form}>
+        <Segment inverted={true} as={Form}>
           <Grid columns={2} relaxed='very'>
             <Grid.Column floated="left" width={6} style={{ maxHeight: '400px' }}>
               <List divided relaxed>
                 {userArray.map(user => {
-                  return <>
-                        <List.Item>
-                          <Grid columns={2} relaxed='very'>
-                            <Grid.Column>
-                              <List.Header as='a'>{user.userName}</List.Header>
-                            </Grid.Column>
-                            <Grid.Column floated='right' width={3}>
-
-                              <Checkbox />
-
-                            </Grid.Column>
-                          </Grid>
-                        </List.Item>
-                      </>
+                  return <div key={user.id}>
+                    <List.Item>
+                      <Grid columns={2} relaxed='very'>
+                        <Grid.Column>
+                          <List.Header as='a'>{user.userName}</List.Header>
+                        </Grid.Column>
+                        <Grid.Column floated='right' width={3}>
+                          <Checkbox />
+                        </Grid.Column>
+                      </Grid>
+                    </List.Item>
+                  </div>
                 })}
               </List>
             </Grid.Column >
             <Grid.Column style={{ maxHeight: '400px', overflowY: 'scroll' }}>
-              <div >
+              <div>
                 {messageArray.map(message => {
                   return <div key={message.timestamp + message.id}>
                     <Segment.Group horizontal>
@@ -102,7 +109,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
             </Grid.Column>
           </Grid >
         </Segment>
-        <Input fluid action={<Button onClick={handleSend}>Send</Button>} id="messageInput" placeholder='Your message goes here...' onChange={handleChange}/>
+        <Input fluid action={<Button onClick={handleSend}>Send</Button>} id="messageInput" placeholder='Your message goes here...' onChange={handleChange} />
       </Container>
     </div>
   </>
