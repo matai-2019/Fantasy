@@ -93,7 +93,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
                     <List.Item>
                       <Grid columns={2} relaxed='very'>
                         <Grid.Column>
-                          <List.Header as='a'>{user.userName}</List.Header>
+                          <List.Header as='a'><h2>{user.userName}</h2></List.Header>
                         </Grid.Column>
                         <Grid.Column floated='right' width={3}>
                           <Checkbox />
@@ -108,10 +108,14 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
               <div>
                 {messageArray.map(message => {
                   return <div key={message.timestamp + message.id}>
-                    <Segment.Group horizontal>
-                      <Segment compact>{message.userName}</Segment>
-                      <Segment compact>{message.messageText}</Segment>
-                    </Segment.Group>
+                    <Segment style={{ padding: '5px', margin: '10px' }}>
+                      <div>{Date.now()}</div>
+                      <Message
+                        header={message.userName}
+                        content={message.messageText}
+                        // onDismiss={(event) => console.log(event.target)}
+                      />
+                    </Segment>
                   </div>
                 })}
               </div>
