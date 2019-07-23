@@ -1,7 +1,15 @@
 import React, { Component } from 'react'
 import LoginLayout from './LoginLayout'
 import { ChatTemplate } from './ChatLayout'
-import { getAllUsers, getAllMessages, addUser, removeUser, addMessage, getNewID, getViewableMessages, resetFirestore } from '../../server/firestore/fsdb'
+import { getAllUsers,
+  getAllMessages,
+  addUser,
+  removeUser,
+  addMessage,
+  getNewID,
+  getViewableMessages,
+  resetFirestore
+} from '../../server/firestore/fsdb'
 import io from 'socket.io-client'
 import ReactDOM from '../index'
 
@@ -30,16 +38,13 @@ const loadSession = () => {
   messageArray = (sessionStorage.getItem('messages') === null) ? [] : JSON.parse(sessionStorage.getItem('messages'))
 }
 const pullFirestore = () => {
-  console.log(sessionId, '|', sessionName, '|', sessionAdmin)
   return getViewableMessages(ssID, Number(sessionId))
     .then(array => {
       return getAllUsers(ssID)
         .then(obj => {
           userArray = obj.users
-          console.log('users', userArray)
           if (array) {
             messageArray = array
-            console.log('msgs', messageArray)
           }
           saveSession({ id: sessionId, isAdmin: sessionAdmin, userName: sessionName })
         })
