@@ -10,7 +10,7 @@ function LoginForm ({ setUserName, userArray }) {
   }
 
   const handleSubmit = () => {
-    if (userArray.length >= 7 ) {
+    if (userArray.length >= 7) {
       // thou shout not pass
       document.getElementById('loginInput').value = 'you shall not pass'
     } else setUserName(inputValue)

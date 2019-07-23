@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { List, Button, Grid, Icon, Segment, Input, Checkbox, Container, Header, Modal, Form, Label, Image, Message, GridColumn } from 'semantic-ui-react'
 
 let inputValue = ''
+const recipients = ''
 
 export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
   const handleChange = event => {
@@ -11,9 +12,6 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
 
   const handleSend = () => {
     if (inputValue.length > 0) sendMessage(inputValue)
-    else {
-
-    }
   }
 
   return <>
@@ -34,7 +32,6 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
                   <Grid.Column floated="left" width={7}>
                     <Form>
                       <Form.Field>
-                        {/* <label>Dungeon Name</label> */}
                         <input placeholder='session ID' />
                       </Form.Field>
                       <Button animated='fade' color='violet' fluid >
@@ -76,19 +73,19 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
               <List divided relaxed>
                 {userArray.map(user => {
                   return <>
-                <List.Item>
-                  <Grid columns={2} relaxed='very'>
-                    <Grid.Column>
-                      <List.Content>
-                        <List.Header as='a'><h2>{user.userName}</h2></List.Header>
-                      </List.Content>
-                    </Grid.Column>
-                    <Grid.Column floated='right' width={3}>
-                      <Checkbox />
-                    </Grid.Column>
-                  </Grid>
-                </List.Item>
-              </>
+                        <List.Item>
+                          <Grid columns={2} relaxed='very'>
+                            <Grid.Column>
+                              <List.Header as='a'>{user.userName}</List.Header>
+                            </Grid.Column>
+                            <Grid.Column floated='right' width={3}>
+
+                              <Checkbox />
+
+                            </Grid.Column>
+                          </Grid>
+                        </List.Item>
+                      </>
                 })}
               </List>
             </Grid.Column >
@@ -108,7 +105,6 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
         </Segment>
         <Input fluid action={<Button onClick={handleSend}>Send</Button>} id="messageInput" placeholder='Your message goes here...' onChange={handleChange}/>
       </Container>
-      <br></br>
-    </div >
-    </>
+    </div>
+  </>
 }

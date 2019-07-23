@@ -138,10 +138,10 @@ test.skip('addUser adds a new user to db with a sequential userId and if Admin a
 //   .then(array => console.log(array))
 
 test.skip('getViewableMessages returns only viewable messages', (done) => {
-  getViewableMessages('TestBed2', 4)
+  getViewableMessages('TestBed', 10)
     .then(messages => {
       console.log(messages)
-      expect(messages).toHaveLength(4)
+      expect(messages).toHaveLength(2)
       done()
     })
 })
@@ -163,13 +163,13 @@ test.skip('addMessage adds a new message to db', (done) => {
     })
 })
 
-test.skip('getViewableMessages gets only messages a player can see', (done) => {
-  getViewableMessages('TestBed2', '2')
-    .then(userMessages => {
-      console.log(userMessages)
-      done()
-    })
-})
+// test.skip('getViewableMessages gets only messages a player can see', (done) => {
+//   getViewableMessages('TestBed2', '2')
+//     .then(userMessages => {
+//       console.log(userMessages)
+//       done()
+//     })
+// })
 
 test.skip('resetFirestore deletes a document', (done) => {
   resetFirestore('123456789012345')
