@@ -46,6 +46,13 @@ const saveUsers = () => {
 const renderDOM = () => {
   ReactDOM.render(<App />, document.getElementById('app'))
 }
+// const kickUser = (userID) => {
+//   removeUser(ssID, userID)
+//     .then(obj => {
+//       userArray = obj.users
+//       renderDOM()
+//     })
+// }
 
 // socket events
 socket.on('load-user', () => {
