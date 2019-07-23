@@ -113,7 +113,10 @@ class App extends Component {
               messageArray={messageArray}
               userArray={userArray}
               sendMessage={this.sendMessage}
-              fullPath={fullPath}/>
+              fullPath={fullPath}
+              handleKickUser={handleKickUser}
+              sessionAdmin={sessionAdmin}
+            />
             : <LoginLayout ssID={ssID} setUserName={this.setUserName} userArray={userArray}/>}
         </div>
       </>
