@@ -1,5 +1,6 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
+import { arrayExpression } from '@babel/types'
 const firebaseConfig = {
   apiKey: 'AIzaSyAGK7lTDySjyb-huj2kUzjSoz_pSsLmafM',
   authDomain: 'fantasy-scroll.firebaseapp.com',
@@ -80,13 +81,14 @@ const getAllMessages = (sessionId) => {
 }
 
 const getViewableMessages = (sessionId, userId) => {
+  let newArr = []
   return db.collection(sessionId).doc('Messages').get()
     .then(data => {
       const obj = data.data()
       obj.messages.forEach(message => {
-        return (message.recipients.includes(userId))
+        if (message.recipients.includes(userId)) newArr.push(message)
       })
-      return obj
+      return newArr
     })
 }
 
