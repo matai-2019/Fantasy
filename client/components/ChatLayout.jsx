@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { List, Button, Grid, Icon, Segment, Input, Checkbox, Container, Header, Modal, Form, Label, Image, Message } from 'semantic-ui-react'
+import { List, Button, Grid, Icon, Segment, Input, Checkbox, Container, Header, Modal, Form, Label, Image, Message, GridColumn } from 'semantic-ui-react'
 
 let inputValue = ''
 
@@ -34,7 +34,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
                   <Grid.Column floated="left" width={7}>
                     <Form>
                       <Form.Field>
-                        <label>Dungeon Name</label>
+                        {/* <label>Dungeon Name</label> */}
                         <input placeholder='session ID' />
                       </Form.Field>
                       <Button animated='fade' color='violet' fluid >
@@ -43,25 +43,25 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
                       </Button>
                     </Form>
                   </Grid.Column>
-
-                  <Grid.Column floated="right" width={6} style={{ maxHeight: '300px', overflowY: 'scroll' }}>
+                  <Grid.Column floated="right" width={7} style={{ maxHeight: '300px', overflowY: 'scroll' }}>
                     <List divided relaxed>
                       {userArray.map(user => {
                         return <>
-                              <List.Item>
-                                <Grid columns={2} relaxed='very'>
-                                  <Grid.Column>
-                                    <List.Content>
-                                      <List.Header as='a'><h3>{user.userName}</h3><Button color='red' type='Kill' onClick={handleSend}>
-                                        <Icon name='close' />
-                              Del</Button></List.Header>
-                                    </List.Content>
-                                  </Grid.Column>
-                                  <Grid.Column floated='right' width={3}>
-                                  </Grid.Column>
-                                </Grid>
-                              </List.Item>
-                            </>
+                            <List.Item>
+                              <Grid columns={2} relaxed='very'>
+                                <Grid.Column floated="left">
+                                  <List.Content>
+                                    <List><h3>{user.userName}</h3></List>
+                                  </List.Content>
+                                </Grid.Column>
+                                <Grid.Column floated="right">
+                                  <Button color='red' type='Kill'>
+                                    <Icon name='close' />
+                                      Del</Button>
+                                </Grid.Column>
+                              </Grid>
+                            </List.Item>
+                          </>
                       })}
                     </List>
                   </Grid.Column>
@@ -106,9 +106,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
             </Grid.Column>
           </Grid >
         </Segment>
-
         <Input fluid action={<Button onClick={handleSend}>Send</Button>} id="messageInput" placeholder='Your message goes here...' onChange={handleChange}/>
-        {/* <Button floated='right' type='submit' onClick={handleSend}>Send</Button> */}
       </Container>
       <br></br>
     </div >
