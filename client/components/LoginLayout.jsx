@@ -10,7 +10,7 @@ function LoginForm ({ setUserName, userArray }) {
   }
 
   const handleSubmit = () => {
-    if (userArray.length >= 7 ) {
+    if (userArray.length >= 7) {
       // thou shout not pass
       document.getElementById('loginInput').value = 'you shall not pass'
     } else setUserName(inputValue)
@@ -28,7 +28,7 @@ function LoginForm ({ setUserName, userArray }) {
             <h1>Brace Yourself <Icon name='grunt' size='large' /></h1>
           </Header>
           <Form onSubmit={handleSubmit} size='large'>
-            <Segment stacked>
+            <Segment stacked inverted>
               <Form.Input
                 id="loginInput"
                 fluid icon='user'
@@ -36,7 +36,7 @@ function LoginForm ({ setUserName, userArray }) {
                 defaultValue=''
                 onChange={handleChange}
                 placeholder='Username' />
-              <Button color='violet' fluid size='large' type='submit'>
+              <Button id='loginButton' color='violet' fluid size='large' type='submit'>
                 <h3>Start New Adventure</h3>
               </Button>
             </Segment>

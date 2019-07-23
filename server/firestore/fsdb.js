@@ -62,7 +62,7 @@ const removeUser = (sessionId, Userid) => {
   return db.collection(sessionId).doc('Users').get()
     .then(obj => {
       obj = obj.data()
-      let removed = obj.users.filter(user => user.id === Userid)[0]
+      const removed = obj.users.filter(user => user.id === Userid)[0]
       let index = obj.users.indexOf(removed)
       index = index === -1 ? null : obj.users.splice(index, 1)
       return obj
@@ -81,7 +81,7 @@ const getAllMessages = (sessionId) => {
 }
 
 const getViewableMessages = (sessionId, userId) => {
-  let newArr = []
+  const newArr = []
   return db.collection(sessionId).doc('Messages').get()
     .then(data => {
       const obj = data.data()
