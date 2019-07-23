@@ -25,14 +25,14 @@ const loadSession = () => {
   sessionId = sessionStorage.getItem('id')
   sessionAdmin = sessionStorage.getItem('isAdmin')
   sessionName = sessionStorage.getItem('userName')
-  userArray = JSON.parse(sessionStorage.getItem('users'))
-  messageArray = JSON.parse(sessionStorage.getItem('messages'))
+  userArray = (sessionStorage.getItem('users') === null) ? [] : JSON.parse(sessionStorage.getItem('users'))
+  messageArray = (sessionStorage.getItem('messages') === null) ? [] : JSON.parse(sessionStorage.getItem('messages'))
 }
 const saveMessages = () => {
   loadSession()
   return getViewableMessages(ssID, Number(sessionId))
     .then(obj => {
-      messageArray = obj
+      if (obj) messageArray = obj
       return obj
     })
 }
@@ -51,17 +51,13 @@ const renderDOM = () => {
 socket.on('load-user', () => {
   socket.emit('set-state', { id: sessionId, isAdmin: sessionAdmin, userName: sessionName })
 })
-
 socket.on('pull-messages', () => {
-  console.log('received pull-messages')
   saveMessages()
     .then(() => {
       renderDOM()
     })
 })
-
 socket.on('pull-users', () => {
-  console.log('received pull-users')
   saveUsers()
     .then(() => {
       renderDOM()
@@ -72,13 +68,14 @@ socket.on('disconnect', () => {
 
 // Variables for client + App class interaction
 let sessionId, sessionAdmin, sessionName
-let messageArray = []
 let userArray = []
+let messageArray = []
 
 // onLoad functions
+saveUsers()
+saveMessages()
 loadSession()
 console.log('Session Obj', sessionName)
-console.log('SESSIONID', ssID)
 
 class App extends Component {
   state = {
@@ -117,7 +114,7 @@ class App extends Component {
           <h1 align="center">Welcome to Fantasy!!!</h1>
           {(this.state.user.id)
             ? <ChatTemplate socket={socket} messageArray={messageArray} userArray={userArray} sendMessage={this.sendMessage}/>
-            : <LoginLayout setUserName={this.setUserName}/>}
+            : <LoginLayout setUserName={this.setUserName} userArray={userArray}/>}
         </div>
       </>
     )
