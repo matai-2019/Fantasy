@@ -84,7 +84,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath })
                     <List.Item>
                       <Grid columns={2} relaxed='very'>
                         <Grid.Column>
-                          <List.Header as='a'><h3>{user.userName}</h3></List.Header>
+                          <List.Header as='a'><h2>{user.userName}</h2></List.Header>
                         </Grid.Column>
                         <Grid.Column floated='right' width={3}>
                           <Checkbox />
@@ -100,11 +100,11 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath })
                 {messageArray.map(message => {
                   return <div key={message.timestamp + message.id}>
                     <Segment style={{ padding: '5px', margin: '10px' }}>
-                      {/* <div>{txtTo.Text = DateTime.Now.ToString('MM/dd/yyyy HH:mm:ss')}</div> */}
+                      <div>{Date.now()}</div>
                       <Message
                         header={message.userName}
                         content={message.messageText}
-                        onDismiss={(event) => console.log(event.target)}
+                        // onDismiss={(event) => console.log(event.target)}
                       />
                     </Segment>
                   </div>
