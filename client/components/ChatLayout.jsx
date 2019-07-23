@@ -14,7 +14,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
   }
 
   return <>
-    <div style={{ maxHeight: '400px' }}>
+    <div>
       <Container inverted>
         <Modal trigger={<Button floated="left" animated='vertical' color='violet'>
           <Button.Content hidden>Admin</Button.Content>
@@ -78,9 +78,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage }) => {
                               <List.Header as='a'>{user.userName}</List.Header>
                             </Grid.Column>
                             <Grid.Column floated='right' width={3}>
-
                               <Checkbox />
-
                             </Grid.Column>
                           </Grid>
                         </List.Item>
