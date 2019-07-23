@@ -8,6 +8,7 @@ import ReactDOM from '../index'
 // client consts
 const socket = io()
 const ssID = window.location.pathname.slice(1)
+const fullPath = window.location.href
 
 // client-only functions
 const saveSession = userObj => {
@@ -117,7 +118,7 @@ class App extends Component {
             messageArray={messageArray} 
             userArray={userArray} 
             sendMessage={this.sendMessage} 
-            ssID={ssID}/>
+            fullPath={fullPath}/>
             : <LoginLayout setUserName={this.setUserName} userArray={userArray}/>}
         </div>
       </>

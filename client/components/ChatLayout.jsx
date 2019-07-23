@@ -5,7 +5,7 @@ import { List, Button, Grid, Icon, Segment, Input, Checkbox, Container, Header, 
 let inputValue = ''
 const recipients = ''
 
-export const ChatTemplate = ({ userArray, messageArray, sendMessage, ssID }) => {
+export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath }) => {
   const handleChange = event => {
     inputValue = event.target.value
   }
@@ -41,10 +41,9 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, ssID }) => 
                         <div placeholder='session ID'></div>
                       </Form.Field>
                       <div className="ui action input">
-                        <input type="text" value={`${ssID}`} onClick={handleAddSession} id='ssIDButton'/>
+                        <input type="text" value={`${fullPath}`} onClick={handleAddSession} id='ssIDButton'/>
                         <button className="ui teal right labeled icon button">
-                          <i className="copy icon"></i>
-                          Copy
+                          Copy This URL
                         </button>
                       </div>
                     </Form>
