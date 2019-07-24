@@ -1,6 +1,5 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
-import { arrayExpression } from '@babel/types'
 const firebaseConfig = {
   apiKey: 'AIzaSyAGK7lTDySjyb-huj2kUzjSoz_pSsLmafM',
   authDomain: 'fantasy-scroll.firebaseapp.com',
