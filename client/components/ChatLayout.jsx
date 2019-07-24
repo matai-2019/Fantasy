@@ -5,7 +5,7 @@ let inputValue = ''
 let recipients = []
 let userNames = []
 
-export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, handleKickUser, sessionId, sessionAdmin, renderApp, handleResetFirestore }) => {
+export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, handleKickUser, sessionName, sessionId, sessionAdmin, renderApp, handleResetFirestore }) => {
   const handleChange = event => {
     inputValue = event.target.value
   }
@@ -65,6 +65,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
   return <>
     <div>
       <Container inverted='true' style={{ minHeight: '80vh' }}>
+        {<h1 style={{ color: 'white' }} align="center">Welcome {sessionName}</h1>}
         { (sessionAdmin === 'true') ? <>
         <Modal trigger={<Button floated="left" animated='vertical' color='violet'>
           <Button.Content hidden>Admin</Button.Content>
@@ -96,7 +97,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
                       </Form.Field>
                       <div className="ui action input">
                         <button className="ui red button" type="text" value='Delete Session' onClick={handleResetFirestore} id='ssIDButton'>
-                          Delete Users and Chats
+                            Delete Users and Chats
                         </button>
                       </div>
                     </Form>
@@ -115,7 +116,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
                               <Grid.Column floated="right">
                                 <button className="ui red button" color='red' type='Kill' onClick={handleKick(user.id)}>
                                   <Icon name='close' />
-                                  Del</button>
+                                    Del</button>
                               </Grid.Column>
                             </Grid>
                           </List.Item>
@@ -159,7 +160,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
                       <Message
                         header={secondsToDate(message.timestamp) + ' | ' + message.userName}
                         content={message.messageText}
-                        // onDismiss={(event) => console.log(event.target)}
+                      // onDismiss={(event) => console.log(event.target)}
                       />
                     </Segment>
                   </div>

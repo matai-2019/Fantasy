@@ -1,6 +1,6 @@
 import React from 'react'
 import { getAllUsers } from '../../server/firestore/fsdb'
-import { Container, Button, Icon, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { Container, Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
 
 function LoginForm ({ setUserName, userArray, ssID }) {
   let inputValue = ''
@@ -15,20 +15,25 @@ function LoginForm ({ setUserName, userArray, ssID }) {
         if (userArray.length >= 7) {
           document.getElementById('loginInput').value = ''
           document.getElementById('loginInput').placeholder = 'Room is full!'
-        } else {
+        } 
+        else if (inputValue.length > 0) {
           document.getElementById('loginInput').value = ''
           setUserName(inputValue)
         }
+        else {
+          document.getElementById('loginInput').value = ''
+          document.getElementById('loginInput').placeholder = 'Please enter a username'
+          document.getElementById('loginInput').focus()
+        }
       })
   }
-  // style={{backgroundImage:"url(../img/death-min.gif)", backgroundRepeat:"no-repeat", backgroundSize:"cover", backgroundPosition:"center", width: "100%", height:"755px"}} 
   return (
         <div >
     <Container>
-      <Grid textAlign='center' style={{ height: '90vh', marginTop: '50x' }} verticalAlign='middle'>
+      <Grid textAlign='center' style={{ height: '85vh' }} verticalAlign='middle'>
         <Grid.Column style={{ maxWidth: 650 }}>
           <Message>
-            <h2>Welcome to Dungeons &#38; Dragons</h2>
+            <h2>Welcome to Fantasy</h2>
           </Message>
           <Header as='h2' color='violet' textAlign='center'>
           </Header>

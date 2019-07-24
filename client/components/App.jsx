@@ -39,9 +39,12 @@ const loadSession = () => {
   userArray = JSON.parse(sessionStorage.getItem('users'))
   messageArray = JSON.parse(sessionStorage.getItem('messages'))
 
-  const loggedIn = userArray.filter(user => {
-    return (user.id === sessObj.id && user.isAdmin === sessObj.isAdmin && user.userName === sessObj.userName)
-  }).length
+  let loggedIn = 0
+  if (userArray !== null) {
+    loggedIn = userArray.filter(user => {
+      return (user.id === sessObj.id && user.isAdmin === sessObj.isAdmin && user.userName === sessObj.userName)
+    }).length
+  }
   sessionId = loggedIn ? sessObj.id : null
   sessionAdmin = loggedIn ? sessObj.isAdmin : null
   sessionName = loggedIn ? sessObj.userName : null
@@ -73,6 +76,14 @@ const handleKickUser = (userid) => {
       socket.emit('change-occured')
     })
 }
+
+const handleResetFirestore = () => {
+  resetFirestore(ssID)
+    .then(() => {
+      socket.emit('change-occured')
+    })
+}
+
 const renderApp = () => {
   ReactDOM.render(<App />, document.getElementById('app'))
   const scrollDiv = document.getElementById('messageScroller')
@@ -141,8 +152,10 @@ class App extends Component {
                 sendMessage={this.sendMessage}
                 fullPath={fullPath}
                 handleKickUser={handleKickUser}
+                handleResetFirestore={handleResetFirestore}
                 sessionAdmin={sessionAdmin}
                 sessionId={sessionId}
+                sessionName={sessionName}
                 renderApp={renderApp}
               />
               : <LoginLayout ssID={ssID} setUserName={this.setUserName} userArray={userArray}/>
