@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import LoginLayout from './LoginLayout'
 import { ChatTemplate } from './ChatLayout'
-import {
-  getAllUsers,
+import { Dimmer, Loader } from 'semantic-ui-react'
+import { getAllUsers,
+  getAllMessages,
   addUser,
   removeUser,
   addMessage,
@@ -31,11 +32,20 @@ const saveSession = userObj => {
 }
 
 const loadSession = () => {
-  sessionId = sessionStorage.getItem('id')
-  sessionAdmin = sessionStorage.getItem('isAdmin')
-  sessionName = sessionStorage.getItem('userName')
-  userArray = (sessionStorage.getItem('users') === null) ? [] : JSON.parse(sessionStorage.getItem('users'))
-  messageArray = (sessionStorage.getItem('messages') === null) ? [] : JSON.parse(sessionStorage.getItem('messages'))
+  const sessObj = {
+    id: JSON.parse(sessionStorage.getItem('id')),
+    isAdmin: JSON.parse(sessionStorage.getItem('isAdmin')),
+    userName: sessionStorage.getItem('userName')
+  }
+  userArray = JSON.parse(sessionStorage.getItem('users'))
+  messageArray = JSON.parse(sessionStorage.getItem('messages'))
+
+  const loggedIn = userArray.filter(user => {
+    return (user.id === sessObj.id && user.isAdmin === sessObj.isAdmin && user.userName === sessObj.userName)
+  }).length
+  sessionId = loggedIn ? sessObj.id : null
+  sessionAdmin = loggedIn ? sessObj.isAdmin : null
+  sessionName = loggedIn ? sessObj.userName : null
 }
 
 const pullFirestore = () => {
@@ -47,15 +57,16 @@ const pullFirestore = () => {
           if (array) {
             messageArray = array
           }
-          saveSession({ id: sessionId, isAdmin: sessionAdmin, userName: sessionName })
+          sessionStorage.setItem('users', JSON.stringify(userArray))
+          sessionStorage.setItem('messages', JSON.stringify(messageArray))
         })
     })
 }
 
 const pullRender = () => {
-  pullFirestore()
+  return pullFirestore()
     .then(() => {
-      renderApp()
+      return renderApp()
     })
 }
 
@@ -87,10 +98,14 @@ socket.on('disconnect', () => {
 let sessionId, sessionAdmin, sessionName
 let userArray = []
 let messageArray = []
+let loading = true
 
 // onLoad functions
-loadSession()
-pullRender()
+pullRender().then(() => {
+  loadSession()
+  loading = false
+  renderApp()
+})
 
 class App extends Component {
   setUserName = (username) => {
@@ -98,7 +113,6 @@ class App extends Component {
       .then(user => {
         saveSession(user)
         socket.emit('set-state', { id: sessionId, isAdmin: sessionAdmin, userName: sessionName })
-        loadSession()
         socket.emit('change-occured')
       })
   }
@@ -117,7 +131,7 @@ class App extends Component {
       })
   }
 
-  render() {
+  render () {
     return (
       <>
         <div>
