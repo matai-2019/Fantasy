@@ -57,7 +57,6 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
       renderApp()
     }
   }
-
   return <>
     <div>
       <Container inverted='true'>
@@ -149,7 +148,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
                 })}
               </List>
             </Grid.Column >
-            <Grid.Column style={{ maxHeight: '400px', overflowY: 'scroll' }}>
+            <Grid.Column id={'messageScroller'} style={{ maxHeight: '400px', overflowY: 'scroll' }}>
               <div>
                 {messageArray.map(message => {
                   return <div key={message.timestamp + message.id}>
@@ -170,7 +169,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
           {userNames.map(name => {
             return <div key={name} className="ui teal horizontal label">{name}</div>
           })}
-          <input id='messageInput' onChange={handleChange} fluid type="text" placeholder="Send a message"/>
+          <input id='messageInput' onChange={handleChange} type="text" placeholder="Send a message"/>
           <Button onClick={handleSend}>Send</Button>
         </div>
       </Container>
