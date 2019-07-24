@@ -131,7 +131,6 @@ export {
   addUser,
   removeUser,
   getAllUsers,
-  getNewID,
   addMessage,
   getAllMessages,
   getViewableMessages,
