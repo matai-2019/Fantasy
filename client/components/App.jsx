@@ -80,7 +80,6 @@ let messageArray = []
 // onLoad functions
 loadSession()
 renderUpdate()
-console.log('Session Obj', sessionName)
 
 class App extends Component {
   setUserName = (username) => {
