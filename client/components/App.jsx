@@ -29,7 +29,6 @@ const saveSession = userObj => {
   sessionId = id
   sessionAdmin = isAdmin
   sessionName = userName
-
 }
 const loadSession = () => {
   const sessObj = {
@@ -140,10 +139,7 @@ class App extends Component {
   render () {
     return (
       <>
-        <div>
-          <br/>
-          <h1 style={{ color: 'white' }} align="center">
-          </h1>
+        <div style={{ paddingTop: '5vh' }}>
           {loading
             ? <Dimmer active>
               <Loader className='teal'/>
@@ -158,6 +154,7 @@ class App extends Component {
                 handleKickUser={handleKickUser}
                 handleResetFirestore={handleResetFirestore}
                 sessionAdmin={sessionAdmin}
+                sessionId={sessionId}
                 sessionName={sessionName}
                 renderApp={renderApp}
               />
@@ -170,4 +167,3 @@ class App extends Component {
 }
 
 export default App
-
