@@ -19,6 +19,14 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath })
     sessionID.select()
     document.execCommand('copy')
   }
+  const secondsToDate = (string) => {
+    const date = new Date(Number(string))
+    date.setHours(date.getHours() + 12)
+    string = date.toString()
+    let arr = string.split(' ')[4].split(':')
+    arr = arr[0] + ':' + arr[1]
+    return arr
+  }
 
   return <>
     <div>
@@ -100,6 +108,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath })
                 {messageArray.map(message => {
                   return <div key={message.timestamp + message.id}>
                     <Segment.Group horizontal>
+                      <Segment compact>{secondsToDate(message.timestamp)}</Segment>
                       <Segment compact>{message.userName}</Segment>
                       <Segment compact>{message.messageText}</Segment>
                     </Segment.Group>
