@@ -73,6 +73,14 @@ const handleKickUser = (userid) => {
       socket.emit('change-occured')
     })
 }
+
+const handleResetFirestore = () => {
+  resetFirestore(ssID)
+    .then(() => {
+      socket.emit('change-occured')
+    })
+}
+
 const renderApp = () => {
   ReactDOM.render(<App />, document.getElementById('app'))
 }
@@ -140,7 +148,9 @@ class App extends Component {
                 sendMessage={this.sendMessage}
                 fullPath={fullPath}
                 handleKickUser={handleKickUser}
+                handleResetFirestore={handleResetFirestore}
                 sessionAdmin={sessionAdmin}
+                sessionName={sessionName}
                 renderApp={renderApp}
               />
               : <LoginLayout ssID={ssID} setUserName={this.setUserName} userArray={userArray}/>

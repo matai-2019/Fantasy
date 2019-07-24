@@ -21,14 +21,13 @@ function LoginForm ({ setUserName, userArray, ssID }) {
         }
       })
   }
-  
   return (
     <div >
       <Container>
-        <Grid textAlign='center' style={{ height: '90vh', marginTop: '50x' }} verticalAlign='middle'>
+        <Grid textAlign='center' style={{ height: '85vh' }} verticalAlign='middle'>
           <Grid.Column style={{ maxWidth: 650 }}>
             <Message>
-              <h2>Velcom to TungNZ &#38; TragoNZ</h2>
+              <h2>Welcome to Dungeons &#38; Dragons</h2>
             </Message>
             <Header as='h2' color='violet' textAlign='center'>
             </Header>
