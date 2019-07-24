@@ -1,7 +1,15 @@
 import React, { Component } from 'react'
 import LoginLayout from './LoginLayout'
 import { ChatTemplate } from './ChatLayout'
-import { getAllUsers, getAllMessages, addUser, removeUser, addMessage, getNewID, getViewableMessages, resetFirestore } from '../../server/firestore/fsdb'
+import { getAllUsers,
+  getAllMessages,
+  addUser,
+  removeUser,
+  addMessage,
+  getNewID,
+  getViewableMessages,
+  resetFirestore
+} from '../../server/firestore/fsdb'
 import io from 'socket.io-client'
 import ReactDOM from '../index'
 
@@ -30,16 +38,13 @@ const loadSession = () => {
   messageArray = (sessionStorage.getItem('messages') === null) ? [] : JSON.parse(sessionStorage.getItem('messages'))
 }
 const pullFirestore = () => {
-  console.log(sessionId, '|', sessionName, '|', sessionAdmin)
   return getViewableMessages(ssID, Number(sessionId))
     .then(array => {
       return getAllUsers(ssID)
         .then(obj => {
           userArray = obj.users
-          console.log('users', userArray)
           if (array) {
             messageArray = array
-            console.log('msgs', messageArray)
           }
           saveSession({ id: sessionId, isAdmin: sessionAdmin, userName: sessionName })
         })
@@ -49,6 +54,13 @@ const renderUpdate = () => {
   pullFirestore()
     .then(() => {
       ReactDOM.render(<App />, document.getElementById('app'))
+    })
+}
+const handleKickUser = (userid) => {
+  console.log(ssID, userid)
+  removeUser(ssID, userid)
+    .then(() => {
+      socket.emit('change-occured')
     })
 }
 
@@ -71,7 +83,7 @@ renderUpdate()
 console.log('Session Obj', sessionName)
 
 class App extends Component {
-  setUserName = username => {
+  setUserName = (username) => {
     addUser(ssID, username)
       .then(user => {
         saveSession(user)
@@ -108,7 +120,10 @@ class App extends Component {
               messageArray={messageArray}
               userArray={userArray}
               sendMessage={this.sendMessage}
-              fullPath={fullPath}/>
+              fullPath={fullPath}
+              handleKickUser={handleKickUser}
+              sessionAdmin={sessionAdmin}
+            />
             : <LoginLayout ssID={ssID} setUserName={this.setUserName} userArray={userArray}/>}
         </div>
       </>
