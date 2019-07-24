@@ -16,14 +16,22 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
   }
 
   const handleAddSession = event => {
-    let sessionID = document.getElementById('ssIDButton')
+    const sessionID = document.getElementById('ssIDButton')
     sessionID.select()
     document.execCommand('copy')
+  }
+  const secondsToDate = (string) => {
+    const date = new Date(Number(string))
+    date.setHours(date.getHours() + 12)
+    string = date.toString()
+    let arr = string.split(' ')[4].split(':')
+    arr = arr[0] + ':' + arr[1]
+    return arr
   }
 
   const handleKick = event => {
     return () => {
-      let userid = event
+      const userid = event
       console.log('event', event)
       handleKickUser(userid)
     }
@@ -113,9 +121,8 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
                 {messageArray.map(message => {
                   return <div key={message.timestamp + message.id}>
                     <Segment style={{ padding: '5px', margin: '10px' }}>
-                      <div>{Date.now()}</div>
                       <Message
-                        header={message.userName}
+                        header={secondsToDate(message.timestamp) + ' | ' + message.userName}
                         content={message.messageText}
                         // onDismiss={(event) => console.log(event.target)}
                       />
