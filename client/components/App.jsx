@@ -84,6 +84,10 @@ const handleResetFirestore = () => {
 
 const renderApp = () => {
   ReactDOM.render(<App />, document.getElementById('app'))
+  const scrollDiv = document.getElementById('messageScroller')
+  if (scrollDiv) {
+    scrollDiv.scrollTo({ top: scrollDiv.scrollHeight, behavior: 'smooth' })
+  }
 }
 
 // socket events
@@ -100,8 +104,8 @@ let messageArray = []
 let loading = true
 
 // onLoad functions
+loadSession()
 pullRender().then(() => {
-  loadSession()
   loading = false
   renderApp()
 })
