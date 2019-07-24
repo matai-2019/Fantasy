@@ -21,10 +21,11 @@ server.listen(port, function () {
   console.log('Listening on port', port)
 })
 
+console.log(path.join(__dirname, '../build/index.html'))
+
 app.get('/', (req, res) => {
   res.send('TO BE DONE')
 })
 app.get('/**', (req, res) => {
-  console.log(path.join(__dirname, '../build/index.html'))
   res.sendFile(path.join(__dirname, '../build/index.html'))
 })
