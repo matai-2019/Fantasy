@@ -16,12 +16,14 @@ function LoginForm ({ setUserName, userArray, ssID }) {
           document.getElementById('loginInput').value = ''
           document.getElementById('loginInput').placeholder = 'Room is full!'
         } 
-        if (userArray = null) {
-        document.getElementById('loginInput').value = 'you shall not pass'
+        else if (inputValue.length > 0) {
+          document.getElementById('loginInput').value = ''
+          setUserName(inputValue)
         }
         else {
           document.getElementById('loginInput').value = ''
-          setUserName(inputValue)
+          document.getElementById('loginInput').placeholder = 'Please enter a username'
+          document.getElementById('loginInput').focus()
         }
       })
   }
@@ -31,9 +33,9 @@ function LoginForm ({ setUserName, userArray, ssID }) {
     <Container>
       <Grid textAlign='center' style={{ height: '90vh', marginTop: '50x' }} verticalAlign='middle'>
         <Grid.Column style={{ maxWidth: 650 }}>
-          <Message>
+          {/* <Message>
             <h2>Welcome to Dungeons &#38; Dragons</h2>
-          </Message>
+          </Message> */}
           <Header as='h2' color='violet' textAlign='center'>
           </Header>
           <Form onSubmit={handleSubmit} size='large'>
