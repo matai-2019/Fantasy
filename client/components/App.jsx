@@ -113,7 +113,8 @@ class App extends Component {
       <>
         <div>
           <br/>
-          <h1 style={{ color: 'white' }} align="center">Welcome {sessionName}!</h1>
+          <h1 style={{ color: 'white' }} align="center"><img src="../img/login-title-min.gif" alt="" height="200px" width="900px"/> 
+          <br/>{sessionName}!</h1>
           {(sessionId)
             ? <ChatTemplate
               socket={socket}

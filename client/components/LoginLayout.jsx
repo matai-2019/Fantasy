@@ -21,8 +21,9 @@ function LoginForm ({ setUserName, userArray, ssID }) {
         }
       })
   }
-
+  // style={{backgroundImage:"url(../img/death-min.gif)", backgroundRepeat:"no-repeat", backgroundSize:"cover", backgroundPosition:"center", width: "100%", height:"755px"}} 
   return (
+        <div >
     <Container>
       <Grid textAlign='center' style={{ height: '90vh' }} verticalAlign='middle'>
         <Grid.Column style={{ maxWidth: 650 }}>
@@ -48,6 +49,7 @@ function LoginForm ({ setUserName, userArray, ssID }) {
         </Grid.Column>
       </Grid>
     </Container>
+      </div>
   )
 }
 
