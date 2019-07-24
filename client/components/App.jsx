@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import LoginLayout from './LoginLayout'
 import { ChatTemplate } from './ChatLayout'
+import { Dimmer, Loader } from 'semantic-ui-react'
 import { getAllUsers,
   getAllMessages,
   addUser,
@@ -31,12 +32,22 @@ const saveSession = userObj => {
   sessionName = userName
 }
 const loadSession = () => {
-  sessionId = sessionStorage.getItem('id')
-  sessionAdmin = sessionStorage.getItem('isAdmin')
-  sessionName = sessionStorage.getItem('userName')
-  userArray = (sessionStorage.getItem('users') === null) ? [] : JSON.parse(sessionStorage.getItem('users'))
-  messageArray = (sessionStorage.getItem('messages') === null) ? [] : JSON.parse(sessionStorage.getItem('messages'))
+  const sessObj = {
+    id: JSON.parse(sessionStorage.getItem('id')),
+    isAdmin: JSON.parse(sessionStorage.getItem('isAdmin')),
+    userName: sessionStorage.getItem('userName')
+  }
+  userArray = JSON.parse(sessionStorage.getItem('users'))
+  messageArray = JSON.parse(sessionStorage.getItem('messages'))
+
+  const loggedIn = userArray.filter(user => {
+    return (user.id === sessObj.id && user.isAdmin === sessObj.isAdmin && user.userName === sessObj.userName)
+  }).length
+  sessionId = loggedIn ? sessObj.id : null
+  sessionAdmin = loggedIn ? sessObj.isAdmin : null
+  sessionName = loggedIn ? sessObj.userName : null
 }
+
 const pullFirestore = () => {
   return getViewableMessages(ssID, Number(sessionId))
     .then(array => {
@@ -46,18 +57,18 @@ const pullFirestore = () => {
           if (array) {
             messageArray = array
           }
-          saveSession({ id: sessionId, isAdmin: sessionAdmin, userName: sessionName })
+          sessionStorage.setItem('users', JSON.stringify(userArray))
+          sessionStorage.setItem('messages', JSON.stringify(messageArray))
         })
     })
 }
 const pullRender = () => {
-  pullFirestore()
+  return pullFirestore()
     .then(() => {
-      renderApp()
+      return renderApp()
     })
 }
 const handleKickUser = (userid) => {
-  console.log(ssID, userid)
   removeUser(ssID, userid)
     .then(() => {
       socket.emit('change-occured')
@@ -69,7 +80,6 @@ const renderApp = () => {
 
 // socket events
 socket.on('update-sockets', () => {
-  console.log('updateSockets')
   pullRender()
 })
 socket.on('disconnect', () => {
@@ -79,10 +89,14 @@ socket.on('disconnect', () => {
 let sessionId, sessionAdmin, sessionName
 let userArray = []
 let messageArray = []
+let loading = true
 
 // onLoad functions
-loadSession()
-pullRender()
+pullRender().then(() => {
+  loadSession()
+  loading = false
+  renderApp()
+})
 
 class App extends Component {
   setUserName = (username) => {
@@ -90,9 +104,7 @@ class App extends Component {
       .then(user => {
         saveSession(user)
         socket.emit('set-state', { id: sessionId, isAdmin: sessionAdmin, userName: sessionName })
-        loadSession()
         socket.emit('change-occured')
-        console.log('setUserName')
       })
   }
 
@@ -106,7 +118,6 @@ class App extends Component {
         addMessage(ssID, sessionName, recipients, message)
           .then(obj => {
             socket.emit('change-occured')
-            console.log('sendMessage')
           })
       })
   }
@@ -116,19 +127,26 @@ class App extends Component {
       <>
         <div style={{ backgroundImage: './img/wp-1.jpg' }}>
           <br/>
-          <h1 style={{ color: 'white' }} align="center">Welcome {sessionName}!</h1>
-          {(sessionId)
-            ? <ChatTemplate
-              socket={socket}
-              messageArray={messageArray}
-              userArray={userArray}
-              sendMessage={this.sendMessage}
-              fullPath={fullPath}
-              handleKickUser={handleKickUser}
-              sessionAdmin={sessionAdmin}
-              renderApp={renderApp}
-            />
-            : <LoginLayout ssID={ssID} setUserName={this.setUserName} userArray={userArray}/>}
+          <h1 style={{ color: 'white' }} align="center">
+            Welcome!
+          </h1>
+          {loading
+            ? <Dimmer active>
+              <Loader className='teal'/>
+            </Dimmer>
+            : (sessionId !== 'null' && sessionId)
+              ? <ChatTemplate
+                socket={socket}
+                messageArray={messageArray}
+                userArray={userArray}
+                sendMessage={this.sendMessage}
+                fullPath={fullPath}
+                handleKickUser={handleKickUser}
+                sessionAdmin={sessionAdmin}
+                renderApp={renderApp}
+              />
+              : <LoginLayout ssID={ssID} setUserName={this.setUserName} userArray={userArray}/>
+          }
         </div>
       </>
     )
