@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import LoginLayout from './LoginLayout'
 import { ChatTemplate } from './ChatLayout'
-import { getAllUsers,
-  getAllMessages,
+import {
+  getAllUsers,
   addUser,
   removeUser,
   addMessage,
-  getNewID,
   getViewableMessages,
   resetFirestore
 } from '../../server/firestore/fsdb'
@@ -16,7 +15,7 @@ import ReactDOM from '../index'
 // client consts
 const socket = io()
 const ssID = window.location.pathname.slice(1)
-const fullPath = window.location
+const fullPath = window.location.href
 
 // client-only functions
 const saveSession = userObj => {
@@ -58,7 +57,6 @@ const renderUpdate = () => {
     })
 }
 const handleKickUser = (userid) => {
-  console.log(ssID, userid)
   removeUser(ssID, userid)
     .then(() => {
       socket.emit('change-occured')
@@ -67,7 +65,6 @@ const handleKickUser = (userid) => {
 
 // socket events
 socket.on('update-sockets', () => {
-  console.log('updateSockets')
   renderUpdate()
 })
 socket.on('disconnect', () => {
@@ -81,7 +78,6 @@ let messageArray = []
 // onLoad functions
 loadSession()
 renderUpdate()
-console.log('Session Obj', sessionName)
 
 class App extends Component {
   setUserName = (username) => {
@@ -91,7 +87,6 @@ class App extends Component {
         socket.emit('set-state', { id: sessionId, isAdmin: sessionAdmin, userName: sessionName })
         loadSession()
         socket.emit('change-occured')
-        console.log('setUserName')
       })
   }
 
@@ -104,16 +99,15 @@ class App extends Component {
         addMessage(ssID, sessionName, recipients, message)
           .then(obj => {
             socket.emit('change-occured')
-            // console.log('sendMessage')
           })
       })
   }
 
-  render () {
+  render() {
     return (
       <>
         <div style={{ backgroundImage: './img/wp-1.jpg' }}>
-          <br/>
+          <br />
           <h1 style={{ color: 'white' }} align="center">Welcome {sessionName}!</h1>
           {(sessionId)
             ? <ChatTemplate
@@ -125,7 +119,7 @@ class App extends Component {
               handleKickUser={handleKickUser}
               sessionAdmin={sessionAdmin}
             />
-            : <LoginLayout ssID={ssID} setUserName={this.setUserName} userArray={userArray}/>}
+            : <LoginLayout ssID={ssID} setUserName={this.setUserName} userArray={userArray} />}
         </div>
       </>
     )
