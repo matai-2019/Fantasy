@@ -15,7 +15,11 @@ function LoginForm ({ setUserName, userArray, ssID }) {
         if (userArray.length >= 7) {
           document.getElementById('loginInput').value = ''
           document.getElementById('loginInput').placeholder = 'Room is full!'
-        } else {
+        } 
+        if (userArray = null) {
+        document.getElementById('loginInput').value = 'you shall not pass'
+        }
+        else {
           document.getElementById('loginInput').value = ''
           setUserName(inputValue)
         }
