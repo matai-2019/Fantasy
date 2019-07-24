@@ -19,47 +19,37 @@ const getAllUsers = (sessionId) => {
     })
 }
 
-const getNewID = (ssID) => {
+const getNewID = (obj) => {
   let id
   const validIDs = []
-  return getAllUsers(ssID)
-    .then(obj => {
-      if (obj === undefined) return 1
-      if (obj.users.length > 0) {
-        obj.users.forEach(user => {
-          if (typeof user.id === typeof 0) validIDs.push(user.id)
-        })
-        id = validIDs.sort((a, b) => a > b)[validIDs.length - 1] + 1
-      } else id = 1
-      return id
+  if (obj === undefined) return 1
+  if (obj.users.length > 0) {
+    obj.users.forEach(user => {
+      if (typeof user.id === typeof 0) validIDs.push(user.id)
     })
+    id = validIDs.sort((a, b) => a > b)[validIDs.length - 1] + 1
+  } else id = 1
+  return id
 }
 
-const addUser = (sessionId, userName) => {
+const addUser = (sessionId, userName, isAdmin) => {
   let id
   return getAllUsers(sessionId)
     .then(obj => {
       if (obj.users.length > 0) {
-        return getNewID(sessionId)
-          .then(data => {
-            id = data
-            return obj
-          })
+        id = getNewID(obj)
       } else {
         id = 1
-        return obj
       }
+      return obj
     })
     .then(obj => {
-      return sendUser(obj, id, userName, sessionId)
+      console.log(obj, id, userName, sessionId, isAdmin)
+      return sendUser(obj, id, userName, sessionId, isAdmin)
     })
 }
 
-const sendUser = (obj, id, userName, sessionId) => {
-  let isAdmin = true
-  obj.users.forEach(user => {
-    if (user.isAdmin === true) isAdmin = false
-  })
+const sendUser = (obj, id, userName, sessionId, isAdmin) => {
   const user = { id, isAdmin, userName }
   obj.users.push(user)
   db.collection(sessionId).doc('Users').set(obj)
@@ -110,15 +100,14 @@ const addMessage = (sessionId, userName, recipients, messageText) => {
       obj.messages.forEach(msg => {
         if (typeof msg.id === typeof 0) validIDs.push(msg.id)
       })
-      if (validIDs > 0) {
+      if (validIDs.length > 0) {
         id = validIDs.sort((a, b) => a > b)[validIDs.length - 1].id + 1
-      } else {
-        id = 1
-      }
+      } else id = 1
       let timestamp = new Date()
       timestamp = timestamp.getTime()
       const message = { id, userName, messageText, recipients, timestamp }
       obj.messages.push(message)
+      console.log(obj)
       return obj
     })
     .then(obj => {

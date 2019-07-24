@@ -3,7 +3,6 @@ import LoginLayout from './LoginLayout'
 import { ChatTemplate } from './ChatLayout'
 import { Dimmer, Loader } from 'semantic-ui-react'
 import { getAllUsers,
-  getAllMessages,
   addUser,
   removeUser,
   addMessage,
@@ -67,6 +66,7 @@ const pullFirestore = () => {
 const pullRender = () => {
   return pullFirestore()
     .then(() => {
+      console.log('render event')
       return renderApp()
     })
 }
@@ -94,6 +94,7 @@ const renderApp = () => {
 
 // socket events
 socket.on('update-sockets', () => {
+  console.log('update event')
   pullRender()
 })
 socket.on('disconnect', () => {
@@ -114,7 +115,11 @@ pullRender().then(() => {
 
 class App extends Component {
   setUserName = (username) => {
-    addUser(ssID, username)
+    let isAdmin = true
+    userArray.forEach(user => {
+      if (user.isAdmin === true) isAdmin = false
+    })
+    addUser(ssID, username, isAdmin)
       .then(user => {
         saveSession(user)
         socket.emit('set-state', { id: sessionId, isAdmin: sessionAdmin, userName: sessionName })
@@ -123,16 +128,15 @@ class App extends Component {
   }
 
   sendMessage = (message, recipients) => {
-    getAllUsers(ssID)
+    console.log('message being sent')
+    console.log('r', recipients.length, recipients.length === 0)
+    if (recipients.length === 0) recipients = userArray.map(user => user.id)
+    else if (!recipients.includes(sessionId)) recipients.push(sessionId)
+    console.log('r', recipients)
+
+    return addMessage(ssID, sessionName, recipients, message)
       .then(obj => {
-        if (typeof recipients === typeof [] && recipients.length > 0) return recipients
-        return obj.users.map(user => user.id)
-      })
-      .then(recipients => {
-        addMessage(ssID, sessionName, recipients, message)
-          .then(obj => {
-            socket.emit('change-occured')
-          })
+        socket.emit('change-occured')
       })
   }
 

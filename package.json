@@ -16,7 +16,7 @@
     "dev": "webpack --watch & nodemon server",
     "test": "jest --watchAll",
     "deploy:sandbox": "webpack && git push heroku sandbox:master",
-    "heroku-postbuild": "webpack -p"
+    "heroku-postbuild": "webpack"
   },
   "babel": {
     "presets": [

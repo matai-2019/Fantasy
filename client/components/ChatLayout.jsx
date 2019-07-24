@@ -11,15 +11,11 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
   }
   const handleSend = () => {
     if (inputValue.length > 0) {
-      if (!recipients.includes(sessionId)) return recipients.push(sessionId)
       sendMessage(inputValue, recipients)
       inputValue = ''
       document.getElementById('messageInput').value = ''
       recipients = []
       userNames = []
-      userArray.forEach(user => {
-        document.getElementById(`${user.id}check`).backgroundColor = '#FFFFFF'
-      })
     } else {
       document.getElementById('messageInput').value = ''
       document.getElementById('messageInput').placeholder = 'Please enter a message'
@@ -64,108 +60,112 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
   }
   return <>
     <div>
-      <Container inverted='true' style={{ minHeight: '80vh' }}>
+      <Container inverted='true' style={{ minHeight: '80vh', color: 'white', position: 'relative' }}>
         {<h1 style={{ color: 'white' }} align="center">Welcome {sessionName}</h1>}
-        { (sessionAdmin === 'true') ? <>
-        <Modal trigger={<Button floated="left" animated='vertical' color='violet'>
+        <Segment inverted={true} style={{ minHeight: '70vh', maxHeight: '70vh' }}>
+          { (sessionAdmin === true) ? <>
+        <Modal trigger={<Button style={{ float: 'left' }} animated='vertical' color='teal'>
           <Button.Content hidden>Admin</Button.Content>
           <Button.Content visible>
-            <Icon name='cog' />
+            <Icon center='true' name='cog' />
           </Button.Content>
         </Button>} closeIcon>
-          <Header icon='cogs' content='Admin Settings' />
+          <Header inverted icon='cogs' content='Admin Settings' />
           <br></br>
           <Modal.Content>
-            <p>
-              <Segment inverted={true}>
-                <Grid columns={2} relaxed='very'>
-                  <Grid.Column floated="left" width={7}>
-                    <Form>
-                      <Form.Field>
-                        <div placeholder='session ID'></div>
-                      </Form.Field>
-                      <div className="ui action input">
-                        <input type="text" value={`${fullPath}`} onClick={handleAddSession} id='ssIDButton'/>
-                        <button className="ui teal right labeled icon button">
-                          Copy This URL
-                        </button>
-                      </div>
-                    </Form>
-                    <Form>
-                      <Form.Field>
-                        <div placeholder='session ID'></div>
-                      </Form.Field>
-                      <div className="ui action input">
-                        <button className="ui red button" type="text" value='Delete Session' onClick={handleResetFirestore} id='ssIDButton'>
+            <Segment inverted={true}>
+              <Grid columns={2} relaxed='very'>
+                <Grid.Column floated="left" width={7}>
+                  <div className="ui action input">
+                    <div type="text" onClick={handleAddSession} id='ssIDButton'>
+                      {`${fullPath}`}
+                      <button className="ui teal right labeled icon button">
+                          Copy URL
+                      </button>
+                    </div>
+                  </div>
+                  <Form>
+                    <Form.Field>
+                      <div placeholder='session ID'></div>
+                    </Form.Field>
+                    <div className="ui action input">
+                      <button className="ui red button" type="text" value='Delete Session' onClick={handleResetFirestore} id='ssIDButton'>
                             Delete Users and Chats
-                        </button>
-                      </div>
-                    </Form>
-                  </Grid.Column>
-                  <Grid.Column floated="right" width={7} style={{ maxHeight: '300px', overflowY: 'scroll' }}>
-                    <List divided relaxed>
-                      {userArray.map(user => {
-                        return <div key={user.id}>
-                          <List.Item>
-                            <Grid columns={2} relaxed='very'>
-                              <Grid.Column floated="left">
-                                <List.Content>
-                                  <List><h3>{user.userName}</h3></List>
-                                </List.Content>
-                              </Grid.Column>
-                              <Grid.Column floated="right">
-                                <button className="ui red button" color='red' type='Kill' onClick={handleKick(user.id)}>
-                                  <Icon name='close' />
+                      </button>
+                    </div>
+                  </Form>
+                </Grid.Column>
+                <Grid.Column floated="right" width={7} style={{ maxHeight: '300px', overflowY: 'scroll' }}>
+                  <List divided relaxed>
+                    {userArray.map(user => {
+                      return <div key={user.id}>
+                        <List.Item>
+                          <Grid columns={2} relaxed='very'>
+                            <Grid.Column floated="left">
+                              <List.Content>
+                                <List><h3 style={{ color: 'white' }}>{user.userName}</h3></List>
+                              </List.Content>
+                            </Grid.Column>
+                            <Grid.Column floated="right">
+                              <button className="ui red button" color='red' type='Kill' onClick={handleKick(user.id)}>
+                                <Icon name='close' />
                                     Del</button>
-                              </Grid.Column>
-                            </Grid>
-                          </List.Item>
-                        </div>
-                      })}
-                    </List>
-                  </Grid.Column>
-                </Grid>
-              </Segment>
-            </p>
+                            </Grid.Column>
+                          </Grid>
+                        </List.Item>
+                      </div>
+                    })}
+                  </List>
+                </Grid.Column>
+              </Grid>
+            </Segment>
           </Modal.Content>
         </Modal>
         </>
-          : <> </>
-        }
-        <Segment inverted={true} as={Form} style={{ minHeight: '70vh' }}>
-          <Grid columns={2} relaxed='very'>
-            <Grid.Column floated="left" width={6} style={{ maxHeight: '400px' }}>
+            : <> </>
+          }
+          <Grid columns={2} center='true' relaxed='very' style={{ width: '100%', margin: '0px' }}>
+            <Grid.Column style={{ width: '25vw', maxWidth: '200px' }}>
               <List divided relaxed>
                 {userArray.map(user => {
-                  return <div key={user.id}>
-                    <List.Item>
-                      <Grid columns={2} relaxed='very'>
-                        <Grid.Column style={{ height: '30px' }}>
-                          <List.Header className='teal' as='a'><h2>{user.userName}</h2></List.Header>
-                        </Grid.Column>
-                        <Grid.Column floated='right' width={3}>
-                          <div className='ui center teal'id={`${user.id}check`} onClick={handleSelect(user.id)} style={{ border: 'none', height: '30px', width: '30px', backgroundColor: '#FFFFFF' }}></div>
-                        </Grid.Column>
-                      </Grid>
-                    </List.Item>
-                  </div>
+                  return <List.Item key={user.id}>
+                    <Grid columns={2} relaxed='very'>
+                      <List.Content style={{ color: 'white' }}>
+                        <List.Header className='teal'>
+                          <h2 style={{ color: 'white', lineHeight: '60px', width: 'calc(25vw - 30px)', marginRight: '0px', maxWidth: '200px' }}>{user.userName}
+
+                            <div className='ui center teal'id={`${user.id}check`} onClick={handleSelect(user.id)}
+                              style={{
+                                border: 'none',
+                                height: '30px',
+                                width: '30px',
+                                backgroundColor: '#FFFFFF',
+                                float: 'right',
+                                marginTop: '15px',
+                                marginBottom: '15px' }}>
+                            </div>
+                          </h2>
+                        </List.Header>
+                      </List.Content>
+                    </Grid>
+                  </List.Item>
                 })}
               </List>
             </Grid.Column >
-            <Grid.Column id={'messageScroller'} style={{ minHeight: '70vh', maxHeight: '70vh', overflowY: 'scroll' }}>
-              <div>
-                {messageArray.map(message => {
-                  return <div key={message.timestamp + message.id}>
-                    <Segment style={{ padding: '5px', margin: '10px' }}>
-                      <Message
-                        header={secondsToDate(message.timestamp) + ' | ' + message.userName}
-                        content={message.messageText}
+            <Grid.Column fluid='true' id={'messageScroller'} style={{ maxWidth: '800px', width: '50vw', padding: '0px', minHeight: '70vh', maxHeight: '70vh', overflowY: 'scroll', position: 'absolute', top: '0px', right: '0px' }}>
+              {messageArray.map(message => {
+                return <div key={message.timestamp + message.id}>
+                  <Segment style={{ padding: '1px', margin: '10px', backgroundColor: 'white' }}>
+                    <Message
+                      center='true'
+                      header={secondsToDate(message.timestamp) + ' | ' + message.userName}
+                      content={message.messageText}
+                      style={{ fontSize: '1.5em', padding: '5px' }}
                       // onDismiss={(event) => console.log(event.target)}
-                      />
-                    </Segment>
-                  </div>
-                })}
-              </div>
+                    />
+                  </Segment>
+                </div>
+              })}
             </Grid.Column>
           </Grid >
         </Segment>
