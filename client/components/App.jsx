@@ -74,6 +74,14 @@ const handleKickUser = (userid) => {
       socket.emit('change-occured')
     })
 }
+
+const handleResetFirestore = () => {
+  resetFirestore(ssID)
+    .then(() => {
+      socket.emit('change-occured')
+    })
+}
+
 const renderApp = () => {
   ReactDOM.render(<App />, document.getElementById('app'))
 }
@@ -127,8 +135,7 @@ class App extends Component {
       <>
         <div>
           <br/>
-          <h1 style={{ color: 'white' }} align="center"><img src="../img/login-title-min.gif" alt="" height="200px" width="900px"/>
-            Welcome!
+          <h1 style={{ color: 'white' }} align="center">
           </h1>
           {loading
             ? <Dimmer active>
@@ -142,7 +149,9 @@ class App extends Component {
                 sendMessage={this.sendMessage}
                 fullPath={fullPath}
                 handleKickUser={handleKickUser}
+                handleResetFirestore={handleResetFirestore}
                 sessionAdmin={sessionAdmin}
+                sessionName={sessionName}
                 renderApp={renderApp}
               />
               : <LoginLayout ssID={ssID} setUserName={this.setUserName} userArray={userArray}/>

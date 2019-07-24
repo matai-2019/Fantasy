@@ -27,11 +27,10 @@ function LoginForm ({ setUserName, userArray, ssID }) {
         }
       })
   }
-  // style={{backgroundImage:"url(../img/death-min.gif)", backgroundRepeat:"no-repeat", backgroundSize:"cover", backgroundPosition:"center", width: "100%", height:"755px"}} 
   return (
         <div >
     <Container>
-      <Grid textAlign='center' style={{ height: '90vh', marginTop: '50x' }} verticalAlign='middle'>
+      <Grid textAlign='center' style={{ height: '85vh' }} verticalAlign='middle'>
         <Grid.Column style={{ maxWidth: 650 }}>
           {/* <Message>
             <h2>Welcome to Dungeons &#38; Dragons</h2>
