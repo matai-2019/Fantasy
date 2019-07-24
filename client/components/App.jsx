@@ -126,8 +126,7 @@ class App extends Component {
       <>
         <div>
           <br/>
-          <h1 style={{ color: 'white' }} align="center"><img src="../img/login-title-min.gif" alt="" height="200px" width="900px"/>
-            Welcome!
+          <h1 style={{ color: 'white' }} align="center">
           </h1>
           {loading
             ? <Dimmer active>
