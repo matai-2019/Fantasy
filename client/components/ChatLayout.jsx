@@ -28,13 +28,6 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
     document.execCommand('copy')
   }
 
-  const handleDelData = event => {
-    const sessionID = document.getElementById('ssIDButton')
-    return () => {
-      handleResetFirestore(sessionID)
-    }
-  }
-
   const handleKick = event => {
     return () => {
       const userid = event
@@ -98,7 +91,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
                         <div placeholder='session ID'></div>
                       </Form.Field>
                       <div className="ui action input">
-                        <button className="ui red button" type="text" value='Delete Session' onClick={handleDelData} id='ssIDButton'>
+                        <button className="ui red button" type="text" value='Delete Session' onClick={handleResetFirestore} id='ssIDButton'>
                           Delete Users and Chats
                         </button>
                       </div>
@@ -174,14 +167,12 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
           </Grid >
         </Segment>
         <div fluid className="ui left labeled input" style={{ width: '100%' }}>
-          {/* <div className="ui teal horizontal label"> Anarun </div> */}
           {userNames.map(name => {
             return <div key={name} className="ui teal horizontal label">{name}</div>
           })}
           <input id='messageInput' onChange={handleChange} fluid type="text" placeholder="Send a message"/>
           <Button onClick={handleSend}>Send</Button>
         </div>
-        {/* <Input fluid action={<Button onClick={handleSend}>Send</Button>} id="messageInput" placeholder='Your message goes here...' onChange={handleChange} /> */}
       </Container>
     </div>
   </>

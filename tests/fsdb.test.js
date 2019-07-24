@@ -172,9 +172,9 @@ test.skip('addMessage adds a new message to db', (done) => {
 // })
 
 test.skip('resetFirestore deletes a document', (done) => {
-  resetFirestore('123456789012345')
+  resetFirestore('e2e-walkthrough-empty')
     .then(() => {
-      expect(db.collection('123456789012345').doc('Users1')).not(null)
+      expect(db.collection('e2e-walkthrough-empty').doc('Users')).not(null)
       done()
     })
 })

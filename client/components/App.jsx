@@ -77,7 +77,7 @@ const handleKickUser = (userid) => {
     })
 }
 
-const handleResetFirestore = (sessionid) => {
+const handleResetFirestore = () => {
   resetFirestore(sessionid)
     .then(() => {
       socket.emit('change-occured')
