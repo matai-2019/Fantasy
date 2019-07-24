@@ -99,7 +99,7 @@ const getViewableMessages = (sessionId, userId) => {
 const addMessage = (sessionId, userName, recipients, messageText) => {
   return getAllMessages(sessionId)
     .then(obj => {
-      const id = obj.messages[obj.messages.length - 1].id + 1
+      const id = (obj.messages.length) ? obj.messages[obj.messages.length - 1].id + 1 : 1
       const timestamp = Math.round(Date.now() / 1000)
       const message = { id, userName, messageText, recipients, timestamp }
       obj.messages.push(message)
