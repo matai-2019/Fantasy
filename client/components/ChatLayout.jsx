@@ -5,16 +5,21 @@ let inputValue = ''
 let recipients = []
 let userNames = []
 
-export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, handleKickUser, sessionAdmin, renderApp, handleResetFirestore }) => {
+export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, handleKickUser, sessionId, sessionAdmin, renderApp, handleResetFirestore }) => {
   const handleChange = event => {
     inputValue = event.target.value
   }
   const handleSend = () => {
     if (inputValue.length > 0) {
+      if (!recipients.includes(sessionId)) return recipients.push(sessionId)
       sendMessage(inputValue, recipients)
+      inputValue = ''
       document.getElementById('messageInput').value = ''
       recipients = []
       userNames = []
+      userArray.forEach(user => {
+        document.getElementById(`${user.id}check`).backgroundColor = '#FFFFFF'
+      })
     } else {
       document.getElementById('messageInput').value = ''
       document.getElementById('messageInput').placeholder = 'Please enter a message'
@@ -59,7 +64,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
   }
   return <>
     <div>
-      <Container inverted='true'>
+      <Container inverted='true' style={{ minHeight: '80vh' }}>
         { (sessionAdmin === 'true') ? <>
         <Modal trigger={<Button floated="left" animated='vertical' color='violet'>
           <Button.Content hidden>Admin</Button.Content>
@@ -126,7 +131,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
         </>
           : <> </>
         }
-        <Segment inverted={true} as={Form}>
+        <Segment inverted={true} as={Form} style={{ minHeight: '70vh' }}>
           <Grid columns={2} relaxed='very'>
             <Grid.Column floated="left" width={6} style={{ maxHeight: '400px' }}>
               <List divided relaxed>
@@ -134,13 +139,11 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
                   return <div key={user.id}>
                     <List.Item>
                       <Grid columns={2} relaxed='very'>
-                        <Grid.Column>
-                          <List.Header as='a'><h2>{user.userName}</h2></List.Header>
+                        <Grid.Column style={{ height: '30px' }}>
+                          <List.Header className='teal' as='a'><h2>{user.userName}</h2></List.Header>
                         </Grid.Column>
                         <Grid.Column floated='right' width={3}>
-                          <div className='ui checkbox'>
-                            <button className='ui center checkbox teal' onClick={handleSelect(user.id)} style={{ height: '15px', width: '15px' }}></button>
-                          </div>
+                          <div className='ui center teal'id={`${user.id}check`} onClick={handleSelect(user.id)} style={{ border: 'none', height: '30px', width: '30px', backgroundColor: '#FFFFFF' }}></div>
                         </Grid.Column>
                       </Grid>
                     </List.Item>
@@ -148,7 +151,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
                 })}
               </List>
             </Grid.Column >
-            <Grid.Column id={'messageScroller'} style={{ maxHeight: '400px', overflowY: 'scroll' }}>
+            <Grid.Column id={'messageScroller'} style={{ minHeight: '70vh', maxHeight: '70vh', overflowY: 'scroll' }}>
               <div>
                 {messageArray.map(message => {
                   return <div key={message.timestamp + message.id}>
@@ -165,7 +168,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
             </Grid.Column>
           </Grid >
         </Segment>
-        <div fluid className="ui left labeled input" style={{ width: '100%' }}>
+        <div className="ui left labeled input" style={{ width: '100%' }}>
           {userNames.map(name => {
             return <div key={name} className="ui teal horizontal label">{name}</div>
           })}
