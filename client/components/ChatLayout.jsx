@@ -149,7 +149,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
                 })}
               </List>
             </Grid.Column >
-            <Grid.Column style={{ maxHeight: '400px', overflowY: 'scroll' }}>
+            <Grid.Column style={{ maxHeight: '50vh', overflowY: 'scroll' }}>
               <div>
                 {messageArray.map(message => {
                   return <div key={message.timestamp + message.id}>
