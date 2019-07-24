@@ -1,12 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { List, Button, Grid, Icon, Segment, Input, Checkbox, Container, Header, Modal, Form, Label, Image, Message, GridColumn } from 'semantic-ui-react'
-import { removeUser } from '../../server/firestore/fsdb'
 
 let inputValue = ''
 const recipients = ''
 
-export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, handleKickUser }) => {
+export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath }) => {
   const handleChange = event => {
     inputValue = event.target.value
   }
@@ -19,14 +18,6 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
     let sessionID = document.getElementById('ssIDButton')
     sessionID.select()
     document.execCommand('copy')
-  }
-
-  const handleKick = event => {
-    return () => {
-      let userid = event
-      console.log('event', event)
-      handleKickUser(userid)
-    }
   }
 
   return <>
@@ -51,7 +42,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
                       </Form.Field>
                       <div className="ui action input">
                         <input type="text" value={`${fullPath}`} onClick={handleAddSession} id='ssIDButton'/>
-                        <button className="ui teal right labeled icon button">
+                        <button className="ui violet right labeled icon button">
                           Copy This URL
                         </button>
                       </div>
@@ -69,9 +60,9 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
                                 </List.Content>
                               </Grid.Column>
                               <Grid.Column floated="right">
-                                <button className="ui red button" color='red' type='Kill' onClick={handleKick(user.id)}>
+                                <Button color='red' type='Kill'>
                                   <Icon name='close' />
-                                  Del</button>
+                                  Del</Button>
                               </Grid.Column>
                             </Grid>
                           </List.Item>
