@@ -1,6 +1,6 @@
 import React from 'react'
 import { getAllUsers } from '../../server/firestore/fsdb'
-import { Container, Button, Icon, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { Container, Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
 
 function LoginForm ({ setUserName, userArray, ssID }) {
   let inputValue = ''
@@ -22,33 +22,33 @@ function LoginForm ({ setUserName, userArray, ssID }) {
       })
   }
   return (
-        <div >
-    <Container>
-      <Grid textAlign='center' style={{ height: '85vh' }} verticalAlign='middle'>
-        <Grid.Column style={{ maxWidth: 650 }}>
-          <Message>
-            <h2>Welcome to Dungeons &#38; Dragons</h2>
-          </Message>
-          <Header as='h2' color='violet' textAlign='center'>
-          </Header>
-          <Form onSubmit={handleSubmit} size='large'>
-            <Segment stacked inverted>
-              <Form.Input
-                id="loginInput"
-                fluid icon='user'
-                iconPosition='left'
-                defaultValue=''
-                onChange={handleChange}
-                placeholder='Username' />
-              <Button id='loginButton' color='violet' fluid size='large' type='submit'>
-                <h3>Start New Adventure</h3>
-              </Button>
-            </Segment>
-          </Form>
-        </Grid.Column>
-      </Grid>
-    </Container>
-      </div>
+    <div >
+      <Container>
+        <Grid textAlign='center' style={{ height: '85vh' }} verticalAlign='middle'>
+          <Grid.Column style={{ maxWidth: 650 }}>
+            <Message>
+              <h2>Welcome to Dungeons &#38; Dragons</h2>
+            </Message>
+            <Header as='h2' color='violet' textAlign='center'>
+            </Header>
+            <Form onSubmit={handleSubmit} size='large'>
+              <Segment stacked inverted>
+                <Form.Input
+                  id="loginInput"
+                  fluid icon='user'
+                  iconPosition='left'
+                  defaultValue=''
+                  onChange={handleChange}
+                  placeholder='Username' />
+                <Button id='loginButton' color='violet' fluid size='large' type='submit'>
+                  <h3>Start New Adventure</h3>
+                </Button>
+              </Segment>
+            </Form>
+          </Grid.Column>
+        </Grid>
+      </Container>
+    </div>
   )
 }
 
