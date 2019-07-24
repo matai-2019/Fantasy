@@ -10,7 +10,6 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
     inputValue = event.target.value
   }
   const handleSend = () => {
-
     if (inputValue.length > 0) {
       sendMessage(inputValue, recipients)
       document.getElementById('messageInput').value = ''
