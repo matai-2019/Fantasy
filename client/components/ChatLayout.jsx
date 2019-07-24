@@ -1,35 +1,57 @@
 import React from 'react'
-import { List, Button, Grid, Icon, Segment, Input, Checkbox, Container, Header, Modal, Form, Message } from 'semantic-ui-react'
+import { List, Button, Grid, Icon, Segment, Container, Header, Modal, Form, Message } from 'semantic-ui-react'
 
 let inputValue = ''
+let recipients = []
+let userNames = []
 
-export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, handleKickUser, sessionAdmin }) => {
+export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, handleKickUser, sessionAdmin, renderApp }) => {
   const handleChange = event => {
     inputValue = event.target.value
   }
-
   const handleSend = () => {
-    if (inputValue.length > 0) sendMessage(inputValue)
-  }
 
+    if (inputValue.length > 0) {
+      sendMessage(inputValue, recipients)
+      document.getElementById('messageInput').value = ''
+      recipients = []
+      userNames = []
+    } else {
+      document.getElementById('messageInput').value = ''
+      document.getElementById('messageInput').placeholder = 'Please enter a message'
+      document.getElementById('messageInput').focus()
+    }
+  }
   const handleAddSession = event => {
     const sessionID = document.getElementById('ssIDButton')
     sessionID.select()
     document.execCommand('copy')
   }
+  const handleKick = event => {
+    return () => {
+      const userid = event
+      handleKickUser(userid)
+    }
+  }
   const secondsToDate = (string) => {
     const date = new Date(Number(string))
-    date.setHours(date.getHours() + 12)
+    date.setHours(date.getHours())
     string = date.toString()
     let arr = string.split(' ')[4].split(':')
     arr = arr[0] + ':' + arr[1]
     return arr
   }
-
-  const handleKick = event => {
+  const handleSelect = userid => {
     return () => {
-      const userid = event
-      handleKickUser(userid)
+      const userName = userArray.find(user => user.id === userid).userName
+      if (recipients.includes(userid)) {
+        recipients.splice(recipients.indexOf(userid), 1)
+        userNames.splice(userNames.indexOf(userName), 1)
+      } else {
+        recipients.push(userid)
+        userNames.push(userName)
+      }
+      renderApp()
     }
   }
 
@@ -104,7 +126,9 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
                           <List.Header as='a'><h2>{user.userName}</h2></List.Header>
                         </Grid.Column>
                         <Grid.Column floated='right' width={3}>
-                          <Checkbox />
+                          <div className='ui checkbox'>
+                            <button className='ui center checkbox teal' onClick={handleSelect(user.id)} style={{ height: '15px', width: '15px' }}></button>
+                          </div>
                         </Grid.Column>
                       </Grid>
                     </List.Item>
@@ -129,7 +153,15 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
             </Grid.Column>
           </Grid >
         </Segment>
-        <Input fluid type='text' action={<Button onClick={handleSend}>Send</Button>} id="messageInput" placeholder='Your message goes here...' onChange={handleChange}/>
+        <div fluid className="ui left labeled input" style={{ width: '100%' }}>
+          {/* <div className="ui teal horizontal label"> Anarun </div> */}
+          {userNames.map(name => {
+            return <div key={name} className="ui teal horizontal label">{name}</div>
+          })}
+          <input id='messageInput' onChange={handleChange} fluid type="text" placeholder="Send a message"/>
+          <Button onClick={handleSend}>Send</Button>
+        </div>
+        {/* <Input fluid action={<Button onClick={handleSend}>Send</Button>} id="messageInput" placeholder='Your message goes here...' onChange={handleChange} /> */}
       </Container>
     </div>
   </>

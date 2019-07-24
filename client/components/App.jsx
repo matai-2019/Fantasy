@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import LoginLayout from './LoginLayout'
 import { ChatTemplate } from './ChatLayout'
-import {
-  getAllUsers,
+import { Dimmer, Loader } from 'semantic-ui-react'
+import { getAllUsers,
+  getAllMessages,
   addUser,
   removeUser,
   addMessage,
@@ -30,12 +31,22 @@ const saveSession = userObj => {
   sessionName = userName
 }
 const loadSession = () => {
-  sessionId = sessionStorage.getItem('id')
-  sessionAdmin = sessionStorage.getItem('isAdmin')
-  sessionName = sessionStorage.getItem('userName')
-  userArray = (sessionStorage.getItem('users') === null) ? [] : JSON.parse(sessionStorage.getItem('users'))
-  messageArray = (sessionStorage.getItem('messages') === null) ? [] : JSON.parse(sessionStorage.getItem('messages'))
+  const sessObj = {
+    id: JSON.parse(sessionStorage.getItem('id')),
+    isAdmin: JSON.parse(sessionStorage.getItem('isAdmin')),
+    userName: sessionStorage.getItem('userName')
+  }
+  userArray = JSON.parse(sessionStorage.getItem('users'))
+  messageArray = JSON.parse(sessionStorage.getItem('messages'))
+
+  const loggedIn = userArray.filter(user => {
+    return (user.id === sessObj.id && user.isAdmin === sessObj.isAdmin && user.userName === sessObj.userName)
+  }).length
+  sessionId = loggedIn ? sessObj.id : null
+  sessionAdmin = loggedIn ? sessObj.isAdmin : null
+  sessionName = loggedIn ? sessObj.userName : null
 }
+
 const pullFirestore = () => {
   return getViewableMessages(ssID, Number(sessionId))
     .then(array => {
@@ -45,14 +56,15 @@ const pullFirestore = () => {
           if (array) {
             messageArray = array
           }
-          saveSession({ id: sessionId, isAdmin: sessionAdmin, userName: sessionName })
+          sessionStorage.setItem('users', JSON.stringify(userArray))
+          sessionStorage.setItem('messages', JSON.stringify(messageArray))
         })
     })
 }
-const renderUpdate = () => {
-  pullFirestore()
+const pullRender = () => {
+  return pullFirestore()
     .then(() => {
-      ReactDOM.render(<App />, document.getElementById('app'))
+      return renderApp()
     })
 }
 const handleKickUser = (userid) => {
@@ -61,10 +73,13 @@ const handleKickUser = (userid) => {
       socket.emit('change-occured')
     })
 }
+const renderApp = () => {
+  ReactDOM.render(<App />, document.getElementById('app'))
+}
 
 // socket events
 socket.on('update-sockets', () => {
-  renderUpdate()
+  pullRender()
 })
 socket.on('disconnect', () => {
 })
@@ -73,10 +88,14 @@ socket.on('disconnect', () => {
 let sessionId, sessionAdmin, sessionName
 let userArray = []
 let messageArray = []
+let loading = true
 
 // onLoad functions
-loadSession()
-renderUpdate()
+pullRender().then(() => {
+  loadSession()
+  loading = false
+  renderApp()
+})
 
 class App extends Component {
   setUserName = (username) => {
@@ -84,14 +103,14 @@ class App extends Component {
       .then(user => {
         saveSession(user)
         socket.emit('set-state', { id: sessionId, isAdmin: sessionAdmin, userName: sessionName })
-        loadSession()
         socket.emit('change-occured')
       })
   }
 
-  sendMessage = (message) => {
+  sendMessage = (message, recipients) => {
     getAllUsers(ssID)
       .then(obj => {
+        if (typeof recipients === typeof [] && recipients.length > 0) return recipients
         return obj.users.map(user => user.id)
       })
       .then(recipients => {
@@ -102,23 +121,31 @@ class App extends Component {
       })
   }
 
-  render() {
+  render () {
     return (
       <>
-        <div style={{ backgroundImage: './img/wp-1.jpg' }}>
-          <br />
-          <h1 style={{ color: 'white' }} align="center">Welcome {sessionName}!</h1>
-          {(sessionId)
-            ? <ChatTemplate
-              socket={socket}
-              messageArray={messageArray}
-              userArray={userArray}
-              sendMessage={this.sendMessage}
-              fullPath={fullPath}
-              handleKickUser={handleKickUser}
-              sessionAdmin={sessionAdmin}
-            />
-            : <LoginLayout ssID={ssID} setUserName={this.setUserName} userArray={userArray} />}
+        <div>
+          <br/>
+          <h1 style={{ color: 'white' }} align="center"><img src="../img/login-title-min.gif" alt="" height="200px" width="900px"/>
+            Welcome!
+          </h1>
+          {loading
+            ? <Dimmer active>
+              <Loader className='teal'/>
+            </Dimmer>
+            : (sessionId !== 'null' && sessionId)
+              ? <ChatTemplate
+                socket={socket}
+                messageArray={messageArray}
+                userArray={userArray}
+                sendMessage={this.sendMessage}
+                fullPath={fullPath}
+                handleKickUser={handleKickUser}
+                sessionAdmin={sessionAdmin}
+                renderApp={renderApp}
+              />
+              : <LoginLayout ssID={ssID} setUserName={this.setUserName} userArray={userArray}/>
+          }
         </div>
       </>
     )

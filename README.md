@@ -20,11 +20,11 @@ At the end of game play, the database will be reset and all chats will be wiped 
 
 // High
 Select functionality not working
-Message box isn't clearing input on send
+Message box isn't clearing input on send // Test
+sessionStorage issues
 Deploy
-Logging in limits (No name - character length max)
+Logging in limits (No name - character length max) 
 Enter button not sending message
-Socket ID null
 Chile errors in ChatLayout
 
 // Lower priority
