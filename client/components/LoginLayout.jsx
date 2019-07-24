@@ -32,9 +32,9 @@ function LoginForm ({ setUserName, userArray, ssID }) {
     <Container>
       <Grid textAlign='center' style={{ height: '85vh' }} verticalAlign='middle'>
         <Grid.Column style={{ maxWidth: 650 }}>
-          {/* <Message>
-            <h2>Welcome to Dungeons &#38; Dragons</h2>
-          </Message> */}
+          <Message>
+            <h2>Welcome to Fantasy</h2>
+          </Message>
           <Header as='h2' color='violet' textAlign='center'>
           </Header>
           <Form onSubmit={handleSubmit} size='large'>
