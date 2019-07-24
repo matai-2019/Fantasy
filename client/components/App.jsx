@@ -123,6 +123,7 @@ class App extends Component {
               sendMessage={this.sendMessage}
               fullPath={fullPath}
               handleKickUser={handleKickUser}
+              sessionAdmin={sessionAdmin}
             />
             : <LoginLayout ssID={ssID} setUserName={this.setUserName} userArray={userArray}/>}
         </div>
