@@ -136,20 +136,25 @@ class App extends Component {
       <>
         <div>
           <br/>
-          <h1 style={{ color: 'white' }} align="center"></h1>
-          {(sessionId)
-            ? <ChatTemplate
-              socket={socket}
-              messageArray={messageArray}
-              userArray={userArray}
-              sendMessage={this.sendMessage}
-              fullPath={fullPath}
-              handleKickUser={handleKickUser}
-              handleResetFirestore={handleResetFirestore}
-              sessionAdmin={sessionAdmin}
-              renderApp={renderApp}
-            />
-            : <LoginLayout ssID={ssID} setUserName={this.setUserName} userArray={userArray} />}
+          <h1 style={{ color: 'white' }} align="center">
+          </h1>
+          {loading
+            ? <Dimmer active>
+              <Loader className='teal'/>
+            </Dimmer>
+            : (sessionId !== 'null' && sessionId)
+              ? <ChatTemplate
+                socket={socket}
+                messageArray={messageArray}
+                userArray={userArray}
+                sendMessage={this.sendMessage}
+                fullPath={fullPath}
+                handleKickUser={handleKickUser}
+                sessionAdmin={sessionAdmin}
+                renderApp={renderApp}
+              />
+              : <LoginLayout ssID={ssID} setUserName={this.setUserName} userArray={userArray}/>
+          }
         </div>
       </>
     )
