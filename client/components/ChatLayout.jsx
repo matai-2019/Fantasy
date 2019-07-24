@@ -1,5 +1,5 @@
 import React from 'react'
-import { List, Button, Grid, Icon, Segment, Input, Checkbox, Container, Header, Modal, Form, Message } from 'semantic-ui-react'
+import { List, Button, Grid, Icon, Segment, Container, Header, Modal, Form, Message } from 'semantic-ui-react'
 
 let inputValue = ''
 let recipients = []
@@ -10,6 +10,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
     inputValue = event.target.value
   }
   const handleSend = () => {
+
     if (inputValue.length > 0) {
       sendMessage(inputValue, recipients)
       document.getElementById('messageInput').value = ''
@@ -29,13 +30,12 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
   const handleKick = event => {
     return () => {
       const userid = event
-      console.log('event', event)
       handleKickUser(userid)
     }
   }
   const secondsToDate = (string) => {
     const date = new Date(Number(string))
-    date.setHours(date.getHours() + 12)
+    date.setHours(date.getHours())
     string = date.toString()
     let arr = string.split(' ')[4].split(':')
     arr = arr[0] + ':' + arr[1]
