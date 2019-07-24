@@ -109,9 +109,10 @@ class App extends Component {
   render() {
     return (
       <>
-        <div style={{ backgroundImage: './img/wp-1.jpg' }}>
-          <br />
-          <h1 style={{ color: 'white' }} align="center">Welcome {sessionName}!</h1>
+        <div>
+          <br/>
+          <h1 style={{ color: 'white' }} align="center"><img src="../img/login-title-min.gif" alt="" height="200px" width="900px"/> 
+          <br/>{sessionName}!</h1>
           {(sessionId)
             ? <ChatTemplate
               socket={socket}
