@@ -44,7 +44,6 @@ const addUser = (sessionId, userName) => {
         })
     })
     .then(obj => {
-      console.log(obj)
       return sendUser(obj, id, userName, sessionId)
     })
 }

@@ -21,7 +21,6 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
   const handleKick = event => {
     return () => {
       let userid = event
-      console.log('event', event)
       handleKickUser(userid)
     }
   }
