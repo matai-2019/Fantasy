@@ -67,7 +67,6 @@ const renderApp = () => {
 
 // socket events
 socket.on('update-sockets', () => {
-  console.log('updateSockets')
   pullRender()
 })
 socket.on('disconnect', () => {
