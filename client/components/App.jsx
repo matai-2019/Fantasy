@@ -128,10 +128,7 @@ class App extends Component {
   render () {
     return (
       <>
-        <div>
-          <br/>
-          <h1 style={{ color: 'white' }} align="center">
-          </h1>
+        <div style={{ paddingTop: '5vh' }}>
           {loading
             ? <Dimmer active>
               <Loader className='teal'/>
@@ -145,6 +142,7 @@ class App extends Component {
                 fullPath={fullPath}
                 handleKickUser={handleKickUser}
                 sessionAdmin={sessionAdmin}
+                sessionId={sessionId}
                 renderApp={renderApp}
               />
               : <LoginLayout ssID={ssID} setUserName={this.setUserName} userArray={userArray}/>
