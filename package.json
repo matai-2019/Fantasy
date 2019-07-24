@@ -15,7 +15,8 @@
     "localStart": "webpack && node server",
     "dev": "webpack --watch & nodemon server",
     "test": "jest --watchAll",
-    "deploy:sandbox": "webpack && git push heroku sandbox:master"
+    "deploy:sandbox": "webpack && git push heroku sandbox:master",
+    "heroku-postbuild": "webpack -p"
   },
   "babel": {
     "presets": [
@@ -32,6 +33,7 @@
       "./tests/setup.js"
     ]
   },
+  "cacheDirectories":["build"],
   "dependencies": {
     "copy-webpack-plugin": "^5.0.3",
     "express": "^4.16.4",
