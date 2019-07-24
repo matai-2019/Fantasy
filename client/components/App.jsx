@@ -29,6 +29,7 @@ const saveSession = userObj => {
   sessionId = id
   sessionAdmin = isAdmin
   sessionName = userName
+
 }
 const loadSession = () => {
   const sessObj = {
@@ -169,3 +170,4 @@ class App extends Component {
 }
 
 export default App
+
