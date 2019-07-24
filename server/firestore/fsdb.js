@@ -20,7 +20,8 @@ const getAllUsers = (sessionId) => {
 }
 
 const getNewID = (ssID) => {
-  let id, validIDs
+  let id
+  const validIDs = []
   return getAllUsers(ssID)
     .then(obj => {
       if (obj === undefined) return 1
@@ -104,11 +105,16 @@ const getViewableMessages = (sessionId, userId) => {
 const addMessage = (sessionId, userName, recipients, messageText) => {
   return getAllMessages(sessionId)
     .then(obj => {
+      let id
       const validIDs = []
       obj.messages.forEach(msg => {
         if (typeof msg.id === typeof 0) validIDs.push(msg.id)
       })
-      const id = validIDs.sort((a, b) => a > b)[validIDs.length - 1].id + 1
+      if (validIDs > 0) {
+        id = validIDs.sort((a, b) => a > b)[validIDs.length - 1].id + 1
+      } else {
+        id = 1
+      }
       let timestamp = new Date()
       timestamp = timestamp.getTime()
       const message = { id, userName, messageText, recipients, timestamp }
