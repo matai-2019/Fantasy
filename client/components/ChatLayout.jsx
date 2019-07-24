@@ -5,7 +5,7 @@ let inputValue = ''
 let recipients = []
 let userNames = []
 
-export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, handleKickUser, sessionAdmin, renderApp }) => {
+export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, handleKickUser, sessionAdmin, renderApp, handleResetFirestore }) => {
   const handleChange = event => {
     inputValue = event.target.value
   }
@@ -21,17 +21,20 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
       document.getElementById('messageInput').focus()
     }
   }
+
   const handleAddSession = event => {
     const sessionID = document.getElementById('ssIDButton')
     sessionID.select()
     document.execCommand('copy')
   }
+
   const handleKick = event => {
     return () => {
       const userid = event
       handleKickUser(userid)
     }
   }
+
   const secondsToDate = (string) => {
     const date = new Date(Number(string))
     date.setHours(date.getHours())
@@ -40,6 +43,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
     arr = arr[0] + ':' + arr[1]
     return arr
   }
+
   const handleSelect = userid => {
     return () => {
       const userName = userArray.find(user => user.id === userid).userName
@@ -79,6 +83,16 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
                         <input type="text" value={`${fullPath}`} onClick={handleAddSession} id='ssIDButton'/>
                         <button className="ui teal right labeled icon button">
                           Copy This URL
+                        </button>
+                      </div>
+                    </Form>
+                    <Form>
+                      <Form.Field>
+                        <div placeholder='session ID'></div>
+                      </Form.Field>
+                      <div className="ui action input">
+                        <button className="ui red button" type="text" value='Delete Session' onClick={handleResetFirestore} id='ssIDButton'>
+                          Delete Users and Chats
                         </button>
                       </div>
                     </Form>
@@ -153,14 +167,12 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
           </Grid >
         </Segment>
         <div fluid className="ui left labeled input" style={{ width: '100%' }}>
-          {/* <div className="ui teal horizontal label"> Anarun </div> */}
           {userNames.map(name => {
             return <div key={name} className="ui teal horizontal label">{name}</div>
           })}
           <input id='messageInput' onChange={handleChange} fluid type="text" placeholder="Send a message"/>
           <Button onClick={handleSend}>Send</Button>
         </div>
-        {/* <Input fluid action={<Button onClick={handleSend}>Send</Button>} id="messageInput" placeholder='Your message goes here...' onChange={handleChange} /> */}
       </Container>
     </div>
   </>
