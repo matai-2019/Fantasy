@@ -30,6 +30,7 @@ const saveSession = userObj => {
   sessionAdmin = isAdmin
   sessionName = userName
 }
+
 const loadSession = () => {
   const sessObj = {
     id: JSON.parse(sessionStorage.getItem('id')),
@@ -61,14 +62,23 @@ const pullFirestore = () => {
         })
     })
 }
+
 const pullRender = () => {
   return pullFirestore()
     .then(() => {
       return renderApp()
     })
 }
+
 const handleKickUser = (userid) => {
   removeUser(ssID, userid)
+    .then(() => {
+      socket.emit('change-occured')
+    })
+}
+
+const handleResetFirestore = () => {
+  resetFirestore(sessionid)
     .then(() => {
       socket.emit('change-occured')
     })
