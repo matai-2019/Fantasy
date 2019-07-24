@@ -36,11 +36,16 @@ const addUser = (sessionId, userName) => {
   let id
   return getAllUsers(sessionId)
     .then(obj => {
-      return getNewID(sessionId)
-        .then(data => {
-          id = data
-          return obj
-        })
+      if (obj.users.length > 0) {
+        return getNewID(sessionId)
+          .then(data => {
+            id = data
+            return obj
+          })
+      } else {
+        id = 1
+        return obj
+      }
     })
     .then(obj => {
       return sendUser(obj, id, userName, sessionId)
