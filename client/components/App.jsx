@@ -7,7 +7,6 @@ import { getAllUsers,
   addUser,
   removeUser,
   addMessage,
-  getNewID,
   getViewableMessages,
   resetFirestore
 } from '../../server/firestore/fsdb'
@@ -125,9 +124,9 @@ class App extends Component {
   render () {
     return (
       <>
-        <div style={{ backgroundImage: './img/wp-1.jpg' }}>
+        <div>
           <br/>
-          <h1 style={{ color: 'white' }} align="center">
+          <h1 style={{ color: 'white' }} align="center"><img src="../img/login-title-min.gif" alt="" height="200px" width="900px"/>
             Welcome!
           </h1>
           {loading

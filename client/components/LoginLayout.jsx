@@ -21,8 +21,9 @@ function LoginForm ({ setUserName, userArray, ssID }) {
         }
       })
   }
-
+  // style={{backgroundImage:"url(../img/death-min.gif)", backgroundRepeat:"no-repeat", backgroundSize:"cover", backgroundPosition:"center", width: "100%", height:"755px"}} 
   return (
+        <div >
     <Container>
       <Grid textAlign='center' style={{ height: '90vh' }} verticalAlign='middle'>
         <Grid.Column style={{ maxWidth: 650 }}>
@@ -30,8 +31,6 @@ function LoginForm ({ setUserName, userArray, ssID }) {
             <h2>Welcome to Dungeons &#38; Dragons</h2>
           </Message>
           <Header as='h2' color='violet' textAlign='center'>
-
-            <h1>Brace Yourself <Icon name='grunt' size='large' /></h1>
           </Header>
           <Form onSubmit={handleSubmit} size='large'>
             <Segment stacked inverted>
@@ -50,6 +49,7 @@ function LoginForm ({ setUserName, userArray, ssID }) {
         </Grid.Column>
       </Grid>
     </Container>
+      </div>
   )
 }
 
