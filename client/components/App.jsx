@@ -30,7 +30,6 @@ const saveSession = userObj => {
   sessionAdmin = isAdmin
   sessionName = userName
 }
-
 const loadSession = () => {
   const sessObj = {
     id: JSON.parse(sessionStorage.getItem('id')),
@@ -62,23 +61,14 @@ const pullFirestore = () => {
         })
     })
 }
-
 const pullRender = () => {
   return pullFirestore()
     .then(() => {
       return renderApp()
     })
 }
-
 const handleKickUser = (userid) => {
   removeUser(ssID, userid)
-    .then(() => {
-      socket.emit('change-occured')
-    })
-}
-
-const handleResetFirestore = () => {
-  resetFirestore(sessionid)
     .then(() => {
       socket.emit('change-occured')
     })
@@ -136,20 +126,26 @@ class App extends Component {
       <>
         <div>
           <br/>
-          <h1 style={{ color: 'white' }} align="center"></h1>
-          {(sessionId)
-            ? <ChatTemplate
-              socket={socket}
-              messageArray={messageArray}
-              userArray={userArray}
-              sendMessage={this.sendMessage}
-              fullPath={fullPath}
-              handleKickUser={handleKickUser}
-              handleResetFirestore={handleResetFirestore}
-              sessionAdmin={sessionAdmin}
-              renderApp={renderApp}
-            />
-            : <LoginLayout ssID={ssID} setUserName={this.setUserName} userArray={userArray} />}
+          <h1 style={{ color: 'white' }} align="center"><img src="../img/login-title-min.gif" alt="" height="200px" width="900px"/>
+            Welcome!
+          </h1>
+          {loading
+            ? <Dimmer active>
+              <Loader className='teal'/>
+            </Dimmer>
+            : (sessionId !== 'null' && sessionId)
+              ? <ChatTemplate
+                socket={socket}
+                messageArray={messageArray}
+                userArray={userArray}
+                sendMessage={this.sendMessage}
+                fullPath={fullPath}
+                handleKickUser={handleKickUser}
+                sessionAdmin={sessionAdmin}
+                renderApp={renderApp}
+              />
+              : <LoginLayout ssID={ssID} setUserName={this.setUserName} userArray={userArray}/>
+          }
         </div>
       </>
     )
