@@ -29,6 +29,7 @@ const saveSession = userObj => {
   sessionAdmin = isAdmin
   sessionName = userName
 }
+
 const loadSession = () => {
   sessionId = sessionStorage.getItem('id')
   sessionAdmin = sessionStorage.getItem('isAdmin')
@@ -36,6 +37,7 @@ const loadSession = () => {
   userArray = (sessionStorage.getItem('users') === null) ? [] : JSON.parse(sessionStorage.getItem('users'))
   messageArray = (sessionStorage.getItem('messages') === null) ? [] : JSON.parse(sessionStorage.getItem('messages'))
 }
+
 const pullFirestore = () => {
   return getViewableMessages(ssID, Number(sessionId))
     .then(array => {
@@ -49,14 +51,23 @@ const pullFirestore = () => {
         })
     })
 }
+
 const pullRender = () => {
   pullFirestore()
     .then(() => {
       renderApp()
     })
 }
+
 const handleKickUser = (userid) => {
   removeUser(ssID, userid)
+    .then(() => {
+      socket.emit('change-occured')
+    })
+}
+
+const handleResetFirestore = (sessionid) => {
+  resetFirestore(sessionid)
     .then(() => {
       socket.emit('change-occured')
     })
@@ -121,6 +132,7 @@ class App extends Component {
               sendMessage={this.sendMessage}
               fullPath={fullPath}
               handleKickUser={handleKickUser}
+              handleResetFirestore={handleResetFirestore}
               sessionAdmin={sessionAdmin}
               renderApp={renderApp}
             />
