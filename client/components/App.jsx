@@ -50,10 +50,10 @@ const pullFirestore = () => {
         })
     })
 }
-const renderUpdate = () => {
+const pullRender = () => {
   pullFirestore()
     .then(() => {
-      ReactDOM.render(<App />, document.getElementById('app'))
+      renderApp()
     })
 }
 const handleKickUser = (userid) => {
@@ -63,11 +63,14 @@ const handleKickUser = (userid) => {
       socket.emit('change-occured')
     })
 }
+const renderApp = () => {
+  ReactDOM.render(<App />, document.getElementById('app'))
+}
 
 // socket events
 socket.on('update-sockets', () => {
   console.log('updateSockets')
-  renderUpdate()
+  pullRender()
 })
 socket.on('disconnect', () => {
 })
@@ -79,7 +82,7 @@ let messageArray = []
 
 // onLoad functions
 loadSession()
-renderUpdate()
+pullRender()
 
 class App extends Component {
   setUserName = (username) => {
@@ -93,9 +96,10 @@ class App extends Component {
       })
   }
 
-  sendMessage = (message) => {
+  sendMessage = (message, recipients) => {
     getAllUsers(ssID)
       .then(obj => {
+        if (typeof recipients === typeof [] && recipients.length > 0) return recipients
         return obj.users.map(user => user.id)
       })
       .then(recipients => {
@@ -122,6 +126,7 @@ class App extends Component {
               fullPath={fullPath}
               handleKickUser={handleKickUser}
               sessionAdmin={sessionAdmin}
+              renderApp={renderApp}
             />
             : <LoginLayout ssID={ssID} setUserName={this.setUserName} userArray={userArray}/>}
         </div>
