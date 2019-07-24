@@ -5,7 +5,7 @@ let inputValue = ''
 let recipients = []
 let userNames = []
 
-export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, handleKickUser, sessionAdmin, renderApp, handleResetFirestore }) => {
+export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, handleKickUser, sessionAdmin, sessionName, renderApp, handleResetFirestore }) => {
   const handleChange = event => {
     inputValue = event.target.value
   }
@@ -61,69 +61,70 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
   return <>
     <div>
       <Container inverted='true'>
-        { (sessionAdmin === 'true') ? <>
-        <Modal trigger={<Button floated="left" animated='vertical' color='violet'>
-          <Button.Content hidden>Admin</Button.Content>
-          <Button.Content visible>
-            <Icon name='cog' />
-          </Button.Content>
-        </Button>} closeIcon>
-          <Header icon='cogs' content='Admin Settings' />
-          <br></br>
-          <Modal.Content>
-            <p>
-              <Segment inverted={true}>
-                <Grid columns={2} relaxed='very'>
-                  <Grid.Column floated="left" width={7}>
-                    <Form>
-                      <Form.Field>
-                        <div placeholder='session ID'></div>
-                      </Form.Field>
-                      <div className="ui action input">
-                        <input type="text" value={`${fullPath}`} onClick={handleAddSession} id='ssIDButton'/>
-                        <button className="ui teal right labeled icon button">
-                          Copy This URL
-                        </button>
-                      </div>
-                    </Form>
-                    <Form>
-                      <Form.Field>
-                        <div placeholder='session ID'></div>
-                      </Form.Field>
-                      <div className="ui action input">
-                        <button className="ui red button" type="text" value='Delete Session' onClick={handleResetFirestore} id='ssIDButton'>
-                          Delete Users and Chats
-                        </button>
-                      </div>
-                    </Form>
-                  </Grid.Column>
-                  <Grid.Column floated="right" width={7} style={{ maxHeight: '300px', overflowY: 'scroll' }}>
-                    <List divided relaxed>
-                      {userArray.map(user => {
-                        return <div key={user.id}>
-                          <List.Item>
-                            <Grid columns={2} relaxed='very'>
-                              <Grid.Column floated="left">
-                                <List.Content>
-                                  <List><h3>{user.userName}</h3></List>
-                                </List.Content>
-                              </Grid.Column>
-                              <Grid.Column floated="right">
-                                <button className="ui red button" color='red' type='Kill' onClick={handleKick(user.id)}>
-                                  <Icon name='close' />
-                                  Del</button>
-                              </Grid.Column>
-                            </Grid>
-                          </List.Item>
+        {<h1 style={{ color: 'white' }} align="center">Welcome {sessionName}</h1>}
+        {(sessionAdmin === true) ? <>
+          <Modal trigger={<Button floated="left" animated='vertical' color='violet'>
+            <Button.Content hidden>Admin</Button.Content>
+            <Button.Content visible>
+              <Icon name='cog' />
+            </Button.Content>
+          </Button>} closeIcon>
+            <Header icon='cogs' content='Admin Settings' />
+            <br></br>
+            <Modal.Content>
+              <p>
+                <Segment inverted={true}>
+                  <Grid columns={2} relaxed='very'>
+                    <Grid.Column floated="left" width={7}>
+                      <Form>
+                        <Form.Field>
+                          <div placeholder='session ID'></div>
+                        </Form.Field>
+                        <div className="ui action input">
+                          <input type="text" value={`${fullPath}`} onClick={handleAddSession} id='ssIDButton' />
+                          <button className="ui teal right labeled icon button">
+                            Copy This URL
+                          </button>
                         </div>
-                      })}
-                    </List>
-                  </Grid.Column>
-                </Grid>
-              </Segment>
-            </p>
-          </Modal.Content>
-        </Modal>
+                      </Form>
+                      <Form>
+                        <Form.Field>
+                          <div placeholder='session ID'></div>
+                        </Form.Field>
+                        <div className="ui action input">
+                          <button className="ui red button" type="text" value='Delete Session' onClick={handleResetFirestore} id='ssIDButton'>
+                            Delete Users and Chats
+                          </button>
+                        </div>
+                      </Form>
+                    </Grid.Column>
+                    <Grid.Column floated="right" width={7} style={{ maxHeight: '300px', overflowY: 'scroll' }}>
+                      <List divided relaxed>
+                        {userArray.map(user => {
+                          return <div key={user.id}>
+                            <List.Item>
+                              <Grid columns={2} relaxed='very'>
+                                <Grid.Column floated="left">
+                                  <List.Content>
+                                    <List><h3>{user.userName}</h3></List>
+                                  </List.Content>
+                                </Grid.Column>
+                                <Grid.Column floated="right">
+                                  <button className="ui red button" color='red' type='Kill' onClick={handleKick(user.id)}>
+                                    <Icon name='close' />
+                                    Del</button>
+                                </Grid.Column>
+                              </Grid>
+                            </List.Item>
+                          </div>
+                        })}
+                      </List>
+                    </Grid.Column>
+                  </Grid>
+                </Segment>
+              </p>
+            </Modal.Content>
+          </Modal>
         </>
           : <> </>
         }
@@ -157,7 +158,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
                       <Message
                         header={secondsToDate(message.timestamp) + ' | ' + message.userName}
                         content={message.messageText}
-                        // onDismiss={(event) => console.log(event.target)}
+                      // onDismiss={(event) => console.log(event.target)}
                       />
                     </Segment>
                   </div>
@@ -170,7 +171,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
           {userNames.map(name => {
             return <div key={name} className="ui teal horizontal label">{name}</div>
           })}
-          <input id='messageInput' onChange={handleChange} fluid type="text" placeholder="Send a message"/>
+          <input id='messageInput' onChange={handleChange} fluid type="text" placeholder="Send a message" />
           <Button onClick={handleSend}>Send</Button>
         </div>
       </Container>

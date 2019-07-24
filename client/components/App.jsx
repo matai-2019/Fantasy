@@ -75,7 +75,7 @@ const handleKickUser = (userid) => {
 }
 
 const handleResetFirestore = () => {
-  resetFirestore(sessionid)
+  resetFirestore(ssID)
     .then(() => {
       socket.emit('change-occured')
     })
@@ -150,6 +150,7 @@ class App extends Component {
                 handleKickUser={handleKickUser}
                 handleResetFirestore={handleResetFirestore}
                 sessionAdmin={sessionAdmin}
+                sessionName={sessionName}
                 renderApp={renderApp}
               />
               : <LoginLayout ssID={ssID} setUserName={this.setUserName} userArray={userArray}/>
