@@ -1,6 +1,6 @@
 import React from 'react'
 import { getAllUsers } from '../../server/firestore/fsdb'
-import { Container, Button, Icon, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { Container, Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
 
 function LoginForm ({ setUserName, userArray, ssID }) {
   let inputValue = ''

@@ -40,9 +40,12 @@ const loadSession = () => {
   userArray = JSON.parse(sessionStorage.getItem('users'))
   messageArray = JSON.parse(sessionStorage.getItem('messages'))
 
-  const loggedIn = userArray.filter(user => {
-    return (user.id === sessObj.id && user.isAdmin === sessObj.isAdmin && user.userName === sessObj.userName)
-  }).length
+  let loggedIn = 0
+  if (userArray !== null) {
+    loggedIn = userArray.filter(user => {
+      return (user.id === sessObj.id && user.isAdmin === sessObj.isAdmin && user.userName === sessObj.userName)
+    }).length
+  }
   sessionId = loggedIn ? sessObj.id : null
   sessionAdmin = loggedIn ? sessObj.isAdmin : null
   sessionName = loggedIn ? sessObj.userName : null
