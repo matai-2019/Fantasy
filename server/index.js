@@ -3,7 +3,6 @@ const port = process.env.PORT || 3000
 
 io.on('connection', socket => {
   let userId
-  console.log('User connected')
   socket.emit('load-user')
   socket.on('set-state', userState => {
     userId = userState.id
@@ -14,7 +13,6 @@ io.on('connection', socket => {
     io.emit('update-sockets')
   })
   socket.on('disconnect', () => {
-    console.log('User disconnect:', userId)
   })
 })
 

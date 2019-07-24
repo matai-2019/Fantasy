@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import LoginLayout from './LoginLayout'
 import { ChatTemplate } from './ChatLayout'
-import { getAllUsers,
-  getAllMessages,
+import {
+  getAllUsers,
   addUser,
   removeUser,
   addMessage,
-  getNewID,
   getViewableMessages,
   resetFirestore
 } from '../../server/firestore/fsdb'
@@ -57,7 +56,6 @@ const pullRender = () => {
     })
 }
 const handleKickUser = (userid) => {
-  console.log(ssID, userid)
   removeUser(ssID, userid)
     .then(() => {
       socket.emit('change-occured')
@@ -92,7 +90,6 @@ class App extends Component {
         socket.emit('set-state', { id: sessionId, isAdmin: sessionAdmin, userName: sessionName })
         loadSession()
         socket.emit('change-occured')
-        console.log('setUserName')
       })
   }
 
@@ -106,16 +103,15 @@ class App extends Component {
         addMessage(ssID, sessionName, recipients, message)
           .then(obj => {
             socket.emit('change-occured')
-            console.log('sendMessage')
           })
       })
   }
 
-  render () {
+  render() {
     return (
       <>
         <div style={{ backgroundImage: './img/wp-1.jpg' }}>
-          <br/>
+          <br />
           <h1 style={{ color: 'white' }} align="center">Welcome {sessionName}!</h1>
           {(sessionId)
             ? <ChatTemplate
@@ -128,7 +124,7 @@ class App extends Component {
               sessionAdmin={sessionAdmin}
               renderApp={renderApp}
             />
-            : <LoginLayout ssID={ssID} setUserName={this.setUserName} userArray={userArray}/>}
+            : <LoginLayout ssID={ssID} setUserName={this.setUserName} userArray={userArray} />}
         </div>
       </>
     )
