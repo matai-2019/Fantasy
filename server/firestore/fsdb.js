@@ -1,6 +1,5 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
-import { arrayExpression } from '@babel/types'
 const firebaseConfig = {
   apiKey: 'AIzaSyAGK7lTDySjyb-huj2kUzjSoz_pSsLmafM',
   authDomain: 'fantasy-scroll.firebaseapp.com',
@@ -44,7 +43,6 @@ const addUser = (sessionId, userName) => {
         })
     })
     .then(obj => {
-      console.log(obj)
       return sendUser(obj, id, userName, sessionId)
     })
 }
@@ -100,7 +98,8 @@ const addMessage = (sessionId, userName, recipients, messageText) => {
   return getAllMessages(sessionId)
     .then(obj => {
       const id = obj.messages[obj.messages.length - 1].id + 1
-      const timestamp = Math.round(Date.now() / 1000)
+      let timestamp = new Date()
+      timestamp = timestamp.getTime()
       const message = { id, userName, messageText, recipients, timestamp }
       obj.messages.push(message)
       return obj
