@@ -98,12 +98,12 @@ const addMessage = (sessionId, userName, recipients, messageText) => {
       let id
       const validIDs = []
       obj.messages.forEach(msg => {
-        if (typeof msg.id === typeof 0) validIDs.push(msg.id)
+        if (typeof msg.id === typeof 0 && !isNaN(msg.id)) validIDs.push(msg.id)
       })
       if (validIDs.length > 0) {
         console.log(validIDs)
         console.log(validIDs.sort((a, b) => a > b))
-        id = validIDs.sort((a, b) => a > b)[validIDs.length - 1].id + 1
+        id = validIDs.sort((a, b) => a > b)[validIDs.length - 1] + 1
         console.log(id)
       } else id = 1
       let timestamp = new Date()
