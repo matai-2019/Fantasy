@@ -77,7 +77,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
               <Grid columns={2} relaxed='very'>
                 <Grid.Column floated="left" width={7}>
                   <div className="ui action input">
-                    <div type="text" onClick={handleAddSession} id='ssIDButton'>
+                    <div type="text" onClick={handleAddSession} id='ssIDButton' style={{ color: 'white', fontSize: '25px' }}>
                       {`${fullPath}`}
                       <button className="ui teal right labeled icon button">
                           Copy URL
