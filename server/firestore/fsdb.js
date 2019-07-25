@@ -44,7 +44,6 @@ const addUser = (sessionId, userName, isAdmin) => {
       return obj
     })
     .then(obj => {
-      console.log(obj, id, userName, sessionId, isAdmin)
       return sendUser(obj, id, userName, sessionId, isAdmin)
     })
 }
@@ -101,16 +100,12 @@ const addMessage = (sessionId, userName, recipients, messageText) => {
         if (typeof msg.id === typeof 0 && !isNaN(msg.id)) validIDs.push(msg.id)
       })
       if (validIDs.length > 0) {
-        console.log(validIDs)
-        console.log(validIDs.sort((a, b) => a > b))
         id = validIDs.sort((a, b) => a > b)[validIDs.length - 1] + 1
-        console.log(id)
       } else id = 1
       let timestamp = new Date()
       timestamp = timestamp.getTime()
       const message = { id, userName, messageText, recipients, timestamp }
       obj.messages.push(message)
-      console.log(obj)
       return obj
     })
     .then(obj => {

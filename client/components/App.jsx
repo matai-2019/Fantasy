@@ -66,7 +66,6 @@ const pullFirestore = () => {
 const pullRender = () => {
   return pullFirestore()
     .then(() => {
-      console.log('render event')
       return renderApp()
     })
 }
@@ -94,7 +93,6 @@ const renderApp = () => {
 
 // socket events
 socket.on('update-sockets', () => {
-  console.log('update event')
   pullRender()
 })
 socket.on('disconnect', () => {
@@ -128,11 +126,8 @@ class App extends Component {
   }
 
   sendMessage = (message, recipients) => {
-    console.log('message being sent')
-    console.log('r', recipients.length, recipients.length === 0)
     if (recipients.length === 0) recipients = userArray.map(user => user.id)
     else if (!recipients.includes(sessionId)) recipients.push(sessionId)
-    console.log('r', recipients)
 
     return addMessage(ssID, sessionName, recipients, message)
       .then(obj => {
