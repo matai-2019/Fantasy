@@ -1,9 +1,16 @@
 const path = require('path')
 const express = require('express')
 
-const server = express()
+const app = express()
+const server = require('http').Server(app)
+const io = require('socket.io')(server)
 
-server.use(express.json())
-server.use(express.static(path.join(__dirname, './public')))
+app.use(express.json())
+app.use(express.static(path.join(__dirname, '../build')))
 
-module.exports = server
+module.exports = {
+  server,
+  app,
+  io,
+  path
+}
