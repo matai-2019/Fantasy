@@ -28,6 +28,9 @@ module.exports = (env, arg) => {
     devtool: 'source-map',
     devServer: {
       contentBase: '/public'
+    },
+    node: {
+      fs: 'empty'
     }
   }
 }
