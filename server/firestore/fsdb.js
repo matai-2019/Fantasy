@@ -1,5 +1,6 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
+
 const firebaseConfig = {
   apiKey: 'AIzaSyAGK7lTDySjyb-huj2kUzjSoz_pSsLmafM',
   authDomain: 'fantasy-scroll.firebaseapp.com',
@@ -44,7 +45,6 @@ const addUser = (sessionId, userName, isAdmin) => {
       return obj
     })
     .then(obj => {
-      console.log(obj, id, userName, sessionId, isAdmin)
       return sendUser(obj, id, userName, sessionId, isAdmin)
     })
 }
@@ -61,8 +61,8 @@ const removeUser = (sessionId, Userid) => {
     .then(obj => {
       obj = obj.data()
       const removed = obj.users.filter(user => user.id === Userid)[0]
-      let index = obj.users.indexOf(removed)
-      index = index === -1 ? null : obj.users.splice(index, 1)
+      const index = obj.users.indexOf(removed)
+      if (index !== -1) obj.users.splice(index, 1)
       return obj
     })
     .then((obj) => {
@@ -107,7 +107,6 @@ const addMessage = (sessionId, userName, recipients, messageText) => {
       timestamp = timestamp.getTime()
       const message = { id, userName, messageText, recipients, timestamp }
       obj.messages.push(message)
-      console.log(obj)
       return obj
     })
     .then(obj => {
