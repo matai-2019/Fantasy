@@ -1,14 +1,14 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
-
+import 'dotenv'
 const firebaseConfig = {
-  apiKey: 'AIzaSyAGK7lTDySjyb-huj2kUzjSoz_pSsLmafM',
-  authDomain: 'fantasy-scroll.firebaseapp.com',
-  databaseURL: 'https://fantasy-scroll.firebaseio.com',
+  apiKey: process.env.API_KEY,
+  authDomain: process.env.AUTH_DOMAIN,
+  databaseURL: process.env.DB_URL,
   projectId: 'fantasy-scroll',
-  storageBucket: 'fantasy-scroll.appspot.com',
-  messagingSenderId: '325113898596',
-  appId: '1:325113898596:web:c745fc7aa34f979b'
+  storageBucket: process.env.STORAGE_BUCKET,
+  messagingSenderId: process.env.MSG_SEND_ID,
+  appId: process.env.APP_ID
 }
 const fire = firebase.initializeApp(firebaseConfig)
 let db = fire.firestore()
