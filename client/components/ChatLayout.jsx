@@ -60,7 +60,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
   }
   return <>
     <div>
-      <Container inverted='true' style={{ minHeight: '80vh', color: 'white', position: 'relative' }}>
+      <Container id='mainContainer' inverted='true' style={{ minHeight: '80vh', color: 'white', position: 'relative' }}>
         {<h1 style={{ color: 'white' }} align="center">Welcome {sessionName}</h1>}
         <Segment inverted={true} style={{ minHeight: '70vh', maxHeight: '70vh' }}>
           { (sessionAdmin === true) ? <>
@@ -124,35 +124,32 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
         </>
             : <> </>
           }
-          <Grid columns={2} center='true' relaxed='very' style={{ width: '100%', margin: '0px' }}>
-            <Grid.Column style={{ width: '25vw', maxWidth: '200px' }}>
-              <List divided relaxed>
-                {userArray.map(user => {
-                  return <List.Item key={user.id}>
-                    <Grid columns={2} relaxed='very'>
-                      <List.Content style={{ color: 'white' }}>
-                        <List.Header className='teal'>
-                          <h2 style={{ color: 'white', lineHeight: '60px', width: 'calc(25vw - 30px)', marginRight: '0px', maxWidth: '200px' }}>{user.userName}
-
-                            <div className='ui center teal'id={`${user.id}check`} onClick={handleSelect(user.id)}
-                              style={{
-                                border: 'none',
-                                height: '30px',
-                                width: '30px',
-                                backgroundColor: '#FFFFFF',
-                                float: 'right',
-                                marginTop: '15px',
-                                marginBottom: '15px' }}>
-                            </div>
-                          </h2>
-                        </List.Header>
-                      </List.Content>
-                    </Grid>
-                  </List.Item>
-                })}
-              </List>
-            </Grid.Column >
-            <Grid.Column fluid='true' id={'messageScroller'} style={{ maxWidth: '800px', width: '50vw', padding: '0px', minHeight: '70vh', maxHeight: '70vh', overflowY: 'scroll', position: 'absolute', top: '0px', right: '0px' }}>
+          <div center='true' relaxed='very' style={{ width: '100%', margin: '0px' }}>
+            <div style={{ width: '25%' }}>
+              {userArray.map(user => {
+                return <h2 key={user.id} style={{ color: 'white', lineHeight: '40px', width: 'calc(25vw - 30px)', margin: '5px' }}>
+                  {user.userName}
+                  <div className='ui center teal'id={`${user.id}check`} onClick={handleSelect(user.id)}
+                    style={{
+                      border: 'none',
+                      height: '30px',
+                      width: '30px',
+                      backgroundColor: '#FFFFFF',
+                      float: 'right',
+                      marginTop: '5px',
+                      marginBottom: '5px' }}>
+                  </div>
+                </h2>
+              })}
+            </div >
+            <div id={'messageScroller'} style={{
+              width: '70%',
+              height: '70vh',
+              margin: '0px',
+              position: 'absolute',
+              top: '0px',
+              right: '0px',
+              overflowY: 'scroll' }}>
               {messageArray.map(message => {
                 return <div key={message.timestamp + message.id}>
                   <Segment style={{ padding: '1px', margin: '10px', backgroundColor: 'white' }}>
@@ -166,16 +163,16 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
                   </Segment>
                 </div>
               })}
-            </Grid.Column>
-          </Grid >
+            </div>
+          </div >
         </Segment>
-        <div className="ui left labeled input" style={{ width: '100%' }}>
+        <Form className="ui fluid input">
           {userNames.map(name => {
             return <div key={name} className="ui teal horizontal label">{name}</div>
           })}
-          <input id='messageInput' onChange={handleChange} type="text" placeholder="Send a message"/>
-          <Button onClick={handleSend}>Send</Button>
-        </div>
+          <input style={{ minHeight: '5vh', width: '85%', padding: '5px' }} id='messageInput' onChange={handleChange} type="text" placeholder="Send a message"/>
+          <Button style={{ minHeight: '5vh', width: '10%', padding: '5px' }} floated='right' onClick={handleSend}>Send</Button>
+        </Form>
       </Container>
     </div>
   </>
