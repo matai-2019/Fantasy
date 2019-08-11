@@ -92,6 +92,30 @@ const getViewableMessages = (sessionId, userId) => {
     })
 }
 
+const cullRecipients = (sessionId, userId) => {
+  const newArr = []
+  return db.collection(sessionId).doc('Messages').get()
+    .then(data => {
+      const obj = data.data()
+      if (obj.messages) {
+        obj.messages.forEach(message => {
+          if (message.recipients.includes(userId)) {
+            const index = message.recipients.indexOf(userId)
+            message.recipients.splice(index, 1)
+          }
+          newArr.push(message)
+        })
+      }
+      return newArr
+    })
+    .then(culledMessages => {
+      db.collection(sessionId).doc('Messages').set({
+        messages: culledMessages
+      })
+      return culledMessages
+    })
+}
+
 const addMessage = (sessionId, userName, recipients, messageText) => {
   return getAllMessages(sessionId)
     .then(obj => {
@@ -118,9 +142,9 @@ const addMessage = (sessionId, userName, recipients, messageText) => {
 }
 
 const resetFirestore = (sessionId) => {
-  return db.collection(sessionId).doc('Users').delete()
+  return db.collection(sessionId).doc('Users').set({ users: [] })
     .then(function () {
-      return db.collection(sessionId).doc('Messages').delete()
+      return db.collection(sessionId).doc('Messages').set({ messages: [] })
     }).catch(function (error) {
       console.error('Error removing document: ', error)
     })
@@ -139,5 +163,6 @@ export {
   addMessage,
   getAllMessages,
   getViewableMessages,
-  resetFirestore
+  resetFirestore,
+  cullRecipients
 }
