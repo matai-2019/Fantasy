@@ -103,7 +103,7 @@ const cullRecipients = (sessionId, userId) => {
             const index = message.recipients.indexOf(userId)
             message.recipients.splice(index, 1)
           }
-          newArr.push(message)
+          if (message.recipients.length !== 0) newArr.push(message)
         })
       }
       return newArr
