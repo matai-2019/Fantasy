@@ -27,17 +27,20 @@ io.on('connection', socket => {
     io.emit('update-sockets')
   })
   socket.on('disconnect', () => {
-    io.emit('dc-user', userId)
     console.log('DC USID', userId, typeof userId)
     console.log('DC SSID', ssID, typeof ssID)
-    if (userId === undefined || userId === null) console.log('no user')
-    else console.log('remove user on dc')// removeUser(ssID, userId)
-    socket.emit('clear-ss')
+    if (userId === undefined || userId === null) return null
+    else {
+      removeUser(ssID, userId)
+        .then(user => {
+          io.emit('dc-user', userId)
+        })
+    }
   })
 })
 
 server.listen(port, function () {
-  // eslint-disable-next-line no-consoleq
+  // eslint-disable-next-line no-console
   console.log('Listening on port', port)
 })
 
