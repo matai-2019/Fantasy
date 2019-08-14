@@ -33,10 +33,14 @@ const getNewID = (obj) => {
   return id
 }
 
-const addUser = (sessionId, userName, isAdmin) => {
+const addUser = (sessionId, userName, isAdmin, userId) => {
   let id
   return getAllUsers(sessionId)
     .then(obj => {
+      if (userId) {
+        id = userId
+        return obj
+      }
       if (obj.users.length > 0) {
         id = getNewID(obj)
       } else {
