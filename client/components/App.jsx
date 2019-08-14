@@ -2,15 +2,16 @@ import React, { Component } from 'react'
 import LoginLayout from './LoginLayout'
 import { ChatTemplate } from './ChatLayout'
 import { Dimmer, Loader } from 'semantic-ui-react'
-import { getAllUsers,
+import io from 'socket.io-client'
+import ReactDOM from '../index'
+const { getAllUsers,
   addUser,
   removeUser,
   addMessage,
   getViewableMessages,
-  resetFirestore
-} from '../../server/firestore/fsdb'
-import io from 'socket.io-client'
-import ReactDOM from '../index'
+  resetFirestore,
+  cullRecipients
+} = require('../../server/firestore/fsdb')
 
 // client consts
 const socket = io()
@@ -47,6 +48,13 @@ const loadSession = () => {
   sessionId = loggedIn ? sessObj.id : null
   sessionAdmin = loggedIn ? sessObj.isAdmin : null
   sessionName = loggedIn ? sessObj.userName : null
+  console.log((sessionId, sessionAdmin, sessionName))
+  if (sessionId && sessionAdmin && sessionName) {
+    // addUser(ssID, sessionName, sessionAdmin, sessionId)
+    //   .then(user => {
+    //     socket.emit('change-occured')
+    //   })
+  }
 }
 
 const pullFirestore = () => {
@@ -60,6 +68,7 @@ const pullFirestore = () => {
           }
           sessionStorage.setItem('users', JSON.stringify(userArray))
           sessionStorage.setItem('messages', JSON.stringify(messageArray))
+          return 'done'
         })
     })
 }
@@ -95,7 +104,20 @@ const renderApp = () => {
 socket.on('update-sockets', () => {
   pullRender()
 })
-socket.on('disconnect', () => {
+socket.on('dc-user', dcId => {
+  console.log('User disconnected', dcId)
+  if (dcId === sessionId) {
+    addUser(ssID, sessionName, sessionAdmin, sessionId)
+      .then(user => {
+        console.log('User added back', sessionId)
+        socket.emit('change-occured')
+      })
+  } else {
+    cullRecipients(ssID, dcId)
+      .then(newMsgs => {
+        pullRender()
+      })
+  }
 })
 
 // Variables for client + App class interaction
@@ -106,6 +128,7 @@ let loading = true
 
 // onLoad functions
 loadSession()
+socket.emit('set-state', { id: sessionId, isAdmin: sessionAdmin, userName: sessionName, ssID })
 pullRender().then(() => {
   loading = false
   renderApp()
@@ -120,7 +143,7 @@ class App extends Component {
     addUser(ssID, username, isAdmin)
       .then(user => {
         saveSession(user)
-        socket.emit('set-state', { id: sessionId, isAdmin: sessionAdmin, userName: sessionName })
+        socket.emit('set-state', { id: sessionId, isAdmin: sessionAdmin, userName: sessionName, ssID })
         socket.emit('change-occured')
       })
   }
