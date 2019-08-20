@@ -24,13 +24,11 @@ io.on('connection', socket => {
     userName = userState.userName
     ssID = userState.ssID
     if (userId !== null && userId !== undefined) userArr.push({ name: userName, id: userId })
-    console.log('set', userArr)
   })
   socket.on('change-occured', () => {
     io.emit('update-sockets')
   })
   socket.on('disconnect', () => {
-    console.log('DC', userId)
     if (userId === undefined || userId === null) return null
     else {
       const dcArr = []
@@ -38,11 +36,10 @@ io.on('connection', socket => {
         if (userId !== obj.id) dcArr.push(obj)
       })
       userArr = dcArr
-      console.log('dc', userArr)
       setTimeout(() => {
         let dc = true
         userArr.forEach(obj => {
-          if (obj.id === userId && obj.name === userName) { console.log('reconnected'); dc = false }
+          if (obj.id === userId && obj.name === userName) { dc = false }
         })
         if (dc) {
           removeUser(ssID, userId)
