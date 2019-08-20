@@ -30,6 +30,7 @@ const saveSession = userObj => {
   sessionAdmin = isAdmin
   sessionName = userName
 }
+
 const loadSession = () => {
   const sessObj = {
     id: JSON.parse(sessionStorage.getItem('id')),
@@ -49,12 +50,6 @@ const loadSession = () => {
   sessionAdmin = loggedIn ? sessObj.isAdmin : null
   sessionName = loggedIn ? sessObj.userName : null
   console.log((sessionId, sessionAdmin, sessionName))
-  if (sessionId && sessionAdmin && sessionName) {
-    // addUser(ssID, sessionName, sessionAdmin, sessionId)
-    //   .then(user => {
-    //     socket.emit('change-occured')
-    //   })
-  }
 }
 
 const pullFirestore = () => {
@@ -93,6 +88,7 @@ const handleResetFirestore = () => {
 }
 
 const renderApp = () => {
+  loading = false
   ReactDOM.render(<App />, document.getElementById('app'))
   const scrollDiv = document.getElementById('messageScroller')
   if (scrollDiv) {
@@ -130,12 +126,12 @@ let loading = true
 loadSession()
 socket.emit('set-state', { id: sessionId, isAdmin: sessionAdmin, userName: sessionName, ssID })
 pullRender().then(() => {
-  loading = false
   renderApp()
 })
 
 class App extends Component {
   setUserName = (username) => {
+    loading = true
     let isAdmin = true
     userArray.forEach(user => {
       if (user.isAdmin === true) isAdmin = false
