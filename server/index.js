@@ -44,6 +44,7 @@ io.on('connection', socket => {
         if (dc) {
           removeUser(ssID, userId)
             .then(rtn => {
+              io.emit('cull-msgs', userId)
               io.emit('update-sockets')
             })
         }

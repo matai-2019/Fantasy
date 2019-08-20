@@ -100,20 +100,11 @@ const renderApp = () => {
 socket.on('update-sockets', () => {
   pullRender()
 })
-socket.on('dc-user', dcId => {
-  console.log('User disconnected', dcId)
-  if (dcId === sessionId) {
-    addUser(ssID, sessionName, sessionAdmin, sessionId)
-      .then(user => {
-        console.log('User added back', sessionId)
-        socket.emit('change-occured')
-      })
-  } else {
-    cullRecipients(ssID, dcId)
-      .then(newMsgs => {
-        pullRender()
-      })
-  }
+socket.on('cull-msgs', dcId => {
+  cullRecipients(ssID, dcId)
+    .then(newMsgs => {
+      pullRender()
+    })
 })
 
 // Variables for client + App class interaction
