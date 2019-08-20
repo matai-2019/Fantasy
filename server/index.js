@@ -16,25 +16,38 @@ const fire = firebase.initializeApp(firebaseConfig)
 const db = fire.firestore()
 
 const port = process.env.PORT || 3000
-
+let userArr = []
 io.on('connection', socket => {
-  let userId, ssID
+  let userId, ssID, userName
   socket.on('set-state', userState => {
     userId = userState.id
+    userName = userState.userName
     ssID = userState.ssID
+    if (userId !== null && userId !== undefined) userArr.push({ name: userName, id: userId })
   })
   socket.on('change-occured', () => {
     io.emit('update-sockets')
   })
   socket.on('disconnect', () => {
-    console.log('DC USID', userId, typeof userId)
-    console.log('DC SSID', ssID, typeof ssID)
     if (userId === undefined || userId === null) return null
     else {
-      removeUser(ssID, userId)
-        .then(user => {
-          io.emit('dc-user', userId)
+      const dcArr = []
+      userArr.forEach(obj => {
+        if (userId !== obj.id) dcArr.push(obj)
+      })
+      userArr = dcArr
+      setTimeout(() => {
+        let dc = true
+        userArr.forEach(obj => {
+          if (obj.id === userId && obj.name === userName) { dc = false }
         })
+        if (dc) {
+          removeUser(ssID, userId)
+            .then(rtn => {
+              io.emit('update-sockets')
+            })
+        }
+      }, 4000)
     }
   })
 })

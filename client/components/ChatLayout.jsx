@@ -59,7 +59,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
     }
   }
   return <>
-    <div>
+    <div style={{ fontSize: '0.8em' }}>
       <Container id='mainContainer' inverted='true' style={{ minHeight: '80vh', color: 'white', position: 'relative' }}>
         {<h1 style={{ color: 'white' }} align="center">Welcome {sessionName}</h1>}
         <Segment inverted={true} style={{ minHeight: '70vh', maxHeight: '70vh' }}>
@@ -127,7 +127,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
           <div center='true' relaxed='very' style={{ width: '100%', margin: '0px' }}>
             <div style={{ width: '25%' }}>
               {userArray.map(user => {
-                return <h2 key={user.id} style={{ color: 'white', lineHeight: '40px', width: 'calc(25vw - 30px)', margin: '5px' }}>
+                return <h2 key={user.id} style={{ color: 'white', lineHeight: '40px', maxWidth: '300px', width: 'calc(25vw - 30px)', margin: '5px' }}>
                   {user.userName}
                   <div className='ui center teal'id={`${user.id}check`} onClick={handleSelect(user.id)}
                     style={{
@@ -171,7 +171,7 @@ export const ChatTemplate = ({ userArray, messageArray, sendMessage, fullPath, h
             return <div key={name} className="ui teal horizontal label">{name}</div>
           })}
           <input style={{ minHeight: '5vh', width: '85%', padding: '5px' }} id='messageInput' onChange={handleChange} type="text" placeholder="Send a message"/>
-          <Button style={{ minHeight: '5vh', width: '10%', padding: '5px' }} floated='right' onClick={handleSend}>Send</Button>
+          <Button style={{ minHeight: '5vh', minWidth: '60px', width: '10%', padding: '5px' }} floated='right' onClick={handleSend}>Send</Button>
         </Form>
       </Container>
     </div>

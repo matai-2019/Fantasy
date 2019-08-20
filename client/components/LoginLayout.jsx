@@ -1,6 +1,6 @@
 import React from 'react'
 import { getAllUsers } from '../../server/firestore/fsdb'
-import { Container, Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
+import { Container, Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
 
 function LoginForm ({ setUserName, userArray, ssID }) {
   let inputValue = ''
@@ -10,6 +10,7 @@ function LoginForm ({ setUserName, userArray, ssID }) {
   }
 
   const handleSubmit = () => {
+    document.getElementById('loginHeader').value = 'Logging In'
     getAllUsers(ssID)
       .then(obj => {
         if (userArray.length >= 7) {
@@ -45,7 +46,7 @@ function LoginForm ({ setUserName, userArray, ssID }) {
                   onChange={handleChange}
                   placeholder='Username' />
                 <Button id='loginButton' color='teal' fluid size='large' type='submit'>
-                  <h3>Start New Adventure</h3>
+                  <h3 id='loginHeader'>Start New Adventure</h3>
                 </Button>
               </Segment>
             </Form>
